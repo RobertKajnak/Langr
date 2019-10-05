@@ -14,7 +14,7 @@ axis_stretch_vertical = 1
 margin_left = -0.814514
 margin_right = 449.185
 margin_bottom = 60.0
-rect_min_size = Vector2( 450, 60 )
+rect_min_size = Vector2( 400, 60 )
 custom_styles/normal = SubResource( 1 )
 script = ExtResource( 2 )
 

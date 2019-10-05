@@ -6,6 +6,8 @@ extends Node
 var currentLang = 0;
 var langs = ['en','hu']
 
+var currentLesson = 'default'
+var currentQuestion = '0'
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	TranslationServer.set_locale(langs[currentLang])

@@ -8,3 +8,6 @@ question,Question,Kérdés
 answer,Answer,Válasz
 next,Next,Következő
 back,Back,Vissza
+lessonList,List of Lessons,Elérhető leckék
+createLesson,Create new Lesson,Új Lecke Létrehozás
+deleteLesson,Delete Lesson,Lecke törlése
