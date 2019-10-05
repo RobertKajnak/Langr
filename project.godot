@@ -16,7 +16,27 @@ _global_script_class_icons={
 [application]
 
 config/name="Langr"
+run/main_scene="res://MainMenu.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+GlobalVars="*res://Global.gd"
+
+[display]
+
+window/size/width=720
+window/size/height=1280
+window/size/test_height=500
+
+[gui]
+
+theme/custom_font="res://fonts/MainMenuFont.tres"
+
+[locale]
+
+test="en"
+translations=PoolStringArray( "res://Localization/localization.en.translation", "res://Localization/localization.hu.translation" )
 
 [rendering]
 
