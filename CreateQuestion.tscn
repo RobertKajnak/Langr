@@ -1,0 +1,68 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://CreateQuestion.gd" type="Script" id=1]
+[ext_resource path="res://res/Wood15.jpg" type="Texture" id=2]
+[ext_resource path="res://fonts/MainMenuFont.tres" type="DynamicFont" id=3]
+[ext_resource path="res://res/Fabric19.jpg" type="Texture" id=4]
+[ext_resource path="res://Buttons/MenuButton.tscn" type="PackedScene" id=5]
+
+[node name="CreateQuestionRoot" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 585.797, 728.062 )
+texture = ExtResource( 2 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+margin_top = 85.0
+margin_right = 720.0
+margin_bottom = 785.0
+rect_min_size = Vector2( 720, 700 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
+margin_right = 600.0
+margin_bottom = 918.0
+rect_min_size = Vector2( 600, 0 )
+custom_constants/separation = 20
+alignment = 1
+
+[node name="TextEditQuestion" type="TextEdit" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+margin_right = 600.0
+margin_bottom = 200.0
+rect_min_size = Vector2( 0, 200 )
+custom_fonts/font = ExtResource( 3 )
+
+[node name="AnswerTextEdit" type="TextEdit" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+margin_top = 220.0
+margin_right = 600.0
+margin_bottom = 420.0
+rect_min_size = Vector2( 0, 200 )
+
+[node name="LabelDraw" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+margin_top = 440.0
+margin_right = 600.0
+margin_bottom = 498.0
+
+[node name="AnswerDraw" type="Control" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+margin_top = 518.0
+margin_right = 600.0
+margin_bottom = 918.0
+rect_min_size = Vector2( 400, 400 )
+rect_clip_content = true
+
+[node name="Sprite" type="Sprite" parent="VBoxContainer/ScrollContainer/VBoxContainer/AnswerDraw"]
+texture = ExtResource( 4 )
+
+[node name="Button" parent="VBoxContainer" instance=ExtResource( 5 )]
+margin_left = 0.0
+margin_top = 789.0
+margin_right = 720.0
+margin_bottom = 865.455
+text_loc = "createQuestion"

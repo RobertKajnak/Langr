@@ -9,5 +9,13 @@ answer,Answer,Válasz
 next,Next,Következő
 back,Back,Vissza
 lessonList,List of Lessons,Elérhető leckék
-createLesson,Create new Lesson,Új Lecke Létrehozás
+createLesson,Create new Lesson,Új Lecke Létrehozása
 deleteLesson,Delete Lesson,Lecke törlése
+createQuestion,Create Question,Új kérdés Létrehozása
+deleteQuestion,Delete Question,Kérdés törlése
+questionPlaceholder,Modify Question text here,Kérdés szövegének módosítása itt
+answerTextPlaceholder,Modify Answer Here (free text),Válasz szövegének módosítása itt (korlátlan bevitel)
+drawLabel,Draw answer in the following field,Válasz lerajzolása a következő mezőbe
+drawClear,Clear current drawing,Jelenlegi rajz törlése
+createQuestionDict,Add Word from Dictionary,Szó hozzáadása a szótárból
+appendDictionary,Append Dictionary,Szótár hozzáadása

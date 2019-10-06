@@ -17,7 +17,7 @@ texture = ExtResource( 2 )
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_constants/separation = 60
+custom_constants/separation = 40
 
 [node name="LabelTitle" type="Label" parent="VBoxContainer"]
 margin_right = 720.0
@@ -27,23 +27,31 @@ text = "<lessonTitle>"
 align = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
-margin_top = 118.0
+margin_top = 98.0
 margin_right = 720.0
-margin_bottom = 818.0
-rect_min_size = Vector2( 0, 700 )
+margin_bottom = 548.0
+rect_min_size = Vector2( 0, 450 )
 
 [node name="ButtonAddWord" parent="VBoxContainer" instance=ExtResource( 4 )]
 margin_left = 0.0
-margin_top = 878.0
+margin_top = 588.0
 margin_right = 720.0
-margin_bottom = 954.455
-text_loc = "addWord"
+margin_bottom = 664.455
+scene_to_load = "res://CreateQuestion.tscn"
+text_loc = "createQuestion"
+
+[node name="ButtonAddWord2" parent="VBoxContainer" instance=ExtResource( 4 )]
+margin_left = 0.0
+margin_top = 704.0
+margin_right = 720.0
+margin_bottom = 780.455
+text_loc = "appendDictionary"
 
 [node name="ButtonDeleteLesson" parent="VBoxContainer" instance=ExtResource( 4 )]
 margin_left = 0.0
-margin_top = 1014.0
+margin_top = 820.0
 margin_right = 720.0
-margin_bottom = 1090.45
+margin_bottom = 896.455
 scene_to_load = "res://Manage.tscn"
 text_loc = "deleteLesson"
 [connection signal="pressed" from="VBoxContainer/ButtonAddWord" to="." method="_on_ButtonAddWord_pressed"]
