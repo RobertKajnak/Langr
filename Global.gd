@@ -29,6 +29,7 @@ func retranslate(node,to_translate_list):
 func save_settings():
 	# Save the changes by overwriting the previous file
 	config.set_value("general", "lang", currentLang)
+	config.set_value("general","allLangs",langs)
 	config.save("user://settings.cfg")
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

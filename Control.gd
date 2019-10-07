@@ -3,6 +3,11 @@ extends Control
 
 func _ready():
 	$VBoxContainer/LabelLesson.text = tr('lessonList')
+	
+	var lesson_directory = Directory.new()
+	if not lesson_directory.dir_exists('user://lessons/'):
+		lesson_directory.make_dir('user://lessons')
+	
 	var files = list_files_in_directory('user://lessons')
 	for f in files:
 		var lessonButton = preload("res://Buttons/SelectLessonButton.tscn").instance()
@@ -34,6 +39,14 @@ func _unhandled_input(event):
     if event is InputEventKey:
         if event.pressed and event.scancode == KEY_ESCAPE:
             get_tree().change_scene('res://MainMenu.tscn')
+
+func _notification(what):
+    if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
+        # For Windows
+        pass        
+    if what == MainLoop.NOTIFICATION_WM_GO_BACK_REQUEST: 
+        # For android
+        get_tree().change_scene('res://MainMenu.tscn')
 
 func _on_lesson_pressed(lesson_name):
 	print('Opening lesson: ' + lesson_name)

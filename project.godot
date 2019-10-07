@@ -18,6 +18,7 @@ _global_script_class_icons={
 config/name="Langr"
 run/main_scene="res://MainMenu.tscn"
 config/icon="res://icon.png"
+config/quit_on_go_back=false
 
 [autoload]
 
@@ -28,6 +29,7 @@ GlobalVars="*res://Global.gd"
 window/size/width=720
 window/size/height=950
 window/size/test_height=500
+window/handheld/orientation="portrait"
 
 [gui]
 
