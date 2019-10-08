@@ -5,11 +5,10 @@ var config;
 var currentLang = 0;
 var langs = ['en','hu']
 
-var currentLesson = 'default'
-var currentQuestion = '0'
+var current_lesson = ''
+var current_question = ''
 
-var current_lesson
-# Called when the node enters the scene tree for the first time.
+
 func _ready():
 	config = ConfigFile.new()
 	var err = config.load("user://settings.cfg")
@@ -25,12 +24,32 @@ func retranslate(node,to_translate_list):
 		node.text = tr(to_translate_list[node.name])
 	for child in node.get_children():
 		retranslate(child,to_translate_list)
-		
+
+
+func list_files_in_directory(path):
+    var files = []
+    var dir = Directory.new()
+    dir.open(path)
+    dir.list_dir_begin()
+
+    while true:
+        var file = dir.get_next()
+        if file == "":
+            break
+        elif not file.begins_with("."):
+            files.append(file)
+
+    dir.list_dir_end()
+
+    return files
+
 func save_settings():
 	# Save the changes by overwriting the previous file
 	config.set_value("general", "lang", currentLang)
 	config.set_value("general","allLangs",langs)
 	config.save("user://settings.cfg")
+	
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
