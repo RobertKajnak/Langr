@@ -28,7 +28,7 @@ rect_min_size = Vector2( 720, 700 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
 margin_right = 600.0
-margin_bottom = 918.0
+margin_bottom = 1058.0
 rect_min_size = Vector2( 600, 0 )
 custom_constants/separation = 20
 alignment = 1
@@ -39,25 +39,56 @@ margin_bottom = 200.0
 rect_min_size = Vector2( 0, 200 )
 custom_fonts/font = ExtResource( 3 )
 
-[node name="AnswerTextEdit" type="TextEdit" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="ScrollContainerMultiChoice" type="ScrollContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 220.0
 margin_right = 600.0
-margin_bottom = 420.0
+margin_bottom = 340.0
+rect_min_size = Vector2( 0, 120 )
+
+[node name="VBoxContainerMultiChoice" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer/ScrollContainerMultiChoice"]
+margin_right = 578.0
+margin_bottom = 128.0
+
+[node name="LabelMultiChoice" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/ScrollContainerMultiChoice/VBoxContainerMultiChoice"]
+margin_right = 578.0
+margin_bottom = 58.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer/ScrollContainerMultiChoice/VBoxContainerMultiChoice"]
+margin_top = 62.0
+margin_right = 578.0
+margin_bottom = 128.0
+
+[node name="CheckBoxMulti" type="CheckBox" parent="VBoxContainer/ScrollContainer/VBoxContainer/ScrollContainerMultiChoice/VBoxContainerMultiChoice/HBoxContainer"]
+margin_right = 24.0
+margin_bottom = 66.0
+
+[node name="TextEditCheckBoxMulti0" type="TextEdit" parent="VBoxContainer/ScrollContainer/VBoxContainer/ScrollContainerMultiChoice/VBoxContainerMultiChoice/HBoxContainer"]
+margin_left = 28.0
+margin_right = 578.0
+margin_bottom = 66.0
+rect_min_size = Vector2( 550, 0 )
+
+[node name="AnswerTextEdit" type="TextEdit" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+margin_top = 360.0
+margin_right = 600.0
+margin_bottom = 560.0
 rect_min_size = Vector2( 0, 200 )
 
 [node name="LabelDraw" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
-margin_top = 440.0
+margin_top = 580.0
 margin_right = 600.0
-margin_bottom = 498.0
+margin_bottom = 638.0
 
 [node name="AnswerDraw" type="Control" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
-margin_top = 518.0
+margin_top = 658.0
 margin_right = 600.0
-margin_bottom = 918.0
+margin_bottom = 1058.0
 rect_min_size = Vector2( 400, 400 )
 rect_clip_content = true
 
 [node name="Sprite" type="Sprite" parent="VBoxContainer/ScrollContainer/VBoxContainer/AnswerDraw"]
+position = Vector2( 293.596, 19.9727 )
+scale = Vector2( 0.373909, 0.321247 )
 texture = ExtResource( 4 )
 
 [node name="Button" parent="VBoxContainer" instance=ExtResource( 5 )]

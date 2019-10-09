@@ -19,3 +19,5 @@ drawLabel,Draw answer in the following field,Válasz lerajzolása a következő 
 drawClear,Clear current drawing,Jelenlegi rajz törlése
 createQuestionDict,Add Word from Dictionary,Szó hozzáadása a szótárból
 appendDictionary,Append Dictionary,Szótár hozzáadása
+multiChoiceTooltip,Start Editing to add an answer,Kezdje el módosítani a hozzáadáshoz
+multiChoiceCheckbox,Add new multi-choice answer,Új többválasz hozzáadása

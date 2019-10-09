@@ -24,7 +24,7 @@ func go_back():
 func _on_lesson_pressed(lesson_name):
 	print('Opening lesson: ' + lesson_name)
 	get_node("/root/GlobalVars").current_lesson = lesson_name
-	var _err = get_tree().change_scene('res://WordList.tscn')
+	var _err = get_tree().change_scene('res://QuestionList.tscn')
 
 func _on_ButtonAddLesson_pressed():
 	print('Creating lesson')
