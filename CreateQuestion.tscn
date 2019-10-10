@@ -2,8 +2,8 @@
 
 [ext_resource path="res://CreateQuestion.gd" type="Script" id=1]
 [ext_resource path="res://res/Wood15.jpg" type="Texture" id=2]
-[ext_resource path="res://fonts/MainMenuFont.tres" type="DynamicFont" id=3]
-[ext_resource path="res://res/Fabric19.jpg" type="Texture" id=4]
+[ext_resource path="res://res/Fabric19.jpg" type="Texture" id=3]
+[ext_resource path="res://fonts/MainMenuFont.tres" type="DynamicFont" id=4]
 [ext_resource path="res://Buttons/MenuButton.tscn" type="PackedScene" id=5]
 
 [node name="CreateQuestionRoot" type="Control"]
@@ -18,31 +18,57 @@ texture = ExtResource( 2 )
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 30.0
+margin_right = -30.0
 alignment = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
 margin_top = 85.0
-margin_right = 720.0
+margin_right = 660.0
 margin_bottom = 785.0
-rect_min_size = Vector2( 720, 700 )
+rect_min_size = Vector2( 650, 700 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
 margin_right = 600.0
-margin_bottom = 1058.0
+margin_bottom = 1126.0
 rect_min_size = Vector2( 600, 0 )
 custom_constants/separation = 20
 alignment = 1
 
+[node name="VBoxContainerDraw" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+margin_right = 400.0
+margin_bottom = 468.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="AnswerDraw" type="Control" parent="VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw"]
+margin_right = 400.0
+margin_bottom = 400.0
+rect_min_size = Vector2( 400, 400 )
+rect_clip_content = true
+
+[node name="Sprite" type="Sprite" parent="VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw/AnswerDraw"]
+position = Vector2( 306.957, 208.703 )
+scale = Vector2( 0.373909, 0.321247 )
+texture = ExtResource( 3 )
+
+[node name="ButtonClearDrawing" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw"]
+margin_top = 404.0
+margin_right = 400.0
+margin_bottom = 468.0
+custom_fonts/font = ExtResource( 4 )
+
 [node name="TextEditQuestion" type="TextEdit" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+margin_top = 488.0
 margin_right = 600.0
-margin_bottom = 200.0
+margin_bottom = 688.0
 rect_min_size = Vector2( 0, 200 )
-custom_fonts/font = ExtResource( 3 )
+custom_fonts/font = ExtResource( 4 )
 
 [node name="ScrollContainerMultiChoice" type="ScrollContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
-margin_top = 220.0
+margin_top = 708.0
 margin_right = 600.0
-margin_bottom = 340.0
+margin_bottom = 828.0
 rect_min_size = Vector2( 0, 120 )
 
 [node name="VBoxContainerMultiChoice" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer/ScrollContainerMultiChoice"]
@@ -69,31 +95,20 @@ margin_bottom = 66.0
 rect_min_size = Vector2( 550, 0 )
 
 [node name="AnswerTextEdit" type="TextEdit" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
-margin_top = 360.0
+margin_top = 848.0
 margin_right = 600.0
-margin_bottom = 560.0
+margin_bottom = 1048.0
 rect_min_size = Vector2( 0, 200 )
 
 [node name="LabelDraw" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
-margin_top = 580.0
+margin_top = 1068.0
 margin_right = 600.0
-margin_bottom = 638.0
-
-[node name="AnswerDraw" type="Control" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
-margin_top = 658.0
-margin_right = 600.0
-margin_bottom = 1058.0
-rect_min_size = Vector2( 400, 400 )
-rect_clip_content = true
-
-[node name="Sprite" type="Sprite" parent="VBoxContainer/ScrollContainer/VBoxContainer/AnswerDraw"]
-position = Vector2( 293.596, 19.9727 )
-scale = Vector2( 0.373909, 0.321247 )
-texture = ExtResource( 4 )
+margin_bottom = 1126.0
 
 [node name="Button" parent="VBoxContainer" instance=ExtResource( 5 )]
 margin_left = 0.0
 margin_top = 789.0
-margin_right = 720.0
+margin_right = 660.0
 margin_bottom = 865.455
 text_loc = "createQuestion"
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_Button_pressed"]

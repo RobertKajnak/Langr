@@ -3,7 +3,9 @@ extends Control
 
 
 func _ready():
-	pass # Replace with function body.
+	if $"/root/GlobalVars".active_lessons == ['']:
+		$"/root/GlobalVars".active_lessons = ['lesson0']#TODO: find the latest added lesson
+	
 
 func go_back():
 	var _err = get_tree().change_scene('res://MainMenu.tscn')
