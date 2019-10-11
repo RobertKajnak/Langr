@@ -63,6 +63,57 @@ func save_settings():
 	config.save("user://settings.cfg")
 	
 	
+func read_svg(file_name):
+	var xml = XMLParser.new()
+	xml.open(file_name)
+	while xml.read() == OK:
+		if xml.get_node_name() == 'path':
+			var path = xml.get_named_attribute_value('d')
+			var conv = _path_string_to_path(path)
+			print(conv)
+		
+	var components = []
+	return components
+	
+func _path_string_to_path(string):
+	var all_segments = []
+	var buff = []
+	var val = 0
+	var coeff = 1
+	var sgn = 1;
+	for c in string:
+		if c in ['M', 'm', # Move to
+					'L', 'l', 'H', 'h', 'V', 'v', #straight line segment
+					'Z', 'z', #closed path command
+					'C', 'c', 'S', 's', # cubic Bézier 
+					'Q', 'q', 'T', 't',#quadratic Bézier
+					'A', 'a']: #elliptical arc
+			if buff != []:
+				buff.append(val*sgn) 
+				val = 0
+				coeff = 1
+				sgn = 1
+				all_segments.append(buff)
+				buff = []
+			buff.append(c)
+		elif c in ['0','1','2','3','4','5','6','7','8','9']:
+			val = val*(10 if coeff==1 else 1) + int(c)*coeff
+			if coeff != 1:
+				coeff /= 10
+		elif c == '-' or c==',':
+			buff.append(val*sgn) 
+			val = 0
+			coeff = 1
+			sgn = 1
+			if c== '-':
+				sgn = -1
+		elif c == '.':
+			coeff = 0.1
+		else:
+			print('Unidentified character detected: ' + c)
+	buff.append(val*sgn) 
+	all_segments.append(buff)
+	return all_segments
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass

@@ -32,7 +32,6 @@ func update_mouse(vec):
 		#print('x = ' + str(X) + ';  y = ' + str(Y))
 
 func save_line():
-	print(lines + [current_line])
 	if current_line.size()>0:
 		lines.append(current_line)
 		current_line = []
@@ -40,6 +39,7 @@ func save_line():
 func clear_drawing():
 	current_line = []
 	lines = []
+	print($"/root/GlobalVars".read_svg('user://lessons/lesson0/06f5c.svg'))
 
 func _draw():
 	for line in lines + [current_line]:
