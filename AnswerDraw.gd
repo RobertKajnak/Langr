@@ -56,12 +56,12 @@ func update_mouse(vec):
 		current_line.append(vec)
 		#print('x = ' + str(X) + ';  y = ' + str(Y))
 
-func save_line():
+func include_line():
 	if current_line.size()>0:
 		lines.append(current_line)
 		current_line = []
 
-func draw_svg_path(svg_path):
+func include_svg_path(svg_path):
 	for segment in svg_path:
 		var pen = Vector2(0,0)
 		for element in segment:
@@ -94,13 +94,27 @@ func draw_svg_path(svg_path):
 					#print(curve.tessellate())
 					lines.append(denormalize(curve.tessellate(3)))
 					
+#Does not try to approximate drawing with bezier
+#TODO compress image
+func drawing_to_svg_path(lines):
+	var segments = []
+	for line in lines:
+		var segment = []
+		var point = denormalize(normalize(line[0]),109,109)
+		segment.append(['M',point.x,point.y])
+		for i in range(1,line.size()):
+			point = denormalize(normalize(line[i]),109,109)
+			segment.append(['L',point.x,point.y])
+		segments.append(segment)
+	return segments
 
 					
 func clear_drawing():
+	$"/root/GlobalVars".save_svg_path('user://lessons/lesson0/temp_drawing.svg',drawing_to_svg_path(lines))
 	current_line = []
 	lines = []
 	var segments = $"/root/GlobalVars".read_svg('user://lessons/lesson0/06f5c.svg')
-	draw_svg_path(segments)
+	include_svg_path(segments)
 	$"/root/GlobalVars".save_svg_path('user://lessons/lesson0/06f5c_re.svg',segments)
 
 

@@ -117,7 +117,7 @@ func _on_AnswerDraw_gui_input(event):
 	#print(event is InputEventMouseMotion)
 	if event is InputEventMouseButton:
 		if button_down:
-			$VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw/AnswerDraw.save_line()
+			$VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw/AnswerDraw.include_line()
 		button_down = !button_down
 	if button_down and event is InputEventMouseMotion:
 		$VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw/AnswerDraw.update_mouse(event.position)
