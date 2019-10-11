@@ -64,21 +64,21 @@ func save_settings():
 	
 	
 func read_svg(file_name):
+	var components = []
+	
 	var xml = XMLParser.new()
 	xml.open(file_name)
 	while xml.read() == OK:
 		if xml.get_node_name() == 'path':
 			var path = xml.get_named_attribute_value('d')
 			var conv = _path_string_to_path(path)
-			print(conv)
-		
-	var components = []
+			components.append(conv)
 	return components
 	
 func _path_string_to_path(string):
 	var all_segments = []
 	var buff = []
-	var val = 0
+	var val = null
 	var coeff = 1
 	var sgn = 1;
 	for c in string:
@@ -90,19 +90,22 @@ func _path_string_to_path(string):
 					'A', 'a']: #elliptical arc
 			if buff != []:
 				buff.append(val*sgn) 
-				val = 0
+				val = null
 				coeff = 1
 				sgn = 1
 				all_segments.append(buff)
 				buff = []
 			buff.append(c)
 		elif c in ['0','1','2','3','4','5','6','7','8','9']:
+			if val == null:
+				val = 0
 			val = val*(10 if coeff==1 else 1) + int(c)*coeff
 			if coeff != 1:
 				coeff /= 10
 		elif c == '-' or c==',':
-			buff.append(val*sgn) 
-			val = 0
+			if val != null:
+				buff.append(val*sgn) 
+			val = null
 			coeff = 1
 			sgn = 1
 			if c== '-':
@@ -111,9 +114,30 @@ func _path_string_to_path(string):
 			coeff = 0.1
 		else:
 			print('Unidentified character detected: ' + c)
-	buff.append(val*sgn) 
+	if val!=null:
+		buff.append(val*sgn) 
 	all_segments.append(buff)
 	return all_segments
+	
+func save_svg_path(file_name,svg_path_array):
+	var f = File.new()
+	f.open(file_name,File.WRITE)
+	f.store_line('<svg xmlns="http://www.w3.org/2000/svg" width="109" height="109" viewBox="0 0 109 109">')
+	f.store_line('<g id="kvg:StrokePaths_06f5c" style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;">')
+	for segment in svg_path_array:
+		var segment_string = '<path d="'
+		var prev_val = ''
+		for element in segment:
+			for val in element:
+				segment_string += str(prev_val)
+				if (val is float or val is int) and (prev_val is float or prev_val is int) and (val>=0):
+					segment_string += ','
+				prev_val = val
+		segment_string += str(prev_val)
+		f.store_line(segment_string + '"/>')
+	f.store_line('</g>')
+	f.store_line('</svg>')
+	f.close()
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass

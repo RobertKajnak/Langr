@@ -39,7 +39,9 @@ func save_line():
 func clear_drawing():
 	current_line = []
 	lines = []
-	print($"/root/GlobalVars".read_svg('user://lessons/lesson0/06f5c.svg'))
+	var segments = $"/root/GlobalVars".read_svg('user://lessons/lesson0/06f5c.svg')
+	print(segments)
+	$"/root/GlobalVars".save_svg_path('user://lessons/lesson0/06f5c_re.svg',segments)
 
 func _draw():
 	for line in lines + [current_line]:
