@@ -111,3 +111,17 @@ func _notification(what):
 		# For android
 		go_back()
 
+
+var button_down = false
+func _on_AnswerDraw_gui_input(event):
+	#print(event is InputEventMouseMotion)
+	if event is InputEventMouseButton:
+		if button_down:
+			$VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw/AnswerDraw.save_line()
+		button_down = !button_down
+	if button_down and event is InputEventMouseMotion:
+		$VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw/AnswerDraw.update_mouse(event.position)
+		
+
+func _on_ButtonClearDrawing_pressed():
+	$VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw/AnswerDraw.clear_drawing()
