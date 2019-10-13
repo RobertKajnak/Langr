@@ -13,12 +13,15 @@ lessonList,List of Lessons,Elérhető leckék
 createLesson,Create new Lesson,Új Lecke Létrehozása
 deleteLesson,Delete Lesson,Lecke törlése
 createQuestion,Create Question,Új kérdés Létrehozása
+modifyQuestion,Modify Question,Kérdés megváltoztatása
 deleteQuestion,Delete Question,Kérdés törlése
 questionPlaceholder,Modify Question text here,Kérdés szövegének módosítása itt
 answerTextPlaceholder,Modify Answer Here (free text),Válasz szövegének módosítása itt (korlátlan bevitel)
 drawLabel,Draw answer in the following field,Válasz lerajzolása a következő mezőbe
-drawClear,Clear current drawing,Jelenlegi rajz törlése
+drawClear,Clear,Törlés
+drawUndo,Undo,Vissza
 createQuestionDict,Add Word from Dictionary,Szó hozzáadása a szótárból
 appendDictionary,Append Dictionary,Szótár hozzáadása
 multiChoiceTooltip,Start Editing to add an answer,Kezdje el módosítani a hozzáadáshoz
 multiChoiceCheckbox,Add new multi-choice answer,Új többválasz hozzáadása
+currentLevel,Current Proficiency,Megjegyzés szintje

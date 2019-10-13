@@ -6,11 +6,11 @@ var width_default = 5
 var lines = []
 var current_line = []
 var svg_paths = []
-# Called when the node enters the scene tree for the first time.
+
 func _ready():
 	pass # Replace with function body.
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+
 func _process(delta):
 	update()
 
@@ -68,25 +68,25 @@ func include_svg_path(svg_path):
 			match element[0]:
 				'M':#TOOD implicit lineto not implemented
 					pen = Vector2(element[1],element[2])
-				'm':
+				'm':#move
 					pen.x += element[1]
 					pen.y += element[2]
-				'l':
+				'l':#line
 					var pen_new = Vector2(element[1],element[2])
 					lines.append([pen,pen_new])
 					pen = pen_new
-				'L':
+				'L':#line absolute
 					var pen_new = Vector2(element[1]+pen.x,element[2]+pen.y)
 					lines.append([pen,pen_new])
 					pen = pen_new
-				'c':
+				'c':#quadratic bezier
 					var curve = Curve2D.new()#c 7.7 -0.57, 22.91 -1.86, 32.51 -2.35
 					curve.add_point(pen,Vector2(0,0),Vector2(element[1],element[2]))
 					curve.add_point(Vector2(pen.x+element[5],pen.y+element[6]),Vector2(0,0),Vector2(element[3],element[4]))
 					pen = Vector2(pen.x+element[5],pen.y+element[6])
 					#print(curve.tessellate())
 					lines.append(denormalize(curve.tessellate(3)))
-				'C':
+				'C':#quadratic bezier absolute
 					var curve = Curve2D.new()#c 7.7 -0.57, 22.91 -1.86, 32.51 -2.35
 					curve.add_point(pen,Vector2(0,0),Vector2(element[1]-pen.x,element[2]-pen.y))
 					curve.add_point(Vector2(element[5],element[6]),Vector2(0,0),Vector2(element[3]-pen.x,element[4]-pen.y))
@@ -110,13 +110,38 @@ func drawing_to_svg_path(lines):
 
 					
 func clear_drawing():
-	$"/root/GlobalVars".save_svg_path('user://lessons/lesson0/temp_drawing.svg',drawing_to_svg_path(lines))
 	current_line = []
 	lines = []
-	var segments = $"/root/GlobalVars".read_svg('user://lessons/lesson0/06f5c.svg')
+	#$"/root/GlobalVars".save_svg_path('user://lessons/lesson0/06f5c_re.svg',segments)
+	
+func load_drawing(file_name):
+	var segments = $"/root/GlobalVars".read_svg(file_name)
 	include_svg_path(segments)
-	$"/root/GlobalVars".save_svg_path('user://lessons/lesson0/06f5c_re.svg',segments)
 
+func save_dawing():
+	if not lines.empty():
+		
+		var supplement_directory = Directory.new()
+		var lesson_dir_str = 'user://lessons/'+$"/root/GlobalVars".current_lesson
+		if not supplement_directory.dir_exists(lesson_dir_str):
+			supplement_directory.make_dir(lesson_dir_str)
+		
+		var drawing_file = File.new()
+		var i =0;
+		var dfn = lesson_dir_str + '/d'+ str(i) +'.svg'
+		while drawing_file.file_exists(dfn):
+			i += 1
+			dfn = lesson_dir_str + '/d'+ str(i) +'.svg'
+		
+		
+		$"/root/GlobalVars".save_svg_path(dfn,drawing_to_svg_path(lines))
+		return dfn.substr(dfn.find_last('/')+1,dfn.length())
+	else:
+		return null
+
+func remove_last_line():
+	current_line = []
+	lines.remove(lines.size()-1)
 
 func _draw():
 	for line in lines + [current_line]:

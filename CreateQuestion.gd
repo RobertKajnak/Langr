@@ -4,12 +4,13 @@ var tbm = 'TextEditCheckBoxMulti'
 var mbox_count = 1 # Keeps track of how many boxes there are
 var to_translate = {'TextEditQuestion':'questionPlaceholder',
 					'AnswerTextEdit':'answerTextPlaceholder',
+					'LabelLevel':'currentLevel',
 					'LabelDraw':'drawLabel',
 					'LabelMultiChoice':'multiChoiceTooltip',
 					'ButtonClearDrawing':'drawClear',
+					'ButtonUndoDrawing':'drawUndo',
 					tbm + '0':'multiChoiceCheckbox'}
 var all_questions = []
-
 
 func _ready():
 	$"/root/GlobalVars".retranslate($VBoxContainer,to_translate)
@@ -25,12 +26,39 @@ func _ready():
 
 	all_questions = $"/root/GlobalVars".all_questions
 	
+	for i in range(7):
+		$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/OptionButtonLevel.add_item(str(i))
+	
+
+func load_data(file_name,question_name):
+	var lesson_file = File.new()
+	lesson_file.open(file_name, File.READ)
+	var question_data = null
+	while not lesson_file.eof_reached():
+		question_data = parse_json(lesson_file.get_line())
+		if question_data['question'] == question_name:
+			break;
+			
+	var inv_dict = $"/root/GlobalVars".adict_inv
+	for key in question_data.keys():
+		var node = $VBoxContainer/ScrollContainer/VBoxContainer/.find_node(inv_dict[key])
+		match key:
+			'answer_draw':
+				var drawing_file_name = file_name.substr(0,file_name.find_last('.')) + '/' + question_data[key]
+				node.load_drawing(drawing_file_name)
+			'level':
+				node.select(int(question_data[key]))
+			_:
+				node.text = question_data[key]
+	lesson_file.close()
+	
+	$VBoxContainer/ButtonCreateQuestion.text_loc = 'modifyQuestion'
+	$VBoxContainer/ButtonCreateQuestion._ready()
+	
+
 #%% Helper functions
 func go_back():
 	var _err = get_tree().change_scene('res://QuestionList.tscn')
-
-func get_draw_data():
-	return null
 
 #%% Interface handling
 func _tapped_to_edit(control):
@@ -74,18 +102,46 @@ func _on_Button_pressed():
 		if q.text!='' and q.text!=tr(to_translate[q.name]):
 			to_save[adict[q.name]] = q.text
 	
-	if get_draw_data():
-		pass
+	var drawing_file = $VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw/AnswerDraw.save_dawing()
+	if drawing_file:
+		to_save[adict['AnswerDraw']] = drawing_file
+	
+	#TODO Better solution
+	if $VBoxContainer/ButtonCreateQuestion.text_loc == 'modifyQuestion':
+		all_questions.erase(to_save['question'])
 		
-	if to_save and 'question' in to_save and not (to_save['question'] in all_questions) \
-			and (adict['AnswerTextEdit'] in to_save or adict['TextEditCheckBoxMulti0'] in to_save):
+	if to_save and ('question' in to_save) and not (to_save['question'] in all_questions) \
+			and (adict['AnswerTextEdit'] in to_save or adict['TextEditCheckBoxMulti0'] in to_save or drawing_file):
 		var lesson_file = File.new()
-		lesson_file.open("user://lessons/" + $"/root/GlobalVars".current_lesson + '.les', File.READ_WRITE)
-		lesson_file.seek_end()
-		lesson_file.store_line(to_json(to_save))
-		lesson_file.close()
+		to_save[adict['OptionButtonLevel']] = $VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/OptionButtonLevel.selected
+		if $VBoxContainer/ButtonCreateQuestion.text_loc == 'modifyQuestion':
+			
+			lesson_file.open("user://lessons/" + $"/root/GlobalVars".current_lesson + '.les', File.READ)
+			var full_JSON = []
+			var question_data
+			while not lesson_file.eof_reached():
+				question_data = parse_json(lesson_file.get_line())
+				if question_data == null:
+					break
+				if question_data['question'] == to_save['question']:
+					full_JSON.append(to_save)
+				else:
+					full_JSON.append(question_data)
+			lesson_file.close()
+			#Rewrite the file, including the new Question
+			lesson_file.open("user://lessons/" + $"/root/GlobalVars".current_lesson + '.les', File.WRITE)
+			for q in full_JSON:
+				lesson_file.store_line(to_json(q))
+			lesson_file.close()
+		else:
+			lesson_file.open("user://lessons/" + $"/root/GlobalVars".current_lesson + '.les', File.READ_WRITE)
+			lesson_file.seek_end()
+			lesson_file.store_line(to_json(to_save))
+			lesson_file.close()
 		go_back()
 	else:
+		if $VBoxContainer/ButtonCreateQuestion.text_loc == 'modifyQuestion':
+			all_questions.append(to_save['question'])
 		var popup = preload("res://ErrorPopup.tscn").instance()
 		add_child(popup)
 		if not to_save:
@@ -96,7 +152,15 @@ func _on_Button_pressed():
 			popup.display("Could not create new Question",'Question Already in database. There Cannot be two identical questions (with different answers. And having two questions with the same answer is pointless)')
 		elif not (adict['AnswerTextEdit'] in to_save or adict['TextEditCheckBoxMulti0'] in to_save):
 			popup.display("Could not create new Question",'None of the answer fields are set')
-		
+
+
+func _on_ButtonClearDrawing_pressed():
+	$VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw/AnswerDraw.clear_drawing()
+
+func _on_ButtonUndoDrawing_pressed():
+	$VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw/AnswerDraw.remove_last_line()
+
+
 #%% Input handling
 func _unhandled_input(event):
 	if event is InputEventKey:
@@ -123,5 +187,3 @@ func _on_AnswerDraw_gui_input(event):
 		$VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw/AnswerDraw.update_mouse(event.position)
 		
 
-func _on_ButtonClearDrawing_pressed():
-	$VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw/AnswerDraw.clear_drawing()

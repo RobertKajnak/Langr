@@ -23,8 +23,8 @@ func _ready():
 		var questionButton = preload("res://Buttons/SelectLessonButton.tscn").instance()
 		$VBoxContainer/VBoxContainer.add_child(questionButton)
 		#questionButton.call('set_label',f.substr(0,f.find_last('.')))
-		#questionButton.connect("pressed",self,'_on_lesson_pressed',[lessonButton.text])
 		questionButton.text = question['question']
+		questionButton.connect("pressed",self,'_on_question_prerssed',[questionButton.text])
 		all_questions.append(question['question'])
 	lesson_file.close()
 
@@ -34,6 +34,17 @@ func go_back():
 
 
 #%% Interface handling
+func _on_question_prerssed(question_text):
+	$"/root/GlobalVars".all_questions = all_questions
+	var q = load('res://CreateQuestion.tscn').instance()
+	
+	for node in [$VBoxContainer,$Sprite]:
+		remove_child(node)
+		node.call_deferred("free")
+	
+	add_child(q)
+	q.load_data('user://lessons/' + current_lesson +'.les', question_text)
+	
 func _on_ButtonAddWord_pressed():
 	$"/root/GlobalVars".all_questions = all_questions
 	var _err = get_tree().change_scene($VBoxContainer/ButtonAddWord.scene_to_load)

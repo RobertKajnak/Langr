@@ -5,7 +5,6 @@
 [ext_resource path="res://fonts/MainMenuFont.tres" type="DynamicFont" id=3]
 [ext_resource path="res://Buttons/MenuButton.tscn" type="PackedScene" id=4]
 
-
 [node name="ManageRoot" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0

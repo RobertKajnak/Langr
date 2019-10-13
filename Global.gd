@@ -15,7 +15,9 @@ var all_questions = []
 var adict = {'TextEditQuestion':'question',
 			'AnswerTextEdit':'answer_free',
 			'AnswerDraw':'answer_draw',
-			'TextEditCheckBoxMulti0':'answer_multi'} #TODO: Ez még mindig elég hándi
+			'TextEditCheckBoxMulti0':'answer_multi',
+			'OptionButtonLevel':'level'} #TODO: Ez még mindig elég hándi
+var adict_inv = reverse_dict(adict)
 var active_lessons = []
 var active_quesiton = ''
 
@@ -37,23 +39,26 @@ func retranslate(node,to_translate_list):
 	for child in node.get_children():
 		retranslate(child,to_translate_list)
 
+#WARNIGN: only works if the values are unique as well
+func reverse_dict(dict):
+	var dict_inv = {}
+	for key in dict.keys():
+		dict_inv[dict[key]] = key
+	return dict_inv
 
 func list_files_in_directory(path):
-    var files = []
-    var dir = Directory.new()
-    dir.open(path)
-    dir.list_dir_begin()
-
-    while true:
-        var file = dir.get_next()
-        if file == "":
-            break
-        elif not file.begins_with("."):
-            files.append(file)
-
-    dir.list_dir_end()
-
-    return files
+	var file_list = []
+	var dir = Directory.new()
+	if dir.open(path) == OK:
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		while (file_name != ""):
+			if not dir.current_is_dir():
+				file_list.append(file_name)
+			file_name = dir.get_next()
+	else:
+		print("An error occurred when trying to access the path.")
+	return file_list
 
 func save_settings():
 	# Save the changes by overwriting the previous file
