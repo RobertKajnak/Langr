@@ -2,7 +2,7 @@ extends Control
 
 var current_lesson
 
-var all_questions = []
+var question_manager
 
 func _ready():
 	current_lesson = get_node("/root/GlobalVars").current_lesson
@@ -13,19 +13,14 @@ func _ready():
 	if not lesson_file.file_exists('user://lessons/' + current_lesson +'.les'):
 		var _err = get_tree().change_scene('res://MainMenu.tscn')
 	
-	
-	var adict = $"/root/GlobalVars".adict;
-	lesson_file.open('user://lessons/' + current_lesson +'.les', File.READ)
-	while not lesson_file.eof_reached():
-		var question = parse_json(lesson_file.get_line())
-		if question == null:
-			break
+	question_manager = $"/root/QuestionManager"
+	question_manager.load_questions()
+	for question in question_manager.get_question_titles():
 		var questionButton = preload("res://Buttons/SelectLessonButton.tscn").instance()
-		$VBoxContainer/VBoxContainer.add_child(questionButton)
+		$VBoxContainer/ScrollContainer/VBoxContainer.add_child(questionButton)
 		#questionButton.call('set_label',f.substr(0,f.find_last('.')))
-		questionButton.text = question['question']
+		questionButton.text = question
 		questionButton.connect("pressed",self,'_on_question_prerssed',[questionButton.text])
-		all_questions.append(question['question'])
 	lesson_file.close()
 
 #%% Helper functions
@@ -35,7 +30,11 @@ func go_back():
 
 #%% Interface handling
 func _on_question_prerssed(question_text):
-	$"/root/GlobalVars".all_questions = all_questions
+	#var root = get_tree().get_root() #--This variant makes the app get stuck in that scene
+	#var current_scene = root.get_child(root.get_child_count() -1)
+	#current_scene.queue_free()
+	
+	#root.add_child(q)
 	var q = load('res://CreateQuestion.tscn').instance()
 	
 	for node in [$VBoxContainer,$Sprite]:
@@ -46,8 +45,7 @@ func _on_question_prerssed(question_text):
 	q.load_data('user://lessons/' + current_lesson +'.les', question_text)
 	
 func _on_ButtonAddWord_pressed():
-	$"/root/GlobalVars".all_questions = all_questions
-	var _err = get_tree().change_scene($VBoxContainer/ButtonAddWord.scene_to_load)
+	var _err = get_tree().change_scene('res://CreateQuestion.tscn')
 
 func _on_ButtonDeleteLesson_pressed():
 	print('Deleting lesson: ' + current_lesson)

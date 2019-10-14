@@ -5,13 +5,14 @@ var width_default = 5
 
 var lines = []
 var current_line = []
-var svg_paths = []
 
 func _ready():
-	pass # Replace with function body.
+	self.rect_size.x = 109*4
+	self.rect_size.y = 109*4
 
 
 func _process(delta):
+	var _delta = delta #silences the error
 	update()
 
 func clip(v):
@@ -28,7 +29,7 @@ func normalize(v,w=-1,h=-1):
 			norm_arr.append(normalize(elem))
 		return norm_arr
 	else:
-		return Vector2(100 * v.x/w, 100* v.y/h)
+		return Vector2(109.0 * v.x/w, 109.0* v.y/h)
 	
 func denormalize(v,w=-1,h=-1):
 	if w<0:
@@ -41,7 +42,7 @@ func denormalize(v,w=-1,h=-1):
 			denorm_arr.append(denormalize(elem))
 		return denorm_arr
 	else:
-		return Vector2(w * v.x/100, h* v.y/100)
+		return Vector2(w * v.x/109.0, h* v.y/109.0)
 
 func dist(v1,v2):
 	return floor(sqrt(pow(v1.x-v2.x,2) + pow(v1.y-v2.y,2)))
@@ -72,12 +73,12 @@ func include_svg_path(svg_path):
 					pen.x += element[1]
 					pen.y += element[2]
 				'l':#line
-					var pen_new = Vector2(element[1],element[2])
-					lines.append([pen,pen_new])
+					var pen_new = Vector2(element[1]+pen.x,element[2]+pen.y)
+					lines.append(denormalize([pen,pen_new]))
 					pen = pen_new
 				'L':#line absolute
-					var pen_new = Vector2(element[1]+pen.x,element[2]+pen.y)
-					lines.append([pen,pen_new])
+					var pen_new = Vector2(element[1],element[2])
+					lines.append(denormalize([pen,pen_new]))
 					pen = pen_new
 				'c':#quadratic bezier
 					var curve = Curve2D.new()#c 7.7 -0.57, 22.91 -1.86, 32.51 -2.35
@@ -100,10 +101,10 @@ func drawing_to_svg_path(lines):
 	var segments = []
 	for line in lines:
 		var segment = []
-		var point = denormalize(normalize(line[0]),109,109)
+		var point = normalize(line[0])
 		segment.append(['M',point.x,point.y])
 		for i in range(1,line.size()):
-			point = denormalize(normalize(line[i]),109,109)
+			point = normalize(line[i])
 			segment.append(['L',point.x,point.y])
 		segments.append(segment)
 	return segments
@@ -113,6 +114,9 @@ func clear_drawing():
 	current_line = []
 	lines = []
 	#$"/root/GlobalVars".save_svg_path('user://lessons/lesson0/06f5c_re.svg',segments)
+
+func is_empty():
+	return lines.empty()
 	
 func load_drawing(file_name):
 	var segments = $"/root/GlobalVars".read_svg(file_name)

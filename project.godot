@@ -23,6 +23,7 @@ config/quit_on_go_back=false
 [autoload]
 
 GlobalVars="*res://Global.gd"
+QuestionManager="*res://QuestionManager.gd"
 
 [display]
 

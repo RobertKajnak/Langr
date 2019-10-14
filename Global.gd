@@ -8,7 +8,6 @@ var langs = ['en','hu']
 #Question list editing
 var current_lesson = ''
 var current_question = ''
-var all_questions = []
 
 #Quiz
 #Answer dictionary -- continuing the LSD joke from ?2nd? year

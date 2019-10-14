@@ -1,5 +1,6 @@
 id,en,hu
 OK,Ok,Ok
+cancel,Cancel,Mégse
 start,Start Lesson,Lecke Elkezdés
 manage,Manage Lessons,Leckék Kezelése
 settings,Settings,Beállítások
@@ -25,3 +26,8 @@ appendDictionary,Append Dictionary,Szótár hozzáadása
 multiChoiceTooltip,Start Editing to add an answer,Kezdje el módosítani a hozzáadáshoz
 multiChoiceCheckbox,Add new multi-choice answer,Új többválasz hozzáadása
 currentLevel,Current Proficiency,Megjegyzés szintje
+questionNotSet,Question is not specified,Kérdés mező nincs kitöltve
+answerNotSet,None of the answer fields were specified,Egyetlen Válasz mező sincs kitöltve
+questionAlreadyExists,Question Already in database. There Cannot be two identical questions (with different answers. And having two questions with the same answer is pointless),A Kérdés már szerepel az leckében. Két azonos kérdés különböző válaszokkal nem megengedett"," azonos válaszokkal pedig értelmetlen
+couldNotModifyQuestion,Could not modify Question,Kérdés módosítása sikertelen
+couldNotCreateQuestion,Could not create question,Nem lehetett létrehozni a kérdést
