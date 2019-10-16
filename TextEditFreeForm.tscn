@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://fonts/SubMenuFont.tres" type="DynamicFont" id=1]
+
+[node name="TextEditQuestion" type="TextEdit"]
+margin_right = 600.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 600, 150 )
+custom_fonts/font = ExtResource( 1 )
+text = "asd"

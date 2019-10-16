@@ -113,3 +113,7 @@ func remove_question(question_title):
 	for question in _all_questions:
 		lesson_file.store_line(to_json(question))
 	lesson_file.close()
+
+#--- Asking---
+func get_next_question_to_ask():
+	return _all_questions[0]

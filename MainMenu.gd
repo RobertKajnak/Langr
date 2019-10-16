@@ -10,6 +10,7 @@ func _ready():
 
 #%% Interface handling
 func _on_ButtonStart_pressed(to_load):
+	$"/root/QuestionManager".load_questions()
 	var _err = get_tree().change_scene(to_load)
 
 

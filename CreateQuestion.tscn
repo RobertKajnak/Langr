@@ -1,11 +1,12 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://CreateQuestion.gd" type="Script" id=1]
 [ext_resource path="res://res/Wood15.jpg" type="Texture" id=2]
-[ext_resource path="res://fonts/SubMenuFont.tres" type="DynamicFont" id=3]
-[ext_resource path="res://AnswerDraw.gd" type="Script" id=4]
-[ext_resource path="res://res/Fabric19.jpg" type="Texture" id=5]
-[ext_resource path="res://Buttons/MenuButton.tscn" type="PackedScene" id=6]
+[ext_resource path="res://TextEditFreeForm.tscn" type="PackedScene" id=3]
+[ext_resource path="res://DrawBox.tscn" type="PackedScene" id=4]
+[ext_resource path="res://fonts/SubMenuFont.tres" type="DynamicFont" id=5]
+[ext_resource path="res://fonts/jp2.tres" type="DynamicFont" id=6]
+[ext_resource path="res://Buttons/MenuButton.tscn" type="PackedScene" id=7]
 
 [node name="CreateQuestionRoot" type="Control"]
 anchor_right = 1.0
@@ -37,56 +38,9 @@ rect_min_size = Vector2( 600, 0 )
 custom_constants/separation = 20
 alignment = 1
 
-[node name="TextEditQuestion" type="TextEdit" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
-margin_right = 600.0
-margin_bottom = 150.0
-rect_min_size = Vector2( 0, 150 )
-custom_fonts/font = ExtResource( 3 )
+[node name="TextEditQuestion" parent="VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource( 3 )]
 
-[node name="VBoxContainerDraw" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
-margin_top = 170.0
-margin_right = 432.0
-margin_bottom = 694.0
-size_flags_horizontal = 0
-size_flags_vertical = 0
-alignment = 1
-
-[node name="LabelDraw" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw"]
-margin_right = 432.0
-margin_bottom = 39.0
-custom_fonts/font = ExtResource( 3 )
-
-[node name="AnswerDraw" type="Control" parent="VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw"]
-margin_top = 43.0
-margin_right = 432.0
-margin_bottom = 475.0
-rect_min_size = Vector2( 432, 432 )
-rect_clip_content = true
-size_flags_horizontal = 0
-size_flags_vertical = 0
-script = ExtResource( 4 )
-
-[node name="Sprite" type="Sprite" parent="VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw/AnswerDraw"]
-show_behind_parent = true
-position = Vector2( 306.957, 208.703 )
-scale = Vector2( 0.373909, 0.321247 )
-texture = ExtResource( 5 )
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw"]
-margin_top = 479.0
-margin_right = 432.0
-margin_bottom = 524.0
-
-[node name="ButtonClearDrawing" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw/HBoxContainer"]
-margin_right = 12.0
-margin_bottom = 45.0
-custom_fonts/font = ExtResource( 3 )
-
-[node name="ButtonUndoDrawing" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw/HBoxContainer"]
-margin_left = 16.0
-margin_right = 28.0
-margin_bottom = 45.0
-custom_fonts/font = ExtResource( 3 )
+[node name="VBoxContainerDraw" parent="VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource( 4 )]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 714.0
@@ -96,13 +50,13 @@ margin_bottom = 759.0
 [node name="LabelLevel" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
 margin_top = 3.0
 margin_bottom = 42.0
-custom_fonts/font = ExtResource( 3 )
+custom_fonts/font = ExtResource( 5 )
 
 [node name="OptionButtonLevel" type="OptionButton" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
 margin_left = 4.0
 margin_right = 45.0
 margin_bottom = 45.0
-custom_fonts/font = ExtResource( 3 )
+custom_fonts/font = ExtResource( 5 )
 
 [node name="ScrollContainerMultiChoice" type="ScrollContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 779.0
@@ -117,7 +71,7 @@ margin_bottom = 90.0
 [node name="LabelMultiChoice" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/ScrollContainerMultiChoice/VBoxContainerMultiChoice"]
 margin_right = 578.0
 margin_bottom = 39.0
-custom_fonts/font = ExtResource( 3 )
+custom_fonts/font = ExtResource( 5 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer/ScrollContainerMultiChoice/VBoxContainerMultiChoice"]
 margin_top = 43.0
@@ -127,37 +81,34 @@ margin_bottom = 90.0
 [node name="CheckBoxMulti" type="CheckBox" parent="VBoxContainer/ScrollContainer/VBoxContainer/ScrollContainerMultiChoice/VBoxContainerMultiChoice/HBoxContainer"]
 margin_right = 24.0
 margin_bottom = 47.0
-custom_fonts/font = ExtResource( 3 )
+custom_fonts/font = ExtResource( 5 )
 
 [node name="TextEditCheckBoxMulti0" type="TextEdit" parent="VBoxContainer/ScrollContainer/VBoxContainer/ScrollContainerMultiChoice/VBoxContainerMultiChoice/HBoxContainer"]
 margin_left = 28.0
 margin_right = 578.0
 margin_bottom = 47.0
 rect_min_size = Vector2( 550, 0 )
-custom_fonts/font = ExtResource( 3 )
+custom_fonts/font = ExtResource( 6 )
 
 [node name="AnswerTextEdit" type="TextEdit" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 919.0
 margin_right = 600.0
 margin_bottom = 1069.0
 rect_min_size = Vector2( 0, 150 )
-custom_fonts/font = ExtResource( 3 )
+custom_fonts/font = ExtResource( 5 )
 
-[node name="ButtonCreateQuestion" parent="VBoxContainer" instance=ExtResource( 6 )]
+[node name="ButtonCreateQuestion" parent="VBoxContainer" instance=ExtResource( 7 )]
 margin_left = 0.0
 margin_top = 749.0
 margin_right = 660.0
 margin_bottom = 825.455
 text_loc = "createQuestion"
 
-[node name="ButtonCancel" parent="VBoxContainer" instance=ExtResource( 6 )]
+[node name="ButtonCancel" parent="VBoxContainer" instance=ExtResource( 7 )]
 margin_left = 0.0
 margin_top = 833.0
 margin_right = 660.0
 margin_bottom = 909.455
 text_loc = "cancel"
-[connection signal="gui_input" from="VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw/AnswerDraw" to="." method="_on_AnswerDraw_gui_input"]
-[connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw/HBoxContainer/ButtonClearDrawing" to="." method="_on_ButtonClearDrawing_pressed"]
-[connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw/HBoxContainer/ButtonUndoDrawing" to="." method="_on_ButtonUndoDrawing_pressed"]
 [connection signal="pressed" from="VBoxContainer/ButtonCreateQuestion" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="VBoxContainer/ButtonCancel" to="." method="_on_ButtonCancel_pressed"]

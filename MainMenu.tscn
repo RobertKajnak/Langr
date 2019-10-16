@@ -45,7 +45,7 @@ alignment = 1
 margin_left = 0.0
 margin_right = 400.0
 margin_bottom = 76.4549
-scene_to_load = "res://Question.tscn"
+scene_to_load = "res://QuizQuestion.tscn"
 text_loc = "start"
 
 [node name="ButtonManage2" parent="CenterContainer/VBoxContainer2/VBoxContainer" instance=ExtResource( 4 )]

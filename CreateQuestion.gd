@@ -5,7 +5,6 @@ var mbox_count = 1 # Keeps track of how many boxes there are
 var to_translate = {'TextEditQuestion':'questionPlaceholder',
 					'AnswerTextEdit':'answerTextPlaceholder',
 					'LabelLevel':'currentLevel',
-					'LabelDraw':'drawLabel',
 					'LabelMultiChoice':'multiChoiceTooltip',
 					'ButtonClearDrawing':'drawClear',
 					'ButtonUndoDrawing':'drawUndo',
@@ -28,6 +27,7 @@ func _ready():
 
 	qm = $"/root/QuestionManager"
 	
+	#Add familiaritylevel
 	for i in range(7):
 		$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/OptionButtonLevel.add_item(str(i))
 	modifying_mode = false
@@ -130,13 +130,6 @@ func _on_Button_pressed():
 		popup.display(tr(popup_title),tr(err))
 	else:
 		go_back()
-	
-func _on_ButtonClearDrawing_pressed():
-	$VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw/AnswerDraw.clear_drawing()
-
-func _on_ButtonUndoDrawing_pressed():
-	$VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw/AnswerDraw.remove_last_line()
-
 
 #%% Input handling
 func _unhandled_input(event):
@@ -153,15 +146,7 @@ func _notification(what):
 		go_back()
 
 
-var button_down = false
-func _on_AnswerDraw_gui_input(event):
-	#print(event is InputEventMouseMotion)
-	if event is InputEventMouseButton:
-		if button_down:
-			$VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw/AnswerDraw.include_line()
-		button_down = !button_down
-	if button_down and event is InputEventMouseMotion:
-		$VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw/AnswerDraw.update_mouse(event.position)
+
 		
 
 func _on_ButtonCancel_pressed():

@@ -154,3 +154,14 @@ func _draw():
 	#for path in svg_paths:
 	#	draw_svg_path(path)
 			
+			
+#Event handling
+var button_down = false
+func _on_AnswerDraw_gui_input(event):
+	#print(event is InputEventMouseMotion)
+	if event is InputEventMouseButton:
+		if button_down:
+			include_line()
+		button_down = !button_down
+	if button_down and event is InputEventMouseMotion:
+		update_mouse(event.position)

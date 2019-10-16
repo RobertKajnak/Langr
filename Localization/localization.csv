@@ -31,3 +31,6 @@ answerNotSet,None of the answer fields were specified,Egyetlen Válasz mező sin
 questionAlreadyExists,Question Already in database. There Cannot be two identical questions (with different answers. And having two questions with the same answer is pointless),A Kérdés már szerepel az leckében. Két azonos kérdés különböző válaszokkal nem megengedett"," azonos válaszokkal pedig értelmetlen
 couldNotModifyQuestion,Could not modify Question,Kérdés módosítása sikertelen
 couldNotCreateQuestion,Could not create question,Nem lehetett létrehozni a kérdést
+checkAnswer,Check Answer,Válasz Ellenőrzése
+forceCorrect,Correct!,Helyes!
+forceIncorrect,Incorrect!,Helytelen!
