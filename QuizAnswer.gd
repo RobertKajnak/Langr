@@ -4,12 +4,15 @@ var global
 var qm
 var current_question
 
-var to_translate = {'ButtonForceIncorrect':'forceIncorrect',
-					'ButtonForceCorrect':'forceCorrect'}
+#var to_translate = {}
+
+var dr_answer
+var correct_dr_answer 
 
 func _ready():
 	qm = $"/root/QuestionManager"
 	global = $"/root/GlobalVars"
+	#global.retranslate($VBoxContainer,to_translate)
 	if qm._all_questions == []:
 		get_node("/root/GlobalVars").current_lesson = 'lesson0'
 		qm.load_questions()
@@ -18,24 +21,42 @@ func _ready():
 	$VBoxContainer/LabelLessonTitle.text = global.current_lesson
 	$VBoxContainer/LabelQuestion.text = current_question['question']
 	
+	var temp_answer = qm.get_temp_answer()
 	if 'answer_free' in current_question:
-		print('Adding free form answer input')
-		var te = load('res://TextEditFreeForm.tscn').instance()
-		$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(te)
-		te.text = current_question['answer_free']
+		for txt in ['      Expected Answer:',
+					current_question['answer_free'],
+					'      Given Answer:',
+					temp_answer['answer_free']]:
+			var label = Label.new()
+			label.text = txt
+			label.set('custom_fonts/font',load('res://fonts/SubMenuFont.tres'))
+			$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(label)
+		#var te = load('res://TextEditFreeForm.tscn').instance()
+		#$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(te)
+		#te.text = current_question['answer_free']
 		
 	
 	if 'answer_draw' in current_question:
-		print('Adding draw box to question')
-		var dr = load('res://DrawBox.tscn').instance()
-		$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(dr)
+		dr_answer = load('res://DrawBox.tscn').instance()
+		$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(dr_answer)
+		
+		display_correct_answer()
+		
+		dr_answer.find_node('AnswerDraw').change_line_color_to()
+		dr_answer.add_lines(temp_answer['answer_draw'])
+		
+		dr_answer.find_node('AnswerDraw').change_line_color_to(Color(0.4,0.1,0.6),3)
+
+func display_correct_answer():
+	dr_answer.find_node('AnswerDraw').change_line_color_to(Color(0,0.8,0.2,0.6),9)
+	if not correct_dr_answer:
 		var drawing_file_name = 'user://lessons/' + global.current_lesson + '/' + current_question['answer_draw']
-		dr.find_node('AnswerDraw').load_drawing(drawing_file_name)
-		dr.find_node('AnswerDraw').change_line_color_to(Color(0,0.8,0.2,0.6),8)
-		drawing_file_name = 'user://lessons/lesson3/d8.svg'
-		dr.find_node('AnswerDraw').load_drawing(drawing_file_name)
-
-
+		dr_answer.find_node('AnswerDraw').load_drawing(drawing_file_name)
+		correct_dr_answer = dr_answer.get_lines()
+	else:
+		dr_answer.add_lines(correct_dr_answer)	
+	dr_answer.find_node('AnswerDraw').change_line_color_to(Color(0.4,0.1,0.6),3)
+	
 func go_back():
 	var _err = get_tree().change_scene('res://MainMenu.tscn')
 	
@@ -53,3 +74,15 @@ func _notification(what):
 	if what == MainLoop.NOTIFICATION_WM_GO_BACK_REQUEST: 
 		# For android
 		go_back()
+
+func _on_ButtonForceIncorrect_pressed():
+	qm.update_question_skill(current_question,-2)
+	var _err = get_tree().change_scene('res://QuizQuestion.tscn')
+
+func _on_ButtonForceCorrect_pressed():
+	qm.update_question_skill(current_question,2)
+	var _err = get_tree().change_scene('res://QuizQuestion.tscn')
+
+func _on_ButtonOnlyCorrect_pressed():
+	dr_answer.clear_drawing()
+	display_correct_answer()

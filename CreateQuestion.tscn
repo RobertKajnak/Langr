@@ -47,12 +47,12 @@ margin_top = 714.0
 margin_right = 600.0
 margin_bottom = 759.0
 
-[node name="LabelLevel" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
+[node name="LabelSkill" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
 margin_top = 3.0
 margin_bottom = 42.0
 custom_fonts/font = ExtResource( 5 )
 
-[node name="OptionButtonLevel" type="OptionButton" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
+[node name="OptionButtonSkill" type="OptionButton" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
 margin_left = 4.0
 margin_right = 45.0
 margin_bottom = 45.0

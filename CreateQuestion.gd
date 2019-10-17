@@ -4,7 +4,7 @@ var tbm = 'TextEditCheckBoxMulti'
 var mbox_count = 1 # Keeps track of how many boxes there are
 var to_translate = {'TextEditQuestion':'questionPlaceholder',
 					'AnswerTextEdit':'answerTextPlaceholder',
-					'LabelLevel':'currentLevel',
+					'LabelSkill':'currentSkill',
 					'LabelMultiChoice':'multiChoiceTooltip',
 					'ButtonClearDrawing':'drawClear',
 					'ButtonUndoDrawing':'drawUndo',
@@ -27,9 +27,9 @@ func _ready():
 
 	qm = $"/root/QuestionManager"
 	
-	#Add familiaritylevel
-	for i in range(7):
-		$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/OptionButtonLevel.add_item(str(i))
+	#Add current profficiency skill level
+	for i in range(qm.max_skill_level):
+		$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/OptionButtonSkill.add_item(str(i))
 	modifying_mode = false
 
 func load_data(file_name,question_title):
@@ -42,7 +42,7 @@ func load_data(file_name,question_title):
 			'answer_draw':
 				var drawing_file_name = file_name.substr(0,file_name.find_last('.')) + '/' + question_data[key]
 				node.load_drawing(drawing_file_name)
-			'level':
+			'skill':
 				node.select(int(question_data[key]))
 			_:
 				node.text = question_data[key]
@@ -101,7 +101,7 @@ func _on_Button_pressed():
 				$VBoxContainer/ScrollContainer/VBoxContainer/TextEditQuestion]:
 		if q.text!='' and q.text!=tr(to_translate[q.name]):
 			to_save[adict[q.name]] = q.text
-	to_save[adict['OptionButtonLevel']] = $VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/OptionButtonLevel.selected
+	to_save[adict['OptionButtonSkill']] = $VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/OptionButtonSkill.selected
 	
 	#TODO this feels like a wokraround
 	if not $VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw/AnswerDraw.is_empty():

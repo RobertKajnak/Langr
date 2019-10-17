@@ -3,9 +3,11 @@ extends Control
 var current_lesson
 
 var question_manager
+var global
 
 func _ready():
-	current_lesson = get_node("/root/GlobalVars").current_lesson
+	global = $"/root/GlobalVars"
+	current_lesson = global.current_lesson
 	$VBoxContainer/LabelTitle.text = current_lesson
 	print('Opened ' + current_lesson)
 	
@@ -50,9 +52,14 @@ func _on_ButtonAddWord_pressed():
 func _on_ButtonDeleteLesson_pressed():
 	print('Deleting lesson: ' + current_lesson)
 	var dir = Directory.new()
-	dir.remove('user://lessons/' + current_lesson + '.les')
+	var dir_name = 'user://lessons/' + current_lesson
+	dir.remove(dir_name + '.les')
+	#remove all files from the directory first, otherwise the request will fail
+	for f in global.list_files_in_directory(dir_name):
+		dir.remove(dir_name + '/' + f)
+	dir.remove(dir_name)
 	current_lesson = ''
-	get_node("/root/GlobalVars").current_lesson = current_lesson
+	global.current_lesson = current_lesson
 	go_back()
 
 

@@ -25,7 +25,7 @@ createQuestionDict,Add Word from Dictionary,Szó hozzáadása a szótárból
 appendDictionary,Append Dictionary,Szótár hozzáadása
 multiChoiceTooltip,Start Editing to add an answer,Kezdje el módosítani a hozzáadáshoz
 multiChoiceCheckbox,Add new multi-choice answer,Új többválasz hozzáadása
-currentLevel,Current Proficiency,Megjegyzés szintje
+currentSkill,Current Proficiency,Megjegyzés szintje
 questionNotSet,Question is not specified,Kérdés mező nincs kitöltve
 answerNotSet,None of the answer fields were specified,Egyetlen Válasz mező sincs kitöltve
 questionAlreadyExists,Question Already in database. There Cannot be two identical questions (with different answers. And having two questions with the same answer is pointless),A Kérdés már szerepel az leckében. Két azonos kérdés különböző válaszokkal nem megengedett"," azonos válaszokkal pedig értelmetlen
@@ -34,3 +34,4 @@ couldNotCreateQuestion,Could not create question,Nem lehetett létrehozni a kér
 checkAnswer,Check Answer,Válasz Ellenőrzése
 forceCorrect,Correct!,Helyes!
 forceIncorrect,Incorrect!,Helytelen!
+showOnlyCorrect,Show only correct answer,Csak helyes válasz

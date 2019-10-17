@@ -1,9 +1,14 @@
 extends Node
 
+#Constants
+var max_skill_level = 7
+
+#Not constants
 var global
 var lesson_path
 var _all_questions = []
 
+var temp_answer = {}
 
 func _ready():
 	global = $"/root/GlobalVars"
@@ -100,6 +105,25 @@ func replace_question(to_replace_title,new_question):
 		_all_questions.remove(index)
 		_all_questions.insert(index,new_question)
 
+#Can be either a question or a question title. Question has faster lookup
+func update_question_skill(question,delta,date = null):
+	if not question:
+		print('Question not specified')
+		return -1
+		
+	if not date:
+		date = OS.get_date()
+		
+	var cc
+	if question is String:
+		cc = get_question(question)
+	else:
+		cc = question
+	cc['date_asked'] = date
+	cc['skill'] = max(1,min(max_skill_level,cc['skill']+delta))
+	
+	_save_current_questions()
+
 #removes a single question from the lsit with the specified question name
 func remove_question(question_title):
 	var index = self.get_question_titles().find(question_title)
@@ -107,13 +131,26 @@ func remove_question(question_title):
 		return
 	else:
 		_all_questions.remove(index)
-		
+	_save_current_questions()
+
+func _save_current_questions():
 	var lesson_file = File.new()
 	lesson_file.open(self.lesson_path, File.WRITE)
 	for question in _all_questions:
 		lesson_file.store_line(to_json(question))
 	lesson_file.close()
 
+
+#---Transition---
+func set_temp_answer(answer):
+	temp_answer = answer
+	
+func get_temp_answer():
+	return temp_answer
+
+
+	
+	
 #--- Asking---
 func get_next_question_to_ask():
 	return _all_questions[0]

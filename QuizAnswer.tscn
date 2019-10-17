@@ -41,15 +41,15 @@ text = "<question>
 [node name="ScrollContainerAnswers" type="ScrollContainer" parent="VBoxContainer"]
 margin_top = 254.0
 margin_right = 720.0
-margin_bottom = 954.0
-rect_min_size = Vector2( 550, 700 )
+margin_bottom = 904.0
+rect_min_size = Vector2( 550, 650 )
 
 [node name="VBoxContainerAnswers" type="VBoxContainer" parent="VBoxContainer/ScrollContainerAnswers"]
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 958.0
+margin_top = 908.0
 margin_right = 720.0
-margin_bottom = 1034.0
+margin_bottom = 984.0
 alignment = 1
 
 [node name="ButtonForceIncorrect" parent="VBoxContainer/HBoxContainer2" instance=ExtResource( 4 )]
@@ -65,3 +65,14 @@ margin_right = 662.0
 margin_bottom = 76.4549
 rect_min_size = Vector2( 300, 60 )
 text_loc = "forceCorrect"
+
+[node name="ButtonOnlyCorrect" parent="VBoxContainer" instance=ExtResource( 4 )]
+margin_left = 0.0
+margin_top = 988.0
+margin_right = 720.0
+margin_bottom = 1064.45
+rect_min_size = Vector2( 300, 60 )
+text_loc = "showOnlyCorrect"
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/ButtonForceIncorrect" to="." method="_on_ButtonForceIncorrect_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/ButtonForceCorrect" to="." method="_on_ButtonForceCorrect_pressed"]
+[connection signal="pressed" from="VBoxContainer/ButtonOnlyCorrect" to="." method="_on_ButtonOnlyCorrect_pressed"]

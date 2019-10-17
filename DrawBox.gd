@@ -14,3 +14,11 @@ func _on_ButtonClearDrawing_pressed():
 func _on_ButtonUndoDrawing_pressed():
 	$AnswerDraw.remove_last_line()
 
+func clear_drawing():
+	$AnswerDraw.clear_drawing()
+
+func get_lines():
+	return $AnswerDraw.lines
+	
+func add_lines(lines):
+	$AnswerDraw.lines += lines

@@ -7,6 +7,8 @@ var lines = []
 var current_line = []
 var colors_and_widths = []
 
+var texts = []
+
 func _ready():
 	self.rect_size.x = 109*4
 	self.rect_size.y = 109*4
@@ -104,6 +106,8 @@ func include_svg_path(svg_path):
 					pen = Vector2(element[5],element[6])
 					#print(curve.tessellate())
 					lines.append(denormalize(curve.tessellate(3)))
+				'text':#text
+					texts.append([element[1],element[2],element[3]])
 					
 #Does not try to approximate drawing with bezier
 #TODO compress image
@@ -123,6 +127,7 @@ func drawing_to_svg_path(lines):
 func clear_drawing():
 	current_line = []
 	lines = []
+	texts = []
 	#$"/root/GlobalVars".save_svg_path('user://lessons/lesson0/06f5c_re.svg',segments)
 
 func is_empty():
@@ -164,8 +169,9 @@ func _draw():
 			var caw = get_line_color_and_with(color_index)
 			draw_line(line[i-1],line[i],caw[0],caw[1])
 		color_index +=1 
-	#for path in svg_paths:
-	#	draw_svg_path(path)
+	for s in texts:	
+		draw_string(load('res://fonts/SubMenuFont.tres'),Vector2(s[0],s[1]),s[2],Color(0,0,0))
+	
 			
 			
 #Event handling

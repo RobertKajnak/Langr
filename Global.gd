@@ -2,6 +2,7 @@ extends Node
 
 var config;
 
+#CONSTANTS
 var currentLang = 0; #currently used languge index from langs
 var langs = ['en','hu']
 
@@ -15,7 +16,7 @@ var adict = {'TextEditQuestion':'question',
 			'AnswerTextEdit':'answer_free',
 			'AnswerDraw':'answer_draw',
 			'TextEditCheckBoxMulti0':'answer_multi',
-			'OptionButtonLevel':'level'} #TODO: Ez még mindig elég hándi
+			'OptionButtonSkill':'skill'} #TODO: Ez még mindig elég hándi
 var adict_inv = reverse_dict(adict)
 var active_lessons = []
 var active_quesiton = ''
@@ -77,6 +78,15 @@ func read_svg(file_name):
 			var path = xml.get_named_attribute_value('d')
 			var conv = _path_string_to_path(path)
 			components.append(conv)
+		elif false:#xml.get_node_name() == 'text':
+			var coords = xml.get_named_attribute_value('transform')
+			if coords == '':
+				continue
+			coords = coords.split(',')
+			print('coords = ',coords[coords.size()-1])
+			var textval = xml.get_node_data()
+			print('textval = ',textval)
+			components.append(['text',coords[coords.size()-2],coords[coords.size()-1],textval])
 	return components
 	
 func _path_string_to_path(string):

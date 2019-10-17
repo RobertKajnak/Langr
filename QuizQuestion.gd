@@ -3,6 +3,8 @@ extends Control
 var global
 var qm
 var current_question
+var te_answer
+var dr_answer
 
 func _ready():
 	qm = $"/root/QuestionManager"
@@ -17,13 +19,13 @@ func _ready():
 	
 	if 'answer_free' in current_question:
 		print('Adding free form answer input')
-		var te = load('res://TextEditFreeForm.tscn').instance()
-		$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(te)
-		te.text=''
+		te_answer = load('res://TextEditFreeForm.tscn').instance()
+		$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(te_answer)
+		te_answer.text=''
 	if 'answer_draw' in current_question:
 		print('Adding draw box to question')
-		var dr = load('res://DrawBox.tscn').instance()
-		$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(dr)
+		dr_answer = load('res://DrawBox.tscn').instance()
+		$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(dr_answer)
 
 func go_back():
 	var _err = get_tree().change_scene('res://MainMenu.tscn')
@@ -44,4 +46,8 @@ func _notification(what):
 		go_back()
 
 func _on_ButtonCheck_pressed():
-	get_tree().change_scene('res://QuizAnswer.tscn')
+	qm.set_temp_answer({
+		'answer_free':te_answer.text,
+		'answer_draw':dr_answer.get_lines()
+		})
+	var _err = get_tree().change_scene('res://QuizAnswer.tscn')
