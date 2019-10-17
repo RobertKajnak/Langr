@@ -31,6 +31,9 @@ func _ready():
 		$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(dr)
 		var drawing_file_name = 'user://lessons/' + global.current_lesson + '/' + current_question['answer_draw']
 		dr.find_node('AnswerDraw').load_drawing(drawing_file_name)
+		dr.find_node('AnswerDraw').change_line_color_to(Color(0,0.8,0.2,0.6),8)
+		drawing_file_name = 'user://lessons/lesson3/d8.svg'
+		dr.find_node('AnswerDraw').load_drawing(drawing_file_name)
 
 
 func go_back():

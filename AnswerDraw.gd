@@ -5,11 +5,12 @@ var width_default = 5
 
 var lines = []
 var current_line = []
+var colors_and_widths = []
 
 func _ready():
 	self.rect_size.x = 109*4
 	self.rect_size.y = 109*4
-
+	colors_and_widths.append([-1,[color_default,width_default]])
 
 func _process(delta):
 	var _delta = delta #silences the error
@@ -47,6 +48,15 @@ func denormalize(v,w=-1,h=-1):
 func dist(v1,v2):
 	return floor(sqrt(pow(v1.x-v2.x,2) + pow(v1.y-v2.y,2)))
 	
+func get_line_color_and_with(index):
+	for ca in colors_and_widths:
+		if index<ca[0]:
+			return ca[1]
+	return colors_and_widths[colors_and_widths.size()-1][1]
+	
+func change_line_color_to(color=Color(0,0.1,0.6,255),width=5):
+	colors_and_widths[colors_and_widths.size()-1][0]=lines.size()
+	colors_and_widths.append([-1,[color,width]])
 
 func update_mouse(vec):
 	vec = clip(vec) #Make sure no points are outside bounds
@@ -148,9 +158,12 @@ func remove_last_line():
 	lines.remove(lines.size()-1)
 
 func _draw():
+	var color_index = 0;
 	for line in lines + [current_line]:
 		for i in range(1,line.size()):
-			draw_line(line[i-1],line[i],color_default,width_default)
+			var caw = get_line_color_and_with(color_index)
+			draw_line(line[i-1],line[i],caw[0],caw[1])
+		color_index +=1 
 	#for path in svg_paths:
 	#	draw_svg_path(path)
 			

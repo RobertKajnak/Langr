@@ -19,7 +19,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="LabelLessonTitle" type="Label" parent="VBoxContainer"]
-margin_right = 804.0
+margin_right = 720.0
 margin_bottom = 119.0
 custom_fonts/font = ExtResource( 3 )
 text = "<question>
@@ -27,12 +27,12 @@ text = "<question>
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 margin_top = 123.0
-margin_right = 804.0
+margin_right = 720.0
 margin_bottom = 127.0
 
 [node name="LabelQuestion" type="Label" parent="VBoxContainer"]
 margin_top = 131.0
-margin_right = 804.0
+margin_right = 720.0
 margin_bottom = 250.0
 custom_fonts/font = ExtResource( 3 )
 text = "<question>
@@ -40,7 +40,7 @@ text = "<question>
 
 [node name="ScrollContainerAnswers" type="ScrollContainer" parent="VBoxContainer"]
 margin_top = 254.0
-margin_right = 804.0
+margin_right = 720.0
 margin_bottom = 954.0
 rect_min_size = Vector2( 550, 700 )
 
@@ -48,18 +48,20 @@ rect_min_size = Vector2( 550, 700 )
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 958.0
-margin_right = 804.0
+margin_right = 720.0
 margin_bottom = 1034.0
 alignment = 1
 
 [node name="ButtonForceIncorrect" parent="VBoxContainer/HBoxContainer2" instance=ExtResource( 4 )]
-margin_left = 0.0
-margin_right = 400.0
+margin_left = 58.0
+margin_right = 358.0
 margin_bottom = 76.4549
+rect_min_size = Vector2( 300, 60 )
 text_loc = "forceIncorrect"
 
 [node name="ButtonForceCorrect" parent="VBoxContainer/HBoxContainer2" instance=ExtResource( 4 )]
-margin_left = 404.0
-margin_right = 804.0
+margin_left = 362.0
+margin_right = 662.0
 margin_bottom = 76.4549
+rect_min_size = Vector2( 300, 60 )
 text_loc = "forceCorrect"
