@@ -34,4 +34,7 @@ couldNotCreateQuestion,Could not create question,Nem lehetett létrehozni a kér
 checkAnswer,Check Answer,Válasz Ellenőrzése
 forceCorrect,Correct!,Helyes!
 forceIncorrect,Incorrect!,Helytelen!
-showOnlyCorrect,Show only correct answer,Csak helyes válasz
+showOnlyCorrect,Show only correct answer,Csak helyes válasz mutatása
+checkActiveLessons,Please check the lessons you want to use in your training sessions:,Kérem válassza ki azokat a leckéket amelyekből szeretné a kérdéseket kapni tanulás közben:
+noActiveLessons,No active lessons are selected,Egyetlen lecke sem aktív
+noLessonsRedirect,You will be redirected to the lessons management scene,Most át lesz vezényelve a lecke rendezés részre

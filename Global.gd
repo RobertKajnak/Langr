@@ -16,10 +16,12 @@ var adict = {'TextEditQuestion':'question',
 			'AnswerTextEdit':'answer_free',
 			'AnswerDraw':'answer_draw',
 			'TextEditCheckBoxMulti0':'answer_multi',
-			'OptionButtonSkill':'skill'} #TODO: Ez még mindig elég hándi
+			'OptionButtonSkill':'skill',
+			'LabelID':'id',
+			'LabelGoodDate':'good_answer_date',
+			'LabelBadDate':'bad_answer_date'} #TODO: Ez még mindig elég hándi
 var adict_inv = reverse_dict(adict)
 var active_lessons = []
-var active_quesiton = ''
 
 func _ready():
 	config = ConfigFile.new()
@@ -32,7 +34,10 @@ func _ready():
 		active_lessons = config.get_value("quiz", "active_lessons", [''])
 	TranslationServer.set_locale(langs[currentLang])
 
-
+func get_date_compact():
+	var dd = OS.get_date()
+	return dd['year']*10000+dd['month']*100+dd['day']
+	
 func retranslate(node,to_translate_list):
 	if node.name in to_translate_list:
 		node.text = tr(to_translate_list[node.name])
@@ -59,6 +64,26 @@ func list_files_in_directory(path):
 	else:
 		print("An error occurred when trying to access the path.")
 	return file_list
+
+func fill_array(size,value):
+	var a = []
+	for i in range(size):
+		a.append(value)
+	return a
+
+func random_string(length):
+	var a = ''
+	var v
+	for i in range(length):
+		v = randi()%(122-48) + 48
+		if v ==92 or v == 96:
+			v+=1
+		a += char(v)
+	return a
+	
+func set_active_lessons(active_lessons):
+	self.active_lessons = active_lessons
+	save_settings()
 
 func save_settings():
 	# Save the changes by overwriting the previous file

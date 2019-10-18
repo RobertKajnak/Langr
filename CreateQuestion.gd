@@ -44,8 +44,10 @@ func load_data(file_name,question_title):
 				node.load_drawing(drawing_file_name)
 			'skill':
 				node.select(int(question_data[key]))
-			_:
+			'answer_free':
 				node.text = question_data[key]
+			_:
+				push_warning("unkown key found: " + key)
 	
 	$VBoxContainer/ButtonCreateQuestion.text_loc = 'modifyQuestion'
 	$VBoxContainer/ButtonCreateQuestion._ready()
@@ -102,21 +104,23 @@ func _on_Button_pressed():
 		if q.text!='' and q.text!=tr(to_translate[q.name]):
 			to_save[adict[q.name]] = q.text
 	to_save[adict['OptionButtonSkill']] = $VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/OptionButtonSkill.selected
+	if modifying_mode:
+		if not 'question' in to_save:
+			to_save['question'] = original_question_title #This must happen before the 'AnswerDraw'='placeholder' draw,
+			# so a 'questionNotSet' Error is not thrown
 	
 	#TODO this feels like a wokraround
 	if not $VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw/AnswerDraw.is_empty():
 		to_save[adict['AnswerDraw']] = 'placeholder'
-		print(modifying_mode, qm._check_question(to_save,true))
 		if (modifying_mode and qm._check_question(to_save,false)==null) or (not modifying_mode and qm._check_question(to_save,true)==null):
 			to_save[adict['AnswerDraw']] = $VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw/AnswerDraw.save_dawing()
-			print(to_save[adict['AnswerDraw']])
 		else:
 			to_save.erase(adict['AnswerDraw'])
 
 	var err = null
 	var popup_title = null
 	if self.modifying_mode:
-		err = qm.replace_question(to_save['question'],to_save)
+		err = qm.replace_question(original_question_title,to_save)
 		if err!=null:
 			popup_title = 'couldNotCreateQuestion'
 	else:

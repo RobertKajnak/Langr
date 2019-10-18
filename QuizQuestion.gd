@@ -9,25 +9,27 @@ var dr_answer
 func _ready():
 	qm = $"/root/QuestionManager"
 	global = $"/root/GlobalVars"
-	if qm._all_questions == []:
-		get_node("/root/GlobalVars").current_lesson = 'lesson0'
-		qm.load_questions()
-		
+	
 	current_question = qm.get_next_question_to_ask()
-	$VBoxContainer/LabelLessonTitle.text = global.current_lesson
+	if not global.active_lessons or not current_question:
+			var popup = load('res://ErrorPopup.tscn').instance()
+			add_child(popup)#TODO this obviously is not displayed, do something about it
+			popup.display(tr('noActiveLessons'),tr('noLessonsRedirect'))
+			var _err = get_tree().change_scene('res://Manage.tscn')
+			return
+	$VBoxContainer/LabelLessonTitle.text = str(global.active_lessons)
 	$VBoxContainer/LabelQuestion.text = current_question['question']
 	
 	if 'answer_free' in current_question:
-		print('Adding free form answer input')
 		te_answer = load('res://TextEditFreeForm.tscn').instance()
 		$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(te_answer)
 		te_answer.text=''
 	if 'answer_draw' in current_question:
-		print('Adding draw box to question')
 		dr_answer = load('res://DrawBox.tscn').instance()
 		$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(dr_answer)
 
 func go_back():
+	qm.exit_quiz()
 	var _err = get_tree().change_scene('res://MainMenu.tscn')
 	
 
@@ -46,8 +48,11 @@ func _notification(what):
 		go_back()
 
 func _on_ButtonCheck_pressed():
-	qm.set_temp_answer({
-		'answer_free':te_answer.text,
-		'answer_draw':dr_answer.get_lines()
-		})
+	var temp_answer = {}
+	if te_answer:
+		temp_answer['answer_free']=te_answer.text
+	if dr_answer:
+		temp_answer['answer_draw']=dr_answer.get_lines()
+		
+	qm.set_temp_answer(temp_answer)
 	var _err = get_tree().change_scene('res://QuizAnswer.tscn')
