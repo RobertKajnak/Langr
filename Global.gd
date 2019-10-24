@@ -10,6 +10,11 @@ var langs = ['en','hu']
 var current_lesson = ''
 var current_question = ''
 
+#Transition scenes. E.g. when not enough words are present and the user is redirected
+var _transition_title = ''
+var _transition_message = ''
+var _transition_goal = ''
+
 #Quiz
 #Answer dictionary -- continuing the LSD joke from ?2nd? year
 var adict = {'TextEditQuestion':'question',
@@ -180,3 +185,10 @@ func save_svg_path(file_name,svg_path_array):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+func to_transition_scene(current_tree,next_scene_name,title,message):
+	_transition_goal = next_scene_name
+	_transition_title = title
+	_transition_message = message
+	var _err = current_tree.change_scene("res://TransitionScene.tscn")
+	

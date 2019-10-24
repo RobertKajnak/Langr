@@ -11,12 +11,14 @@ func _ready():
 	global = $"/root/GlobalVars"
 	
 	current_question = qm.get_next_question_to_ask()
-	if not global.active_lessons or not current_question:
-			var popup = load('res://ErrorPopup.tscn').instance()
-			add_child(popup)#TODO this obviously is not displayed, do something about it
-			popup.display(tr('noActiveLessons'),tr('noLessonsRedirect'))
-			var _err = get_tree().change_scene('res://Manage.tscn')
-			return
+	if not global.active_lessons:
+		global.to_transition_scene(get_tree(),'res://Manage.tscn','noActiveLessons','noLessonsRedirect')
+		return
+	if not current_question:
+		global.to_transition_scene(get_tree(),'res://Manage.tscn','noActiveQuestions','noQuestionsRedirect')
+		return
+		
+		
 	$VBoxContainer/LabelLessonTitle.text = str(global.active_lessons)
 	$VBoxContainer/LabelQuestion.text = current_question['question']
 	

@@ -90,12 +90,9 @@ margin_bottom = 47.0
 rect_min_size = Vector2( 550, 0 )
 custom_fonts/font = ExtResource( 6 )
 
-[node name="AnswerTextEdit" type="TextEdit" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="AnswerTextEdit" parent="VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource( 3 )]
 margin_top = 919.0
-margin_right = 600.0
 margin_bottom = 1069.0
-rect_min_size = Vector2( 0, 150 )
-custom_fonts/font = ExtResource( 5 )
 
 [node name="ButtonCreateQuestion" parent="VBoxContainer" instance=ExtResource( 7 )]
 margin_left = 0.0

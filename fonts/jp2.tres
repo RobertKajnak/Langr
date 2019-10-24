@@ -1,5 +1,11 @@
-[gd_resource type="DynamicFont" format=2]
+[gd_resource type="DynamicFont" load_steps=2 format=2]
+
+[sub_resource type="DynamicFontData" id=1]
+antialiased = false
+font_path = "res://fonts/yumin.ttf"
 
 [resource]
 size = 32
-outline_size = 1
+outline_size = 4
+outline_color = Color( 0, 0, 0, 1 )
+font_data = SubResource( 1 )
