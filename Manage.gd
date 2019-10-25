@@ -9,6 +9,9 @@ func _ready():
 	global = $"/root/GlobalVars"
 	global.retranslate($VBoxContainer,to_translate)
 	
+	$VBoxContainer/LabelLesson/LabelTitle.rect_size = Vector2($VBoxContainer.rect_size.x,60)
+	$VBoxContainer/LabelCheckActiveLessons/LabelSmall.rect_size = Vector2($VBoxContainer.rect_size.x,60)
+	
 	var lesson_directory = Directory.new()
 	if not lesson_directory.dir_exists('user://lessons/'):
 		lesson_directory.make_dir('user://lessons')
@@ -31,14 +34,15 @@ func _ready():
 		box.set('size_flags_vertical',0)
 		checkBox.set('size_flags_vertical',0)
 		#print(box.size_flags_vertical)
-		var lessonButton = preload("res://Buttons/SelectLessonButton.tscn").instance()
-		#TODO: change f to title in f
-		lessonButton.call('set_label',f.substr(0,f.find_last('.')))
-		lessonButton.connect("pressed",self,'_on_lesson_pressed',[lessonButton.text])
+		var lessonButton = load("res://Buttons/SelectLessonButton.tscn").instance()
 		
 		box.add_child(checkBox)
 		box.add_child(lessonButton)
 		$VBoxContainer/ScrollContainer/VBoxContainer.add_child(box)
+		
+		#TODO: change f to title in f
+		lessonButton.call('set_label',f.substr(0,f.find_last('.')))
+		lessonButton.connect("pressed",self,'_on_lesson_pressed',[lessonButton.text])
 
 #%% Helper functions
 func go_back():

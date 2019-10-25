@@ -1,10 +1,8 @@
 extends TextEdit
 
 func _ready():
-
-	set('custom_fonts/font',load('res://fonts/jp2.tres'))
-	pass
+	$"/root/GlobalVars".adapt_font(self,$"/root/GlobalVars".FONT_SIZE_SMALL)
 
 
-func _on_TextEditQuestion_ready():
-	pass # Replace with function body.
+func _on_TextEditQuestion_text_changed():
+	$"/root/GlobalVars".adapt_font(self,$"/root/GlobalVars".FONT_SIZE_SMALL)

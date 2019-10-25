@@ -9,4 +9,4 @@ margin_bottom = 150.0
 rect_min_size = Vector2( 600, 150 )
 custom_fonts/font = ExtResource( 1 )
 script = ExtResource( 2 )
-[connection signal="ready" from="." to="." method="_on_TextEditQuestion_ready"]
+[connection signal="text_changed" from="." to="." method="_on_TextEditQuestion_text_changed"]

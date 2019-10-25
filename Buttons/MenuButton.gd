@@ -4,6 +4,11 @@ export(String) var scene_to_load
 export(String) var text_loc
 
 func _ready():
-	if (TranslationServer.get_locale()=='jp'):
-		set('custom_fonts/font',load('res://fonts/jp2.tres'))
 	$Label.text = tr(text_loc)
+	$"/root/GlobalVars".adapt_font($Label,$"/root/GlobalVars".FONT_SIZE_LARGE)
+	
+	
+func _process(delta):
+	rect_min_size = $Label.rect_size
+	rect_size = $Label.rect_size
+	set_process(false)

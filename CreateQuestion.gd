@@ -20,6 +20,8 @@ func _ready():
 		var _err = control.connect("focus_entered",self,"_tapped_to_edit",[control])
 		_err = control.connect("focus_exited",self,"_tapped_away",[control])
 	
+	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/LabelSkill/LabelNormal.rect_min_size = Vector2(180,0)
+	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/LabelSkill/LabelNormal.rect_size = Vector2(400,0)
 	var chbox = $VBoxContainer/ScrollContainer/VBoxContainer/ScrollContainerMultiChoice/VBoxContainerMultiChoice/HBoxContainer/TextEditCheckBoxMulti0
 	chbox.connect("focus_entered",self,"_tapped_to_edit",[chbox])
 	chbox.connect("focus_exited",self,"_tapped_away",[chbox])

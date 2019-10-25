@@ -24,10 +24,9 @@ func _ready():
 					'      ' + current_question['answer_free'],
 					'Given Answer:',
 					'      ' + temp_answer['answer_free']]:
-			var label = Label.new()
-			label.text = txt
-			label.set('custom_fonts/font',load('res://fonts/SubMenuFont.tres'))
+			var label = load('res://LabelAdaptiveSmall.tscn').instance()
 			$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(label)
+			label.text = txt
 		#var te = load('res://TextEditFreeForm.tscn').instance()
 		#$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(te)
 		#te.text = current_question['answer_free']

@@ -6,6 +6,43 @@ var config;
 var currentLang = 0; #currently used languge index from langs
 var langs = ['en','hu']
 
+#Render Constants
+var UI_SCALE = 32 setget set_ui_scale
+var LARGE_FACTOR = 1.5
+var MEDIUM_FACTOR = 1.15
+var FONT_SIZE_SMALL = 'SMALL'
+var FONT_SIZE_MEDIUM = 'MEDIUM'
+var FONT_SIZE_LARGE = 'LARGE'
+var FONTS = {}
+
+func set_ui_scale(val):
+	UI_SCALE = val
+	
+	for font in ['FONT_SMALL_JP', 'FONT_SMALL_LAT', 
+				'FONT_MEDIUM_JP', 'FONT_MEDIUM_LAT',
+				'FONT_LARGE_JP', 'FONT_LARGE_LAT']:
+		FONTS[font] = DynamicFont.new()
+		var font_data = DynamicFontData.new()
+		if 'JP' in font:
+			font_data.font_path = 'res://fonts/yumin.ttf'
+		else:
+			if 'SMALL' in font:
+				font_data.font_path = 'res://fonts/AA_Brush Stroke_Hun.ttf'
+			elif 'LARGE' in font:
+				font_data.font_path = 'res://fonts/AA_Antique Type_Hun.ttf'
+			else: #elif 'MEDIUM' in font
+				font_data.font_path = 'res://fonts/AA_Antique Type_Hun.ttf'
+		
+		if 'SMALL' in font:
+			FONTS[font] .size = UI_SCALE
+		elif 'LARGE' in font:
+			FONTS[font] .size = UI_SCALE*LARGE_FACTOR
+		else: #elif 'MEDIUM' in font
+			FONTS[font] .size = UI_SCALE*MEDIUM_FACTOR
+
+		FONTS[font].font_data = font_data
+
+
 #Question list editing
 var current_lesson = ''
 var current_question = ''
@@ -36,6 +73,11 @@ func _ready():
 		currentLang = config.get_value("general", "lang", 0)
 		langs = config.get_value("general","allLangs",langs)#Allows external modification of available languages
 		
+		#Render options, such as font size
+		var ui_scale_default = 32 if OS.get_name() in ["iOS", "HTML5", "Server", "Windows","UWP", "X11"] else 48
+		var ui_scale_temp = config.get_value("render", "ui_scale", 32)
+		set_ui_scale(ui_scale_temp)
+		
 		active_lessons = config.get_value("quiz", "active_lessons", [''])
 	TranslationServer.set_locale(langs[currentLang])
 
@@ -46,6 +88,8 @@ func get_date_compact():
 func retranslate(node,to_translate_list):
 	if node.name in to_translate_list:
 		node.text = tr(to_translate_list[node.name])
+		if TranslationServer.get_locale() == 'jp':
+			node.set('custom_fonts/font',load('res://fonts/jp2.tres'))
 	for child in node.get_children():
 		retranslate(child,to_translate_list)
 
@@ -94,10 +138,37 @@ func save_settings():
 	# Save the changes by overwriting the previous file
 	config.set_value("general", "lang", currentLang)
 	config.set_value("general","allLangs",langs)
+	config.set_value("render","ui_scale",UI_SCALE)
 	config.set_value("quiz","active_lessons",active_lessons)
 	config.save("user://settings.cfg")
 	
-	
+#If text is left as null, node.text is used.
+#Size should be one of the FONT_SIZE constants
+func adapt_font(node,size=FONT_SIZE_SMALL,text = null):
+	var latin_only = true
+	if not text:
+		text = node.text
+	for i in text.length():
+		if text.ord_at(i)>500:
+			latin_only = false
+	var font 
+	if latin_only:
+		if size==FONT_SIZE_LARGE:
+			font = FONTS['FONT_LARGE_LAT']
+		elif size==FONT_SIZE_MEDIUM:
+			font = FONTS['FONT_MEDIUM_LAT']
+		else:
+			font = FONTS['FONT_SMALL_LAT']
+	else:
+		if size==FONT_SIZE_SMALL:
+			font = FONTS['FONT_SMALL_JP']
+		elif size==FONT_SIZE_MEDIUM:
+			font = FONTS['FONT_MEDIUM_JP']
+		else:
+			font = FONTS['FONT_LARGE_JP']
+		
+	node.set('custom_fonts/font',font)
+
 func read_svg(file_name):
 	var components = []
 	

@@ -5,8 +5,11 @@ var to_translate = {'ButtonClearDrawing':'drawClear',
 					'LabelDraw':'drawLabel'}
 
 func _ready():
-	$"/root/GlobalVars".retranslate(get_node('/root'),to_translate)
-
+	var global = $"/root/GlobalVars"
+	global.retranslate(get_node('/root'),to_translate)
+	global.adapt_font($HBoxContainer/ButtonClearDrawing,global.FONT_SIZE_SMALL)
+	global.adapt_font($HBoxContainer/ButtonUndoDrawing,global.FONT_SIZE_SMALL)
+	
 	
 func _on_ButtonClearDrawing_pressed():
 	$AnswerDraw.clear_drawing()

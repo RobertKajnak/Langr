@@ -31,6 +31,8 @@ window/size/width=720
 window/size/height=950
 window/size/test_height=500
 window/handheld/orientation="portrait"
+window/stretch/mode="2d"
+window/stretch/aspect="expand"
 
 [gui]
 

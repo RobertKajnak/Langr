@@ -21,7 +21,7 @@ func _ready():
 		var questionButton = preload("res://Buttons/SelectLessonButton.tscn").instance()
 		$VBoxContainer/ScrollContainer/VBoxContainer.add_child(questionButton)
 		#questionButton.call('set_label',f.substr(0,f.find_last('.')))
-		questionButton.text = question
+		questionButton.set_label(question)
 		questionButton.connect("pressed",self,'_on_question_prerssed',[questionButton.text])
 	lesson_file.close()
 

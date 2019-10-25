@@ -2,8 +2,8 @@
 
 [ext_resource path="res://TransitionScene.gd" type="Script" id=1]
 [ext_resource path="res://res/Fabric24.jpg" type="Texture" id=2]
-[ext_resource path="res://fonts/MainMenuFont.tres" type="DynamicFont" id=3]
-[ext_resource path="res://fonts/SubMenuFont.tres" type="DynamicFont" id=4]
+[ext_resource path="res://LabelAdaptiveTitle.tscn" type="PackedScene" id=3]
+[ext_resource path="res://LabelAdaptiveNormal.tscn" type="PackedScene" id=4]
 
 [node name="TransitionScene" type="Control"]
 anchor_right = 1.0
@@ -20,22 +20,19 @@ anchor_bottom = 1.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
 margin_left = 60.0
-margin_top = 424.0
+margin_top = 175.0
 margin_right = 660.0
-margin_bottom = 525.0
-rect_min_size = Vector2( 600, 0 )
+margin_bottom = 775.0
+rect_min_size = Vector2( 600, 600 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
 
-[node name="LabelTitle" type="Label" parent="CenterContainer/VBoxContainer"]
-margin_right = 600.0
-margin_bottom = 58.0
-custom_fonts/font = ExtResource( 3 )
-autowrap = true
+[node name="LabelTitle" parent="CenterContainer/VBoxContainer" instance=ExtResource( 3 )]
 
-[node name="LabelMessage" type="Label" parent="CenterContainer/VBoxContainer"]
-margin_top = 62.0
+[node name="LabelMessage" parent="CenterContainer/VBoxContainer" instance=ExtResource( 4 )]
+margin_top = 64.0
 margin_right = 600.0
-margin_bottom = 101.0
-custom_fonts/font = ExtResource( 4 )
-autowrap = true
+margin_bottom = 64.0
+rect_min_size = Vector2( 0, 0 )
 [connection signal="gui_input" from="." to="." method="_on_TransitionScene_gui_input"]
 [connection signal="gui_input" from="CenterContainer" to="." method="_on_TransitionScene_gui_input"]
