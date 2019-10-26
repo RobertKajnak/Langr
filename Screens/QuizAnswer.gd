@@ -21,6 +21,7 @@ func _ready():
 	$VBoxContainer/LabelQuestion/LabelNormal.add_color_override("font_color",global.skill_color_dict[int(current_question['skill'])])
 	
 	temp_answer = qm.get_temp_answer()
+	var answer_color = Color(0.1,0.9,0.2) if current_question['answer_free'] == temp_answer['answer_free'] else Color(0.7,0.1,0.1)
 	if 'answer_free' in current_question:
 		for txt in ['Expected Answer:',
 					'      ' + current_question['answer_free'],
@@ -29,6 +30,7 @@ func _ready():
 			var label = load('res://Interface/TextDisplay/LabelAdaptiveSmall.tscn').instance()
 			$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(label)
 			label.text = txt
+			label.get_node('LabelSmall').add_color_override('font_color',answer_color)
 		#var te = load('res://Interface/TextDisplay/TextEditFreeForm.tscn').instance()
 		#$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(te)
 		#te.text = current_question['answer_free']
