@@ -15,6 +15,14 @@ var FONT_SIZE_MEDIUM = 'MEDIUM'
 var FONT_SIZE_LARGE = 'LARGE'
 var FONTS = {}
 
+var skill_color_dict = {0:Color(1,0,0),
+						1:Color(1,0.2,0.2),
+						2:Color(0.5,0.2,0),
+						3:Color(0.3,0.4,0),
+						4:Color(0.5,0.5,0.5),
+						5:Color(0.2,0.8,0),
+						6:Color(0,1,0)}
+
 func set_ui_scale(val):
 	UI_SCALE = val
 	

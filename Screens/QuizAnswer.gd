@@ -18,6 +18,7 @@ func _ready():
 	current_question = global.current_question
 	$VBoxContainer/LabelLessonTitle.text = str(global.active_lessons)
 	$VBoxContainer/LabelQuestion.text = current_question['question']
+	$VBoxContainer/LabelQuestion/LabelNormal.add_color_override("font_color",global.skill_color_dict[int(current_question['skill'])])
 	
 	temp_answer = qm.get_temp_answer()
 	if 'answer_free' in current_question:
