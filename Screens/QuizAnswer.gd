@@ -7,7 +7,8 @@ var current_question
 #var to_translate = {}
 
 var dr_answer
-var correct_dr_answer 
+var temp_answer
+#var correct_dr_answer 
 
 func _ready():
 	qm = $"/root/QuestionManager"
@@ -18,7 +19,7 @@ func _ready():
 	$VBoxContainer/LabelLessonTitle.text = str(global.active_lessons)
 	$VBoxContainer/LabelQuestion.text = current_question['question']
 	
-	var temp_answer = qm.get_temp_answer()
+	temp_answer = qm.get_temp_answer()
 	if 'answer_free' in current_question:
 		for txt in ['Expected Answer:',
 					'      ' + current_question['answer_free'],
@@ -36,23 +37,39 @@ func _ready():
 		dr_answer = load('res://Interface/Input/DrawBox.tscn').instance()
 		$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(dr_answer)
 		
-		display_correct_answer()
+		display_answers()
 		
-		dr_answer.find_node('AnswerDraw').change_line_color_to()
-		dr_answer.add_lines(temp_answer['answer_draw'])
-		
-		dr_answer.find_node('AnswerDraw').change_line_color_to(Color(0.4,0.1,0.6),3)
 
-func display_correct_answer():
-	dr_answer.find_node('AnswerDraw').change_line_color_to(Color(0,0.8,0.2,0.6),9)
-	if not correct_dr_answer:
-		var drawing_file_name = 'user://lessons/' + qm.get_lesson_for_question(current_question,true) \
-								+ '/' + current_question['answer_draw']
-		dr_answer.find_node('AnswerDraw').load_drawing(drawing_file_name)
-		correct_dr_answer = dr_answer.get_lines()
-	else:
-		dr_answer.add_lines(correct_dr_answer)	
-	dr_answer.find_node('AnswerDraw').change_line_color_to(Color(0.4,0.1,0.6),3)
+func display_answers(only_correct = false):
+	#if not correct_dr_answer:
+	var fns = current_question['answer_draw']
+	var temp_answer_cache = temp_answer['answer_draw']
+	var dr_internal = dr_answer.find_node('AnswerDraw')
+	if fns is String:
+		fns = [fns]
+		
+	var lim = max(temp_answer_cache.size(),fns.size())
+	for i in range(lim):
+		if i<fns.size():
+			dr_internal.change_line_color_to(Color(0,0.8,0.2,0.6),9)
+			var drawing_file_name = 'user://lessons/' + qm.get_lesson_for_question(current_question,true) \
+									+ '/' + fns[i]
+			dr_internal.load_drawing(drawing_file_name)
+			#var correct_dr_answer = dr_answer.get_lines()
+		#else:
+		#	dr_answer.add_lines(correct_dr_answer)	
+		if (not only_correct) and i<temp_answer_cache.size():
+			dr_internal.change_line_color_to(Color(0.4,0.1,0.6),3)
+			
+			
+			dr_internal.change_line_color_to()
+			dr_answer.add_lines(temp_answer_cache[i][0])
+		if i<lim-1:
+			dr_internal.load_next_cached()
+	dr_internal.load_chached(0)
+	dr_internal.change_line_color_to(Color(0.4,0.1,0.6),3)
+	dr_answer.disable_add_drawing()
+	dr_answer.set_cache_status_label()
 	
 func go_back():
 	qm.exit_quiz()
@@ -70,7 +87,7 @@ func _on_ButtonForceCorrect_pressed():
 
 func _on_ButtonOnlyCorrect_pressed():
 	dr_answer.clear_drawing()
-	display_correct_answer()
+	display_answers(true)
 
 
 func _unhandled_input(event):

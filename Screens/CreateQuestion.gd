@@ -42,8 +42,13 @@ func load_data(file_name,question_title):
 		var node = $VBoxContainer/ScrollContainer/VBoxContainer/.find_node(inv_dict[key])
 		match key:
 			'answer_draw':
-				var drawing_file_name = file_name.substr(0,file_name.find_last('.')) + '/' + question_data[key]
-				node.load_drawing(drawing_file_name)
+				var drawing_file_name = question_data[key]
+				if drawing_file_name is String:
+					drawing_file_name = [drawing_file_name]
+				var full_fns = []
+				for dfn in drawing_file_name:
+					full_fns.append(file_name.substr(0,file_name.find_last('.')) + '/' + dfn)
+				node.load_drawing(full_fns)
 			'skill':
 				node.select(int(question_data[key]))
 			'answer_free':
@@ -113,11 +118,11 @@ func _on_Button_pressed():
 	
 	#TODO this feels like a wokraround
 	if not $VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw/AnswerDraw.is_empty():
-		to_save[adict['AnswerDraw']] = 'placeholder'
+		to_save[adict['VBoxContainerDraw']] = 'placeholder'
 		if (modifying_mode and qm._check_question(to_save,false)==null) or (not modifying_mode and qm._check_question(to_save,true)==null):
-			to_save[adict['AnswerDraw']] = $VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw/AnswerDraw.save_dawing()
+			to_save[adict['VBoxContainerDraw']] = $VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw/AnswerDraw.save_dawing()
 		else:
-			to_save.erase(adict['AnswerDraw'])
+			to_save.erase(adict['VBoxContainerDraw'])
 
 	var err = null
 	var popup_title = null

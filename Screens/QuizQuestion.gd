@@ -29,6 +29,13 @@ func _ready():
 	if 'answer_draw' in current_question:
 		dr_answer = load('res://Interface/Input/DrawBox.tscn').instance()
 		$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(dr_answer)
+		var nr_drawings = current_question['answer_draw']
+		if nr_drawings is String:
+			nr_drawings = 1
+		else:
+			nr_drawings = nr_drawings.size()
+		dr_answer.create_empty_drawings(nr_drawings-1)
+		dr_answer.disable_add_drawing()
 
 func go_back():
 	qm.exit_quiz()

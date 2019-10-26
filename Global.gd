@@ -56,7 +56,7 @@ var _transition_goal = ''
 #Answer dictionary -- continuing the LSD joke from ?2nd? year
 var adict = {'TextEditQuestion':'question',
 			'AnswerTextEdit':'answer_free',
-			'AnswerDraw':'answer_draw',
+			'VBoxContainerDraw':'answer_draw',
 			'TextEditCheckBoxMulti0':'answer_multi',
 			'OptionButtonSkill':'skill',
 			'LabelID':'id',

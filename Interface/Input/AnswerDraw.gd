@@ -9,14 +9,20 @@ var colors_and_widths = []
 
 var texts = []
 
+var cache = []
+var currently_loaded = 0
+
 func _ready():
 	self.rect_size.x = 109*4
 	self.rect_size.y = 109*4
-	colors_and_widths.append([-1,[color_default,width_default]])
+	_init_colors_and_widths()
 
 func _process(delta):
 	var _delta = delta #silences the error
 	update()
+
+func _init_colors_and_widths():
+	colors_and_widths = [[-1,[color_default,width_default]]]
 
 func clip(v):
 	return Vector2(max(min(v.x,self.rect_size.x),0), max(min(v.y,self.rect_size.y),0))
@@ -131,37 +137,111 @@ func clear_drawing():
 	#$"/root/GlobalVars".save_svg_path('user://lessons/lesson0/06f5c_re.svg',segments)
 
 func is_empty():
-	return lines.empty()
+	var empty =  lines.empty()
+	for l in cache:
+		empty = empty and l[0].empty()
+	return empty
 	
-func load_drawing(file_name):
-	var segments = $"/root/GlobalVars".read_svg(file_name)
-	include_svg_path(segments)
+#if somethign other then a string is provided, 
+#it is assumed that it is an iterable and all its elements are filenames
+func load_drawing(file_name_s):
+	if file_name_s is String:
+		var segments = $"/root/GlobalVars".read_svg(file_name_s)
+		include_svg_path(segments)
+	else:
+		for file_name in file_name_s:
+			var segments = $"/root/GlobalVars".read_svg(file_name)
+			include_svg_path(segments)
+			load_next_cached()
+		load_prev_cached()
+		cache.pop_back()
 
 func save_dawing():
-	if not lines.empty():
+	if not is_empty():
 		
 		var supplement_directory = Directory.new()
 		var lesson_dir_str = 'user://lessons/'+$"/root/GlobalVars".current_lesson
 		if not supplement_directory.dir_exists(lesson_dir_str):
 			supplement_directory.make_dir(lesson_dir_str)
 		
-		var drawing_file = File.new()
-		var i =0;
-		var dfn = lesson_dir_str + '/d'+ str(i) +'.svg'
-		while drawing_file.file_exists(dfn):
-			i += 1
-			dfn = lesson_dir_str + '/d'+ str(i) +'.svg'
-		
-		
-		$"/root/GlobalVars".save_svg_path(dfn,drawing_to_svg_path(lines))
-		return dfn.substr(dfn.find_last('/')+1,dfn.length())
+		var filenames = []
+
+		for lc in get_cache_and_lines():
+			var drawing_file = File.new()
+			var i =0;
+			var dfn = lesson_dir_str + '/d'+ str(i) +'.svg'
+			while drawing_file.file_exists(dfn):
+				i += 1
+				dfn = lesson_dir_str + '/d'+ str(i) +'.svg'
+			
+			
+			$"/root/GlobalVars".save_svg_path(dfn,drawing_to_svg_path(lc[0]))
+			filenames.append(dfn.substr(dfn.find_last('/')+1,dfn.length()))
+		return filenames
 	else:
 		return null
 
 func remove_last_line():
 	current_line = []
 	lines.remove(lines.size()-1)
+	
+func load_prev_cached():
+	return load_chached(currently_loaded-1)
+	
+func load_next_cached():
+	return load_chached(currently_loaded+1)
+	
+#Return values: 
+#  0 -- loaded successfully
+#  -1 -- cannot load negative index or already loaded
+#  1 -- added next index
+func load_chached(index):
+	if currently_loaded == index || index<0:
+		return -1
+	
+	var retval = 0
+	if currently_loaded >= cache.size():
+		cache.append([lines,colors_and_widths])
+		retval = 1
+	else:
+		cache[currently_loaded] = [lines,colors_and_widths]
+		
+	if index<cache.size():
+		var cc = cache[index]
+		lines = cc[0]
+		colors_and_widths = cc[1]
+	else:
+		if index>cache.size():
+			index = cache.size()
+		lines = []
+		_init_colors_and_widths()
+	
+	currently_loaded = index
+	return retval
+	
+func remove_empty_cached_from_end():
+	for i in range(cache.size()):
+		if cache[-1][0].empty():
+			cache.remove(cache.size()-1)
+		else:
+			return
 
+func get_cache_and_lines(remove_empty_from_end = true):
+	if remove_empty_from_end:
+		if lines.empty() or cache.size()!=currently_loaded:
+			remove_empty_cached_from_end()
+	load_chached(cache.size()+1)
+	 
+	return cache
+
+func get_cache_status():
+	return [currently_loaded+1,cache.size()+(1 if currently_loaded==cache.size() else 0)]
+	
+func cache_status_string():
+	var cst = get_cache_status()
+	return str(cst[0]) + '/' + str(cst[1])
+	
+#always runnign
 func _draw():
 	var color_index = 0;
 	for line in lines + [current_line]:
