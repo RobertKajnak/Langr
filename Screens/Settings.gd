@@ -35,7 +35,7 @@ func find_closest(array,value):
 	return array.size()-1
 
 func go_back():
-	var _err = get_tree().change_scene('res://MainMenu.tscn')
+	var _err = get_tree().change_scene('res://Screens/MainMenu.tscn')
 
 
 #%%Interface Handling

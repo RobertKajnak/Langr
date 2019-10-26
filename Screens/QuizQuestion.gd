@@ -12,10 +12,10 @@ func _ready():
 	
 	current_question = qm.get_next_question_to_ask()
 	if not global.active_lessons:
-		global.to_transition_scene(get_tree(),'res://Manage.tscn','noActiveLessons','noLessonsRedirect')
+		global.to_transition_scene(get_tree(),'res://Screens/Manage.tscn','noActiveLessons','noLessonsRedirect')
 		return
 	if not current_question:
-		global.to_transition_scene(get_tree(),'res://Manage.tscn','noActiveQuestions','noQuestionsRedirect')
+		global.to_transition_scene(get_tree(),'res://Screens/Manage.tscn','noActiveQuestions','noQuestionsRedirect')
 		return
 		
 		
@@ -23,16 +23,16 @@ func _ready():
 	$VBoxContainer/LabelQuestion.text = current_question['question']
 	
 	if 'answer_free' in current_question:
-		te_answer = load('res://TextEditFreeForm.tscn').instance()
+		te_answer = load('res://Interface/Input/TextEditFreeForm.tscn').instance()
 		$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(te_answer)
 		te_answer.text=''
 	if 'answer_draw' in current_question:
-		dr_answer = load('res://DrawBox.tscn').instance()
+		dr_answer = load('res://Interface/Input/DrawBox.tscn').instance()
 		$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(dr_answer)
 
 func go_back():
 	qm.exit_quiz()
-	var _err = get_tree().change_scene('res://MainMenu.tscn')
+	var _err = get_tree().change_scene('res://Screens/MainMenu.tscn')
 	
 
 #INput handling
@@ -57,4 +57,4 @@ func _on_ButtonCheck_pressed():
 		temp_answer['answer_draw']=dr_answer.get_lines()
 		
 	qm.set_temp_answer(temp_answer)
-	var _err = get_tree().change_scene('res://QuizAnswer.tscn')
+	var _err = get_tree().change_scene('res://Screens/QuizAnswer.tscn')

@@ -34,7 +34,7 @@ func _ready():
 		box.set('size_flags_vertical',0)
 		checkBox.set('size_flags_vertical',0)
 		#print(box.size_flags_vertical)
-		var lessonButton = load("res://Buttons/SelectLessonButton.tscn").instance()
+		var lessonButton = load("res://Interface/Buttons/SelectLessonButton.tscn").instance()
 		
 		box.add_child(checkBox)
 		box.add_child(lessonButton)
@@ -47,7 +47,7 @@ func _ready():
 #%% Helper functions
 func go_back():
 	change_active_lessons()
-	var _err = get_tree().change_scene('res://MainMenu.tscn')
+	var _err = get_tree().change_scene('res://Screens/MainMenu.tscn')
 
 func change_active_lessons():
 	var active_lessons = []
@@ -61,7 +61,7 @@ func _on_lesson_pressed(lesson_name):
 	print('Opening lesson: ' + lesson_name)
 	change_active_lessons()
 	get_node("/root/GlobalVars").current_lesson = lesson_name
-	var _err = get_tree().change_scene('res://QuestionList.tscn')
+	var _err = get_tree().change_scene('res://Screens/QuestionList.tscn')
 
 func _on_ButtonAddLesson_pressed():
 	change_active_lessons()

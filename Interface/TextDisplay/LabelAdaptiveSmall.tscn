@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://LabelAdaptiveSmall.gd" type="Script" id=1]
+[ext_resource path="res://Interface/TextDisplay/LabelAdaptiveSmall.gd" type="Script" id=1]
 
 [node name="LableSmallRoot" type="Control"]
 margin_right = 720.0

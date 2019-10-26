@@ -261,5 +261,5 @@ func to_transition_scene(current_tree,next_scene_name,title,message):
 	_transition_goal = next_scene_name
 	_transition_title = title
 	_transition_message = message
-	var _err = current_tree.change_scene("res://TransitionScene.tscn")
+	var _err = current_tree.change_scene("res://Screens/TransitionScene.tscn")
 	

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://fonts/SubMenuFont.tres" type="DynamicFont" id=1]
-[ext_resource path="res://Buttons/SelectLessonButton.gd" type="Script" id=2]
+[ext_resource path="res://Interface/Buttons/SelectLessonButton.gd" type="Script" id=2]
 
 [node name="Label" type="LinkButton"]
 margin_right = 113.0

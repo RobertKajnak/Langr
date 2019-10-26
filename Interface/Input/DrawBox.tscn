@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://DrawBox.gd" type="Script" id=1]
-[ext_resource path="res://LabelAdaptiveNormal.tscn" type="PackedScene" id=2]
-[ext_resource path="res://AnswerDraw.gd" type="Script" id=3]
+[ext_resource path="res://Interface/Input/DrawBox.gd" type="Script" id=1]
+[ext_resource path="res://Interface/TextDisplay/LabelAdaptiveNormal.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Interface/Input/AnswerDraw.gd" type="Script" id=3]
 [ext_resource path="res://res/Fabric19.jpg" type="Texture" id=4]
 [ext_resource path="res://fonts/SubMenuFont.tres" type="DynamicFont" id=5]
 

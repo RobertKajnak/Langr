@@ -1,13 +1,13 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://CreateQuestion.gd" type="Script" id=1]
+[ext_resource path="res://Screens/CreateQuestion.gd" type="Script" id=1]
 [ext_resource path="res://res/Wood15.jpg" type="Texture" id=2]
-[ext_resource path="res://TextEditFreeForm.tscn" type="PackedScene" id=3]
-[ext_resource path="res://DrawBox.tscn" type="PackedScene" id=4]
-[ext_resource path="res://LabelAdaptiveNormal.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Interface/Input/TextEditFreeForm.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Interface/Input/DrawBox.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Interface/TextDisplay/LabelAdaptiveNormal.tscn" type="PackedScene" id=5]
 [ext_resource path="res://fonts/SubMenuFont.tres" type="DynamicFont" id=6]
 [ext_resource path="res://fonts/jp2.tres" type="DynamicFont" id=7]
-[ext_resource path="res://Buttons/MenuButton.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Interface/Buttons/MenuButton.tscn" type="PackedScene" id=8]
 
 [node name="CreateQuestionRoot" type="Control"]
 anchor_right = 1.0

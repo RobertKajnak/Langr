@@ -10,7 +10,7 @@ func _ready():
 
 #%% Interface handling
 func _on_ButtonStart_pressed(to_load):
-	if to_load == 'res://QuizQuestion.tscn':
+	if to_load == 'res://Screens/QuizQuestion.tscn':
 		$"/root/QuestionManager".load_lessons_for_quiz()
 	var _err = get_tree().change_scene(to_load)
 

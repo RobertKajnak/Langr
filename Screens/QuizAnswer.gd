@@ -24,16 +24,16 @@ func _ready():
 					'      ' + current_question['answer_free'],
 					'Given Answer:',
 					'      ' + temp_answer['answer_free']]:
-			var label = load('res://LabelAdaptiveSmall.tscn').instance()
+			var label = load('res://Interface/TextDisplay/LabelAdaptiveSmall.tscn').instance()
 			$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(label)
 			label.text = txt
-		#var te = load('res://TextEditFreeForm.tscn').instance()
+		#var te = load('res://Interface/TextDisplay/TextEditFreeForm.tscn').instance()
 		#$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(te)
 		#te.text = current_question['answer_free']
 		
 	
 	if 'answer_draw' in current_question:
-		dr_answer = load('res://DrawBox.tscn').instance()
+		dr_answer = load('res://Interface/Input/DrawBox.tscn').instance()
 		$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(dr_answer)
 		
 		display_correct_answer()
@@ -56,17 +56,17 @@ func display_correct_answer():
 	
 func go_back():
 	qm.exit_quiz()
-	var _err = get_tree().change_scene('res://MainMenu.tscn')
+	var _err = get_tree().change_scene('res://Screens/MainMenu.tscn')
 	
 
 #INput handling
 func _on_ButtonForceIncorrect_pressed():
 	qm.update_question_skill(current_question,-2)
-	var _err = get_tree().change_scene('res://QuizQuestion.tscn')
+	var _err = get_tree().change_scene('res://Screens/QuizQuestion.tscn')
 
 func _on_ButtonForceCorrect_pressed():
 	qm.update_question_skill(current_question,2)
-	var _err = get_tree().change_scene('res://QuizQuestion.tscn')
+	var _err = get_tree().change_scene('res://Screens/QuizQuestion.tscn')
 
 func _on_ButtonOnlyCorrect_pressed():
 	dr_answer.clear_drawing()

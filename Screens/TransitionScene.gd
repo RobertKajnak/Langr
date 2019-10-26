@@ -9,7 +9,7 @@ func _ready():
 	#print($CenterContainer/VBoxContainer/LabelMessage.rect_position)
 	
 func go_back():
-	var _err = get_tree().change_scene('res://MainMenu.tscn')
+	var _err = get_tree().change_scene('res://Screens/MainMenu.tscn')
 
 func perform_transition():
 	var _err = get_tree().change_scene(global._transition_goal)

@@ -13,12 +13,12 @@ func _ready():
 	
 	var lesson_file = File.new()
 	if not lesson_file.file_exists('user://lessons/' + current_lesson +'.les'):
-		var _err = get_tree().change_scene('res://MainMenu.tscn')
+		var _err = get_tree().change_scene('res://Screens/MainMenu.tscn')
 	
 	question_manager = $"/root/QuestionManager"
 	question_manager.load_questions()
 	for question in question_manager.get_question_titles():
-		var questionButton = preload("res://Buttons/SelectLessonButton.tscn").instance()
+		var questionButton = preload("res://Interface/Buttons/SelectLessonButton.tscn").instance()
 		$VBoxContainer/ScrollContainer/VBoxContainer.add_child(questionButton)
 		#questionButton.call('set_label',f.substr(0,f.find_last('.')))
 		questionButton.set_label(question)
@@ -27,7 +27,7 @@ func _ready():
 
 #%% Helper functions
 func go_back():
-	var _err = get_tree().change_scene('res://Manage.tscn')
+	var _err = get_tree().change_scene('res://Screens/Manage.tscn')
 
 
 #%% Interface handling
@@ -37,7 +37,7 @@ func _on_question_prerssed(question_text):
 	#current_scene.queue_free()
 	
 	#root.add_child(q)
-	var q = load('res://CreateQuestion.tscn').instance()
+	var q = load('res://Screens/CreateQuestion.tscn').instance()
 	
 	for node in [$VBoxContainer,$Sprite]:
 		remove_child(node)
@@ -47,7 +47,7 @@ func _on_question_prerssed(question_text):
 	q.load_data('user://lessons/' + current_lesson +'.les', question_text)
 	
 func _on_ButtonAddWord_pressed():
-	var _err = get_tree().change_scene('res://CreateQuestion.tscn')
+	var _err = get_tree().change_scene('res://Screens/CreateQuestion.tscn')
 
 func _on_ButtonDeleteLesson_pressed():
 	print('Deleting lesson: ' + current_lesson)

@@ -62,7 +62,7 @@ func load_data(file_name,question_title):
 
 #%% Helper functions
 func go_back():
-	var _err = get_tree().change_scene('res://QuestionList.tscn')
+	var _err = get_tree().change_scene('res://Screens/QuestionList.tscn')
 
 #%% Interface handling
 func _tapped_to_edit(control):
@@ -131,7 +131,7 @@ func _on_Button_pressed():
 			popup_title='couldNotModifyQuestion'
 	if err!=null:
 		print(popup_title + ': ' + err)
-		var popup = preload("res://ErrorPopup.tscn").instance()
+		var popup = preload("res://Interface/Interactive/ErrorPopup.tscn").instance()
 		add_child(popup)
 		popup.display(tr(popup_title),tr(err))
 	else:
