@@ -4,7 +4,7 @@
 [ext_resource path="res://res/Wood15.jpg" type="Texture" id=2]
 [ext_resource path="res://Interface/Input/TextEditFreeForm.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Interface/Input/DrawBox.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Interface/TextDisplay/LabelAdaptiveNormal.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Interface/TextDisplay/LabelAdaptive.tscn" type="PackedScene" id=5]
 [ext_resource path="res://fonts/SubMenuFont.tres" type="DynamicFont" id=6]
 [ext_resource path="res://fonts/jp2.tres" type="DynamicFont" id=7]
 [ext_resource path="res://Interface/Buttons/MenuButton.tscn" type="PackedScene" id=8]
@@ -22,33 +22,49 @@ texture = ExtResource( 2 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 30.0
+margin_top = 30.0457
 margin_right = -30.0
-custom_constants/separation = 8
+margin_bottom = -23.9543
+size_flags_horizontal = 0
+size_flags_vertical = 3
+custom_constants/separation = 15
 alignment = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
-margin_top = 41.0
 margin_right = 660.0
-margin_bottom = 741.0
-rect_min_size = Vector2( 650, 700 )
+margin_bottom = 714.0
+rect_min_size = Vector2( 650, 600 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
-margin_right = 720.0
+margin_right = 600.0
 margin_bottom = 919.0
 rect_min_size = Vector2( 600, 0 )
 custom_constants/separation = 20
 alignment = 1
 
 [node name="TextEditQuestion" parent="VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource( 3 )]
-margin_right = 720.0
 
-[node name="VBoxContainerDraw" parent="VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource( 4 )]
-margin_bottom = 684.0
+[node name="AnswerTextEdit" parent="VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource( 3 )]
+margin_top = 170.0
+margin_bottom = 320.0
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+margin_top = 340.0
+margin_right = 600.0
+margin_bottom = 854.0
+
+[node name="VBoxContainerDraw" parent="VBoxContainer/ScrollContainer/VBoxContainer/CenterContainer" instance=ExtResource( 4 )]
+margin_left = 84.0
+margin_top = 0.0
+margin_right = 516.0
+margin_bottom = 514.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
-margin_top = 704.0
-margin_right = 720.0
-margin_bottom = 749.0
+margin_top = 874.0
+margin_right = 600.0
+margin_bottom = 919.0
 
 [node name="LabelSkill" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer" instance=ExtResource( 5 )]
 margin_right = 200.0
@@ -94,23 +110,26 @@ margin_bottom = 47.0
 rect_min_size = Vector2( 550, 0 )
 custom_fonts/font = ExtResource( 7 )
 
-[node name="AnswerTextEdit" parent="VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource( 3 )]
-margin_top = 769.0
-margin_right = 720.0
-margin_bottom = 919.0
-
-[node name="ButtonCreateQuestion" parent="VBoxContainer" instance=ExtResource( 8 )]
-margin_left = 0.0
-margin_top = 749.0
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
+margin_top = 729.0
 margin_right = 660.0
-margin_bottom = 825.455
+margin_bottom = 805.455
+
+[node name="ButtonCreateQuestion" parent="VBoxContainer/CenterContainer" instance=ExtResource( 8 )]
+margin_left = 130.0
+margin_right = 530.0
+margin_bottom = 76.4549
 text_loc = "createQuestion"
 
-[node name="ButtonCancel" parent="VBoxContainer" instance=ExtResource( 8 )]
-margin_left = 0.0
-margin_top = 833.0
+[node name="CenterContainer2" type="CenterContainer" parent="VBoxContainer"]
+margin_top = 820.0
 margin_right = 660.0
-margin_bottom = 909.455
+margin_bottom = 896.455
+
+[node name="ButtonCancel" parent="VBoxContainer/CenterContainer2" instance=ExtResource( 8 )]
+margin_left = 130.0
+margin_right = 530.0
+margin_bottom = 76.4549
 text_loc = "cancel"
-[connection signal="pressed" from="VBoxContainer/ButtonCreateQuestion" to="." method="_on_Button_pressed"]
-[connection signal="pressed" from="VBoxContainer/ButtonCancel" to="." method="_on_ButtonCancel_pressed"]
+[connection signal="pressed" from="VBoxContainer/CenterContainer/ButtonCreateQuestion" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="VBoxContainer/CenterContainer2/ButtonCancel" to="." method="_on_ButtonCancel_pressed"]

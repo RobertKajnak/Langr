@@ -7,12 +7,13 @@ var currentLang = 0; #currently used languge index from langs
 var langs = ['en','hu']
 
 #Render Constants
+var POSSIBLE_SCALES = [8,12,14,16,24,32,48,56,64,72]
 var UI_SCALE = 32 setget set_ui_scale
-var LARGE_FACTOR = 1.5
-var MEDIUM_FACTOR = 1.15
-var FONT_SIZE_SMALL = 'SMALL'
-var FONT_SIZE_MEDIUM = 'MEDIUM'
-var FONT_SIZE_LARGE = 'LARGE'
+const LARGE_FACTOR = 1.5
+const MEDIUM_FACTOR = 1.15
+const FONT_SIZE_SMALL = 'SMALL'
+const FONT_SIZE_MEDIUM = 'MEDIUM'
+const FONT_SIZE_LARGE = 'LARGE'
 var FONTS = {}
 
 var skill_color_dict = {0:Color(1,0,0),
@@ -141,6 +142,12 @@ func random_string(length):
 func set_active_lessons(active_lessons):
 	self.active_lessons = active_lessons
 	save_settings()
+
+func get_active_lessons_string():
+	var s = ''
+	for lesson in active_lessons:
+		s += lesson.substr(0,lesson.find('.les')) + ', '
+	return s.substr(0,s.length()-2)
 
 func save_settings():
 	# Save the changes by overwriting the previous file

@@ -16,29 +16,39 @@ func _ready():
 	#global.retranslate($VBoxContainer,to_translate)
 	
 	current_question = global.current_question
-	$VBoxContainer/LabelLessonTitle.text = str(global.active_lessons)
+	$VBoxContainer/LabelLessonTitle.text = global.get_active_lessons_string()
 	$VBoxContainer/LabelQuestion.text = current_question['question']
-	$VBoxContainer/LabelQuestion/LabelNormal.add_color_override("font_color",global.skill_color_dict[int(current_question['skill'])])
+	$VBoxContainer/LabelQuestion/Label.add_color_override("font_color",global.skill_color_dict[int(current_question['skill'])])
 	
 	temp_answer = qm.get_temp_answer()
-	var answer_color = Color(0.1,0.9,0.2) if current_question['answer_free'] == temp_answer['answer_free'] else Color(0.7,0.1,0.1)
+	print(temp_answer)
+	var answer_color
+	if 'answer_free' in current_question and 'answer_free' in temp_answer and \
+		current_question['answer_free'] == temp_answer['answer_free']:
+			answer_color = Color(0.1,0.9,0.2) 
+	else:
+		 answer_color = Color(0.7,0.1,0.1)
 	if 'answer_free' in current_question:
 		for txt in ['Expected Answer:',
 					'      ' + current_question['answer_free'],
 					'Given Answer:',
 					'      ' + temp_answer['answer_free']]:
-			var label = load('res://Interface/TextDisplay/LabelAdaptiveSmall.tscn').instance()
+			var label = load('res://Interface/TextDisplay/LabelAdaptive.tscn').instance()
 			$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(label)
 			label.text = txt
-			label.get_node('LabelSmall').add_color_override('font_color',answer_color)
+			label.get_node('Label').add_color_override('font_color',answer_color)
+			label.set_mode(label.LABEL_MODE_SMALL)
 		#var te = load('res://Interface/TextDisplay/TextEditFreeForm.tscn').instance()
 		#$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(te)
 		#te.text = current_question['answer_free']
 		
 	
 	if 'answer_draw' in current_question:
+		var cc = CenterContainer.new()
+		cc.size_flags_horizontal = cc.SIZE_EXPAND_FILL
 		dr_answer = load('res://Interface/Input/DrawBox.tscn').instance()
-		$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(dr_answer)
+		$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(cc)
+		cc.add_child(dr_answer)
 		
 		display_answers()
 		

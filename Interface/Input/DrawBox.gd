@@ -13,8 +13,15 @@ func _ready():
 	global.adapt_font($HBoxContainer/ButtonUndoDrawing,global.FONT_SIZE_SMALL)
 
 	set_cache_status_label()
-	$HBoxContainer/LabelProgress/LabelNormal.rect_size = Vector2(70,40)
-	$HBoxContainer/PreviousButton.set_icon("left")
+	$HBoxContainer/LabelProgress/Label.rect_size = Vector2(70,40)
+	
+	$LabelDraw.set_mode($LabelDraw.LABEL_MODE_SMALL)
+	$LabelDraw/Label.rect_size = Vector2(450,0)
+	#no effect...
+	#$HBoxContainer/ButtonClearDrawing.rect_min_size = Vector2($HBoxContainer/ButtonClearDrawing.rect_size.x+5,
+#															$HBoxContainer/ButtonClearDrawing.rect_size.y-20)
+#	$HBoxContainer/ButtonClearDrawing.rect_size = Vector2($HBoxContainer/ButtonClearDrawing.rect_size.x+5,
+#															$HBoxContainer/ButtonClearDrawing.rect_size.y-20)
 	
 func _on_ButtonClearDrawing_pressed():
 	$AnswerDraw.clear_drawing()
@@ -40,11 +47,21 @@ func load_drawing(filename):
 	
 func set_cache_status_label():
 	$HBoxContainer/LabelProgress.text = $AnswerDraw.cache_status_string()
+	$HBoxContainer/PreviousButton.set_icon("left")
+	
 	var cst = $AnswerDraw.get_cache_status()
 	if cst[0] == cst[1] and can_add_drawing:
-		$HBoxContainer/NextButton.set_icon("plus")
+		if can_add_drawing:
+			$HBoxContainer/NextButton.set_icon("plus")
+		else:
+			$HBoxContainer/NextButton.set_icon("empty")
 	else:
 		$HBoxContainer/NextButton.set_icon("right")
+	if cst[0] == 1:
+		$HBoxContainer/PreviousButton.disabled = true
+	else:
+		$HBoxContainer/PreviousButton.disabled = false
+		
 		
 func create_empty_drawings(count,reset_position_to_0=true):
 	for i in range(count):

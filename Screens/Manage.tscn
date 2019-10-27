@@ -1,10 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Screens/Manage.gd" type="Script" id=1]
 [ext_resource path="res://res/Wood24.jpg" type="Texture" id=2]
-[ext_resource path="res://Interface/TextDisplay/LabelAdaptiveTitle.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Interface/TextDisplay/LabelAdaptiveSmall.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Interface/Buttons/MenuButton.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Interface/TextDisplay/LabelAdaptive.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Interface/Buttons/MenuButton.tscn" type="PackedScene" id=4]
 
 [node name="ManageRoot" type="Control"]
 anchor_right = 1.0
@@ -25,35 +24,38 @@ margin_bottom = -50.0
 
 [node name="LabelLesson" parent="VBoxContainer" instance=ExtResource( 3 )]
 margin_right = 620.0
+margin_bottom = 0.0
 
-[node name="LabelCheckActiveLessons" parent="VBoxContainer" instance=ExtResource( 4 )]
-margin_top = 64.0
+[node name="LabelCheckActiveLessons" parent="VBoxContainer" instance=ExtResource( 3 )]
+margin_top = 4.0
 margin_right = 620.0
-margin_bottom = 64.0
+margin_bottom = 4.0
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
-margin_top = 68.0
+margin_top = 8.0
 margin_right = 620.0
-margin_bottom = 72.0
+margin_bottom = 12.0
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
-margin_top = 76.0
+margin_top = 16.0
 margin_right = 620.0
-margin_bottom = 626.0
-rect_min_size = Vector2( 0, 550 )
+margin_bottom = 770.0
+rect_min_size = Vector2( 0, 400 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
 scroll_horizontal_enabled = false
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 630.0
+[node name="HBoxContainer" type="CenterContainer" parent="VBoxContainer"]
+margin_top = 774.0
 margin_right = 620.0
-margin_bottom = 706.0
+margin_bottom = 850.455
 
-[node name="ButtonAddLesson" parent="VBoxContainer/HBoxContainer" instance=ExtResource( 5 )]
-margin_left = 0.0
-margin_right = 600.0
+[node name="ButtonAddLesson" parent="VBoxContainer/HBoxContainer" instance=ExtResource( 4 )]
+margin_left = 260.0
+margin_right = 360.0
 margin_bottom = 76.4549
-rect_min_size = Vector2( 600, 60 )
+rect_min_size = Vector2( 100, 60 )
 text_loc = "createLesson"
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/ButtonAddLesson" to="." method="_on_ButtonAddLesson_pressed"]

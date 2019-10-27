@@ -4,12 +4,11 @@ extends Control
 var buttonTexts = {'LabelTitle':'settings','LabelLanguage':'language','LabelScale':'scale'}
 var global
 
-var possible_scales = [8,12,14,16,24,32,48,56,64,72,96,126]
 
 func _ready():
 	global = $"/root/GlobalVars"
-	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerLang/LabelLanguage/LabelNormal.rect_min_size = Vector2(180,0)
-	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerLang/LabelLanguage/LabelNormal.rect_size = Vector2(180,0)
+	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerLang/LabelLanguage/Label.rect_min_size = Vector2(180,0)
+	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerLang/LabelLanguage/Label.rect_size = Vector2(180,0)
 	var ButtonLang = $VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerLang/ButtonLanguage
 	for lang in global.langs:
 		ButtonLang.add_item(lang);
@@ -17,13 +16,13 @@ func _ready():
 	global.retranslate($VBoxContainer,buttonTexts)
 	
 	
-	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerScale/LabelScale/LabelNormal.rect_min_size = Vector2(180,0)
-	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerScale/LabelScale/LabelNormal.rect_size = Vector2(250,0)
+	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerScale/LabelScale/Label.rect_min_size = Vector2(180,0)
+	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerScale/LabelScale/Label.rect_size = Vector2(250,0)
 	var ButtonScale = $VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerScale/ButtonScale
-	var index = find_closest(possible_scales,global.UI_SCALE)
-	if possible_scales[index] != global.UI_SCALE:
-		possible_scales.insert(index,global.UI_SCALE)
-	for i in possible_scales:
+	var index = find_closest(global.POSSIBLE_SCALES,global.UI_SCALE)
+	if global.POSSIBLE_SCALES[index] != global.UI_SCALE:
+		global.POSSIBLE_SCALES.insert(index,global.UI_SCALE)
+	for i in global.POSSIBLE_SCALES:
 		ButtonScale.add_item(str(i));
 	ButtonScale.select(index);
 
@@ -45,7 +44,7 @@ func _on_ButtonLanguage_item_selected(ID):
 	global.retranslate($VBoxContainer,buttonTexts);
 
 func _on_ButtonScale_item_selected(ID):
-	global.UI_SCALE = possible_scales[ID]
+	global.UI_SCALE = global.POSSIBLE_SCALES[ID]
 	$VBoxContainer/LabelTitle._ready()
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerLang/LabelLanguage._ready()
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerScale/LabelScale._ready()

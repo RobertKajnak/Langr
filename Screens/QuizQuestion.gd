@@ -18,8 +18,8 @@ func _ready():
 		global.to_transition_scene(get_tree(),'res://Screens/Manage.tscn','noActiveQuestions','noQuestionsRedirect')
 		return
 		
-		
-	$VBoxContainer/LabelLessonTitle.text = str(global.active_lessons)
+	$VBoxContainer/LabelQuestion.set_mode('small')
+	$VBoxContainer/LabelLessonTitle.text = global.get_active_lessons_string()
 	$VBoxContainer/LabelQuestion.text = current_question['question']
 	
 	if 'answer_free' in current_question:
@@ -27,8 +27,11 @@ func _ready():
 		$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(te_answer)
 		te_answer.text=''
 	if 'answer_draw' in current_question:
+		var cc = CenterContainer.new()
+		cc.size_flags_horizontal = cc.SIZE_EXPAND_FILL
 		dr_answer = load('res://Interface/Input/DrawBox.tscn').instance()
-		$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(dr_answer)
+		$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(cc)
+		cc.add_child(dr_answer)
 		var nr_drawings = current_question['answer_draw']
 		if nr_drawings is String:
 			nr_drawings = 1
@@ -57,7 +60,7 @@ func _notification(what):
 		go_back()
 
 func _on_ButtonCheck_pressed():
-	var temp_answer = {}
+	var temp_answer = {'answer_free':''}
 	if te_answer:
 		temp_answer['answer_free']=te_answer.text
 	if dr_answer:
@@ -65,3 +68,15 @@ func _on_ButtonCheck_pressed():
 		
 	qm.set_temp_answer(temp_answer)
 	var _err = get_tree().change_scene('res://Screens/QuizAnswer.tscn')
+
+
+func _on_QuizQuestionRoot_resized():
+	var vpr = get_viewport_rect()
+	#print('new size = ',vpr)
+	$VBoxContainer.rect_position = Vector2(vpr.size.x*0.05,vpr.size.y*0.05)
+	$VBoxContainer.rect_size = vpr.size*0.9
+	$VBoxContainer.rect_min_size = vpr.size*0.9
+	
+	if te_answer:
+		te_answer.rect_size.x = vpr.size.x*0.85
+	

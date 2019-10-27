@@ -20,8 +20,8 @@ func _ready():
 		var _err = control.connect("focus_entered",self,"_tapped_to_edit",[control])
 		_err = control.connect("focus_exited",self,"_tapped_away",[control])
 	
-	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/LabelSkill/LabelNormal.rect_min_size = Vector2(180,0)
-	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/LabelSkill/LabelNormal.rect_size = Vector2(400,0)
+	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/LabelSkill/Label.rect_min_size = Vector2(180,0)
+	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/LabelSkill/Label.rect_size = Vector2(400,0)
 	var chbox = $VBoxContainer/ScrollContainer/VBoxContainer/ScrollContainerMultiChoice/VBoxContainerMultiChoice/HBoxContainer/TextEditCheckBoxMulti0
 	chbox.connect("focus_entered",self,"_tapped_to_edit",[chbox])
 	chbox.connect("focus_exited",self,"_tapped_away",[chbox])
@@ -53,15 +53,17 @@ func load_data(file_name,question_title):
 				node.select(int(question_data[key]))
 			'answer_free':
 				node.text = question_data[key]
+			'question':
+				node.text = question_data[key]
 			_:
 				push_warning("unkown key found: " + key)
 	
-	$VBoxContainer/ButtonCreateQuestion.text_loc = 'modifyQuestion'
-	$VBoxContainer/ButtonCreateQuestion._ready()
+	$VBoxContainer/CenterContainer/ButtonCreateQuestion.text_loc = 'modifyQuestion'
+	$VBoxContainer/CenterContainer/ButtonCreateQuestion._ready()
 	
 	original_question_title = question_title
-	$VBoxContainer/ButtonCancel.text_loc = 'deleteQuestion'
-	$VBoxContainer/ButtonCancel._ready()
+	$VBoxContainer/CenterContainer2/ButtonCancel.text_loc = 'deleteQuestion'
+	$VBoxContainer/CenterContainer2/ButtonCancel._ready()
 	
 	modifying_mode = true
 
@@ -117,10 +119,10 @@ func _on_Button_pressed():
 			# so a 'questionNotSet' Error is not thrown
 	
 	#TODO this feels like a wokraround
-	if not $VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw/AnswerDraw.is_empty():
+	if not $VBoxContainer/ScrollContainer/VBoxContainer/CenterContainer/VBoxContainerDraw/AnswerDraw.is_empty():
 		to_save[adict['VBoxContainerDraw']] = 'placeholder'
 		if (modifying_mode and qm._check_question(to_save,false)==null) or (not modifying_mode and qm._check_question(to_save,true)==null):
-			to_save[adict['VBoxContainerDraw']] = $VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerDraw/AnswerDraw.save_dawing()
+			to_save[adict['VBoxContainerDraw']] = $VBoxContainer/ScrollContainer/VBoxContainer/CenterContainer/VBoxContainerDraw/AnswerDraw.save_dawing()
 		else:
 			to_save.erase(adict['VBoxContainerDraw'])
 
@@ -161,7 +163,7 @@ func _notification(what):
 		
 
 func _on_ButtonCancel_pressed():
-	if $VBoxContainer/ButtonCancel.text_loc == 'deleteQuestion':
+	if $VBoxContainer/CenterContainer2/ButtonCancel.text_loc == 'deleteQuestion':
 		qm.remove_question(original_question_title)
 	go_back()
 		

@@ -12,7 +12,7 @@ answer,Answer,Válasz
 next,Next,Következő
 back,Back,Vissza
 lessonList,List of Lessons,Elérhető leckék
-createLesson,Create new Lesson,Új Lecke Létrehozása
+createLesson,Create Lesson, Lecke Létrehozása
 deleteLesson,Delete Lesson,Lecke törlése
 createQuestion,Create Question,Új kérdés Létrehozása
 modifyQuestion,Modify Question,Kérdés megváltoztatása
@@ -35,7 +35,7 @@ couldNotCreateQuestion,Could not create question,Nem lehetett létrehozni a kér
 checkAnswer,Check Answer,Válasz Ellenőrzése
 forceCorrect,Correct!,Helyes!
 forceIncorrect,Incorrect!,Helytelen!
-showOnlyCorrect,Show only correct answer,Csak helyes válasz mutatása
+showOnlyCorrect,Show Correct Only,Csak helyes mutatása
 checkActiveLessons,Please check the lessons you want to use in your training sessions:,Kérem válassza ki azokat a leckéket amelyekből szeretné a kérdéseket kapni tanulás közben:
 noActiveLessons,No active lessons are selected,Egyetlen lecke sem aktív
 noLessonsRedirect,You will be redirected to the lessons management scene,Most át lesz vezényelve a lecke rendezés részre

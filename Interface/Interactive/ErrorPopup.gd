@@ -7,8 +7,8 @@ func _ready():
 func display(title,description):
 	set_title(title)
 	set_description(description)
-	$PopupDialog/VBoxContainer/Title/LabelTitle.rect_size = Vector2(get_viewport_rect().size.x*ratio,60)
-	$PopupDialog/VBoxContainer/Description/LabelNormal.rect_size = Vector2(get_viewport_rect().size.x*ratio,60)
+	$PopupDialog/VBoxContainer/Title/Label.rect_size = Vector2(get_viewport_rect().size.x*ratio,60)
+	$PopupDialog/VBoxContainer/Description/Label.rect_size = Vector2(get_viewport_rect().size.x*ratio,60)
 	$PopupDialog.popup_centered_ratio (ratio)
 
 func set_title(text):

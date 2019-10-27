@@ -9,8 +9,9 @@ func _ready():
 	global = $"/root/GlobalVars"
 	global.retranslate($VBoxContainer,to_translate)
 	
-	$VBoxContainer/LabelLesson/LabelTitle.rect_size = Vector2($VBoxContainer.rect_size.x,60)
-	$VBoxContainer/LabelCheckActiveLessons/LabelSmall.rect_size = Vector2($VBoxContainer.rect_size.x,60)
+	$VBoxContainer/LabelLesson/Label.rect_size = Vector2($VBoxContainer.rect_size.x,60)
+	$VBoxContainer/LabelCheckActiveLessons/Label.rect_size = Vector2($VBoxContainer.rect_size.x,60)
+	$VBoxContainer/LabelCheckActiveLessons.set_mode('small')
 	
 	var lesson_directory = Directory.new()
 	if not lesson_directory.dir_exists('user://lessons/'):
@@ -78,7 +79,6 @@ func _on_ButtonAddLesson_pressed():
 	_on_lesson_pressed('lesson' + str(i))
 
 
-
 #%% Input handling
 func _unhandled_input(event):
 	if event is InputEventKey:
@@ -92,3 +92,4 @@ func _notification(what):
 	if what == MainLoop.NOTIFICATION_WM_GO_BACK_REQUEST: 
 		# For android
 		go_back()
+

@@ -2,12 +2,8 @@
 
 [ext_resource path="res://Screens/QuestionList.gd" type="Script" id=1]
 [ext_resource path="res://res/Wood15.jpg" type="Texture" id=2]
-[ext_resource path="res://Interface/TextDisplay/LabelAdaptiveTitle.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Interface/TextDisplay/LabelAdaptive.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Interface/Buttons/MenuButton.tscn" type="PackedScene" id=4]
-
-
-
-
 
 [node name="WordListRoot" type="Control"]
 anchor_right = 1.0
@@ -21,41 +17,61 @@ texture = ExtResource( 2 )
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_constants/separation = 40
+margin_left = 28.0
+margin_top = 30.0
+margin_right = -28.0
+margin_bottom = -33.0
+size_flags_vertical = 3
+custom_constants/separation = 15
+alignment = 1
 
 [node name="LabelTitle" parent="VBoxContainer" instance=ExtResource( 3 )]
-margin_right = 720.0
+margin_bottom = 0.0
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
-margin_top = 100.0
+margin_top = 15.0
 margin_right = 720.0
-margin_bottom = 550.0
+margin_bottom = 614.0
 rect_min_size = Vector2( 0, 450 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
 margin_bottom = 450.0
 rect_min_size = Vector2( 0, 450 )
 
-[node name="ButtonAddWord" parent="VBoxContainer" instance=ExtResource( 4 )]
-margin_left = 0.0
-margin_top = 590.0
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
+margin_top = 629.0
 margin_right = 720.0
-margin_bottom = 666.455
+margin_bottom = 705.455
+
+[node name="ButtonAddWord" parent="VBoxContainer/CenterContainer" instance=ExtResource( 4 )]
+margin_left = 160.0
+margin_right = 560.0
+margin_bottom = 76.4549
 text_loc = "createQuestion"
 
-[node name="ButtonAddWord2" parent="VBoxContainer" instance=ExtResource( 4 )]
-margin_left = 0.0
-margin_top = 706.0
+[node name="CenterContainer2" type="CenterContainer" parent="VBoxContainer"]
+margin_top = 720.0
 margin_right = 720.0
-margin_bottom = 782.455
+margin_bottom = 796.455
+
+[node name="ButtonAddWord2" parent="VBoxContainer/CenterContainer2" instance=ExtResource( 4 )]
+margin_left = 160.0
+margin_right = 560.0
+margin_bottom = 76.4549
 text_loc = "appendDictionary"
 
-[node name="ButtonDeleteLesson" parent="VBoxContainer" instance=ExtResource( 4 )]
-margin_left = 0.0
-margin_top = 822.0
+[node name="CenterContainer3" type="CenterContainer" parent="VBoxContainer"]
+margin_top = 811.0
 margin_right = 720.0
-margin_bottom = 898.455
+margin_bottom = 887.455
+
+[node name="ButtonDeleteLesson" parent="VBoxContainer/CenterContainer3" instance=ExtResource( 4 )]
+margin_left = 160.0
+margin_right = 560.0
+margin_bottom = 76.4549
 scene_to_load = "res://Manage.tscn"
 text_loc = "deleteLesson"
-[connection signal="pressed" from="VBoxContainer/ButtonAddWord" to="." method="_on_ButtonAddWord_pressed"]
-[connection signal="pressed" from="VBoxContainer/ButtonDeleteLesson" to="." method="_on_ButtonDeleteLesson_pressed"]
+[connection signal="pressed" from="VBoxContainer/CenterContainer/ButtonAddWord" to="." method="_on_ButtonAddWord_pressed"]
+[connection signal="pressed" from="VBoxContainer/CenterContainer3/ButtonDeleteLesson" to="." method="_on_ButtonDeleteLesson_pressed"]
