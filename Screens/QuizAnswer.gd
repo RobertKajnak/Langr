@@ -16,7 +16,7 @@ func _ready():
 	#global.retranslate($VBoxContainer,to_translate)
 	
 	current_question = global.current_question
-	$VBoxContainer/LabelLessonTitle.text = global.get_active_lessons_string()
+	$VBoxContainer/HeaderContainer/LabelLessonTitle.text = global.get_active_lessons_string()
 	$VBoxContainer/LabelQuestion.text = current_question['question']
 	$VBoxContainer/LabelQuestion/Label.add_color_override("font_color",global.skill_color_dict[int(current_question['skill'])])
 	

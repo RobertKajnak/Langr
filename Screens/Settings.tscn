@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Screens/Settings.gd" type="Script" id=1]
 [ext_resource path="res://res/Wood24.jpg" type="Texture" id=2]
 [ext_resource path="res://Interface/TextDisplay/LabelAdaptive.tscn" type="PackedScene" id=3]
 [ext_resource path="res://fonts/MainMenuFont.tres" type="DynamicFont" id=4]
+[ext_resource path="res://Interface/Buttons/BackButton.tscn" type="PackedScene" id=5]
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -21,6 +22,7 @@ anchor_bottom = 1.0
 custom_constants/separation = 100
 
 [node name="LabelTitle" parent="VBoxContainer" instance=ExtResource( 3 )]
+margin_right = 720.0
 margin_bottom = 0.0
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
@@ -70,5 +72,12 @@ margin_left = 441.0
 margin_right = 482.0
 margin_bottom = 64.0
 custom_fonts/font = ExtResource( 4 )
+
+[node name="BackButton" parent="." instance=ExtResource( 5 )]
+margin_left = 13.2562
+margin_top = 12.5804
+margin_right = 43.2562
+margin_bottom = 52.5804
 [connection signal="item_selected" from="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerLang/ButtonLanguage" to="." method="_on_ButtonLanguage_item_selected"]
 [connection signal="item_selected" from="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerScale/ButtonScale" to="." method="_on_ButtonScale_item_selected"]
+[connection signal="pressed" from="BackButton" to="." method="go_back"]

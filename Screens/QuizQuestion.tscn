@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Screens/QuizQuestion.gd" type="Script" id=1]
 [ext_resource path="res://res/Wood15.jpg" type="Texture" id=2]
-[ext_resource path="res://Interface/TextDisplay/LabelAdaptive.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Interface/Buttons/MenuButton.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Interface/Buttons/BackButton.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Interface/TextDisplay/LabelAdaptive.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Interface/Buttons/MenuButton.tscn" type="PackedScene" id=5]
 
 [node name="QuizQuestionRoot" type="Control"]
 anchor_right = 1.0
@@ -28,25 +29,35 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="LabelLessonTitle" parent="VBoxContainer" instance=ExtResource( 3 )]
+[node name="HeaderContainer" type="HBoxContainer" parent="VBoxContainer"]
 margin_right = 650.0
-margin_bottom = 0.0
+margin_bottom = 40.0
+custom_constants/separation = 30
+
+[node name="BackButton" parent="VBoxContainer/HeaderContainer" instance=ExtResource( 3 )]
+margin_left = 0.0
+margin_right = 30.0
+
+[node name="LabelLessonTitle" parent="VBoxContainer/HeaderContainer" instance=ExtResource( 4 )]
+margin_left = 60.0
+margin_right = 60.0
+margin_bottom = 40.0
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
-margin_top = 10.0
+margin_top = 50.0
 margin_right = 650.0
-margin_bottom = 14.0
+margin_bottom = 54.0
 
-[node name="LabelQuestion" parent="VBoxContainer" instance=ExtResource( 3 )]
-margin_top = 24.0
+[node name="LabelQuestion" parent="VBoxContainer" instance=ExtResource( 4 )]
+margin_top = 64.0
 margin_right = 650.0
-margin_bottom = 24.0
+margin_bottom = 64.0
 rect_min_size = Vector2( 650, 0 )
 
 [node name="ScrollContainerAnswers" type="ScrollContainer" parent="VBoxContainer"]
-margin_top = 34.0
+margin_top = 74.0
 margin_right = 650.0
-margin_bottom = 670.0
+margin_bottom = 674.0
 rect_min_size = Vector2( 550, 600 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -54,12 +65,12 @@ size_flags_vertical = 3
 [node name="VBoxContainerAnswers" type="VBoxContainer" parent="VBoxContainer/ScrollContainerAnswers"]
 
 [node name="HBoxContainer2" type="CenterContainer" parent="VBoxContainer"]
-margin_top = 680.0
+margin_top = 684.0
 margin_right = 650.0
-margin_bottom = 756.455
+margin_bottom = 760.455
 size_flags_horizontal = 15
 
-[node name="ButtonCheck" parent="VBoxContainer/HBoxContainer2" instance=ExtResource( 4 )]
+[node name="ButtonCheck" parent="VBoxContainer/HBoxContainer2" instance=ExtResource( 5 )]
 margin_left = 125.0
 margin_right = 525.0
 margin_bottom = 76.4549
@@ -72,4 +83,5 @@ __meta__ = {
 "_edit_group_": true
 }
 [connection signal="resized" from="." to="." method="_on_QuizQuestionRoot_resized"]
+[connection signal="pressed" from="VBoxContainer/HeaderContainer/BackButton" to="." method="go_back"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/ButtonCheck" to="." method="_on_ButtonCheck_pressed"]

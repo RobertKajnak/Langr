@@ -9,7 +9,7 @@ func _ready():
 	global = $"/root/GlobalVars"
 	global.retranslate($VBoxContainer,to_translate)
 	
-	$VBoxContainer/LabelLesson/Label.rect_size = Vector2($VBoxContainer.rect_size.x,60)
+	$VBoxContainer/HeaderContainer/LabelLesson/Label.rect_size = Vector2($VBoxContainer.rect_size.x,60)
 	$VBoxContainer/LabelCheckActiveLessons/Label.rect_size = Vector2($VBoxContainer.rect_size.x,60)
 	$VBoxContainer/LabelCheckActiveLessons.set_mode('small')
 	

@@ -8,7 +8,7 @@ var global
 func _ready():
 	global = $"/root/GlobalVars"
 	current_lesson = global.current_lesson
-	$VBoxContainer/LabelTitle.text = current_lesson
+	$VBoxContainer/HeaderContainer/LabelTitle.text = current_lesson
 	print('Opened ' + current_lesson)
 	
 	var lesson_file = File.new()

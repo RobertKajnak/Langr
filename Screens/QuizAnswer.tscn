@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Screens/QuizAnswer.gd" type="Script" id=1]
 [ext_resource path="res://res/Wood15.jpg" type="Texture" id=2]
-[ext_resource path="res://Interface/TextDisplay/LabelAdaptive.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Interface/Buttons/MenuButton.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Interface/Buttons/BackButton.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Interface/TextDisplay/LabelAdaptive.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Interface/Buttons/MenuButton.tscn" type="PackedScene" id=5]
 
 [node name="QuizQuestionRoot" type="Control"]
 anchor_right = 1.0
@@ -26,23 +27,33 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="LabelLessonTitle" parent="VBoxContainer" instance=ExtResource( 3 )]
+[node name="HeaderContainer" type="HBoxContainer" parent="VBoxContainer"]
 margin_right = 664.0
-margin_bottom = 0.0
+margin_bottom = 40.0
+custom_constants/separation = 30
+
+[node name="BackButton" parent="VBoxContainer/HeaderContainer" instance=ExtResource( 3 )]
+margin_left = 0.0
+margin_right = 30.0
+
+[node name="LabelLessonTitle" parent="VBoxContainer/HeaderContainer" instance=ExtResource( 4 )]
+margin_left = 60.0
+margin_right = 60.0
+margin_bottom = 40.0
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
-margin_top = 4.0
+margin_top = 44.0
 margin_right = 664.0
-margin_bottom = 8.0
+margin_bottom = 48.0
 
-[node name="LabelQuestion" parent="VBoxContainer" instance=ExtResource( 3 )]
-margin_top = 12.0
+[node name="LabelQuestion" parent="VBoxContainer" instance=ExtResource( 4 )]
+margin_top = 52.0
 margin_right = 664.0
-margin_bottom = 12.0
+margin_bottom = 52.0
 rect_min_size = Vector2( 550, 0 )
 
 [node name="ScrollContainerAnswers" type="ScrollContainer" parent="VBoxContainer"]
-margin_top = 16.0
+margin_top = 56.0
 margin_right = 664.0
 margin_bottom = 713.0
 rect_min_size = Vector2( 550, 500 )
@@ -56,14 +67,14 @@ margin_right = 664.0
 margin_bottom = 793.0
 alignment = 1
 
-[node name="ButtonForceIncorrect" parent="VBoxContainer/HBoxContainer2" instance=ExtResource( 4 )]
+[node name="ButtonForceIncorrect" parent="VBoxContainer/HBoxContainer2" instance=ExtResource( 5 )]
 margin_left = 30.0
 margin_right = 330.0
 margin_bottom = 76.4549
 rect_min_size = Vector2( 300, 60 )
 text_loc = "forceIncorrect"
 
-[node name="ButtonForceCorrect" parent="VBoxContainer/HBoxContainer2" instance=ExtResource( 4 )]
+[node name="ButtonForceCorrect" parent="VBoxContainer/HBoxContainer2" instance=ExtResource( 5 )]
 margin_left = 334.0
 margin_right = 634.0
 margin_bottom = 76.4549
@@ -75,12 +86,13 @@ margin_top = 797.0
 margin_right = 664.0
 margin_bottom = 873.455
 
-[node name="ButtonOnlyCorrect" parent="VBoxContainer/CenterContainer" instance=ExtResource( 4 )]
+[node name="ButtonOnlyCorrect" parent="VBoxContainer/CenterContainer" instance=ExtResource( 5 )]
 margin_left = 282.0
 margin_right = 382.0
 margin_bottom = 76.4549
 rect_min_size = Vector2( 100, 60 )
 text_loc = "showOnlyCorrect"
+[connection signal="pressed" from="VBoxContainer/HeaderContainer/BackButton" to="." method="go_back"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/ButtonForceIncorrect" to="." method="_on_ButtonForceIncorrect_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/ButtonForceCorrect" to="." method="_on_ButtonForceCorrect_pressed"]
 [connection signal="pressed" from="VBoxContainer/CenterContainer/ButtonOnlyCorrect" to="." method="_on_ButtonOnlyCorrect_pressed"]

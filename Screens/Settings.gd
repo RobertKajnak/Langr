@@ -7,6 +7,10 @@ var global
 
 func _ready():
 	global = $"/root/GlobalVars"
+	
+	$VBoxContainer/LabelTitle.set_mode('title')
+	$VBoxContainer/LabelTitle.set_width(get_viewport_rect().size.x)
+	
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerLang/LabelLanguage/Label.rect_min_size = Vector2(180,0)
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerLang/LabelLanguage/Label.rect_size = Vector2(180,0)
 	var ButtonLang = $VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerLang/ButtonLanguage

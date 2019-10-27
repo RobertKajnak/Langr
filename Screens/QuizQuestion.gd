@@ -19,7 +19,7 @@ func _ready():
 		return
 		
 	$VBoxContainer/LabelQuestion.set_mode('small')
-	$VBoxContainer/LabelLessonTitle.text = global.get_active_lessons_string()
+	$VBoxContainer/HeaderContainer/LabelLessonTitle.text = global.get_active_lessons_string()
 	$VBoxContainer/LabelQuestion.text = current_question['question']
 	
 	if 'answer_free' in current_question:

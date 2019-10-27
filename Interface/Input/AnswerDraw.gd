@@ -71,7 +71,7 @@ func update_mouse(vec):
 	
 	if len(current_line)==0:#If array empty, append it regarless
 		current_line.append(vec)
-	elif (dist(vec,current_line[-1])) > 2: #Ignore points that are too close together
+	elif (dist(vec,current_line[-1])) > 3: #Ignore points that are too close together
 		current_line.append(vec)
 		#print('x = ' + str(X) + ';  y = ' + str(Y))
 

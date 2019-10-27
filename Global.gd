@@ -143,11 +143,15 @@ func set_active_lessons(active_lessons):
 	self.active_lessons = active_lessons
 	save_settings()
 
-func get_active_lessons_string():
+#Auto_ellipse<=0 =>no ellipse
+func get_active_lessons_string(auto_ellipse=30):
 	var s = ''
 	for lesson in active_lessons:
 		s += lesson.substr(0,lesson.find('.les')) + ', '
-	return s.substr(0,s.length()-2)
+	s = s.substr(0,s.length()-2)
+	if auto_ellipse>0 and s.length()>auto_ellipse:
+		s = s.substr(0,auto_ellipse-3) + '...'
+	return s
 
 func save_settings():
 	# Save the changes by overwriting the previous file

@@ -11,4 +11,5 @@ script = ExtResource( 1 )
 margin_right = 550.0
 margin_bottom = 58.0
 text = "<Label>"
+valign = 1
 autowrap = true
