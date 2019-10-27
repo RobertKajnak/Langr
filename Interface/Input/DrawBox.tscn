@@ -19,6 +19,7 @@ __meta__ = {
 }
 
 [node name="LabelDraw" parent="." instance=ExtResource( 2 )]
+margin_right = 437.0
 margin_bottom = 0.0
 
 [node name="AnswerDraw" type="Control" parent="."]
@@ -59,7 +60,6 @@ custom_fonts/font = ExtResource( 5 )
 margin_left = 32.0
 margin_right = 32.0
 margin_bottom = 74.0
-rect_min_size = Vector2( 0, 0 )
 
 [node name="PreviousButton" parent="HBoxContainer" instance=ExtResource( 6 )]
 

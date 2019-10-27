@@ -16,7 +16,7 @@ func _ready():
 	$HBoxContainer/LabelProgress/Label.rect_size = Vector2(70,40)
 	
 	$LabelDraw.set_mode($LabelDraw.LABEL_MODE_SMALL)
-	$LabelDraw/Label.rect_size = Vector2(450,0)
+	$LabelDraw.set_width(430)
 	#no effect...
 	#$HBoxContainer/ButtonClearDrawing.rect_min_size = Vector2($HBoxContainer/ButtonClearDrawing.rect_size.x+5,
 #															$HBoxContainer/ButtonClearDrawing.rect_size.y-20)
@@ -64,7 +64,7 @@ func set_cache_status_label():
 		
 		
 func create_empty_drawings(count,reset_position_to_0=true):
-	for i in range(count):
+	for _i in range(count):
 		$AnswerDraw.load_next_cached()
 	if reset_position_to_0:
 		$AnswerDraw.load_chached(0)

@@ -4,7 +4,7 @@ var global
 
 func _ready():
 	global = $"/root/GlobalVars"
-	$CenterContainer/VBoxContainer/Label.text = tr(global._transition_title)
+	$CenterContainer/VBoxContainer/LabelTitle.text = tr(global._transition_title)
 	$CenterContainer/VBoxContainer/LabelMessage.text = tr(global._transition_message)
 	#print($CenterContainer/VBoxContainer/LabelMessage.rect_position)
 	

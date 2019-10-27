@@ -38,6 +38,6 @@ forceIncorrect,Incorrect!,Helytelen!
 showOnlyCorrect,Show Correct Only,Csak helyes mutatása
 checkActiveLessons,Please check the lessons you want to use in your training sessions:,Kérem válassza ki azokat a leckéket amelyekből szeretné a kérdéseket kapni tanulás közben:
 noActiveLessons,No active lessons are selected,Egyetlen lecke sem aktív
-noLessonsRedirect,You will be redirected to the lessons management scene,Most át lesz vezényelve a lecke rendezés részre
+noLessonsRedirect,Tap or click to be redirected to the lessons management scene,Kattintson vagy tappintson és át lesz vezényelve a lecke rendezés részre
 noActiveQuestions,There no questions to ask,Nincs több kérdés
 noQuestionsRedirect,There no questions available that have not been already asked and answered correctly today. Please add new questions or change lesson,Nincs több kérdés amit ma lehetne még kérdezni. Kérem adjon hozzá új kérdéseket vagy váltson leckét

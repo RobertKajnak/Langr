@@ -220,7 +220,7 @@ func load_chached(index):
 	return retval
 	
 func remove_empty_cached_from_end():
-	for i in range(cache.size()):
+	for _i in range(cache.size()):
 		if cache[-1][0].empty():
 			cache.remove(cache.size()-1)
 		else:

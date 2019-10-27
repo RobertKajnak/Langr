@@ -55,6 +55,9 @@ func load_data(file_name,question_title):
 				node.text = question_data[key]
 			'question':
 				node.text = question_data[key]
+			'id': pass
+			'good_answer_date':pass
+			'bad_answer_date':pass
 			_:
 				push_warning("unkown key found: " + key)
 	
