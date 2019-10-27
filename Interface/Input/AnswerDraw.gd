@@ -56,6 +56,34 @@ func denormalize(v,w=-1,h=-1):
 func dist(v1,v2):
 	return floor(sqrt(pow(v1.x-v2.x,2) + pow(v1.y-v2.y,2)))
 	
+func line_dist(v0,v1,vp):
+	var divisor = (v1.x-v0.x) if v1.x!=v0.x else 0.01
+	var a = (v0.y-v1.y)/divisor
+	var c = -a*v1.x-v1.y
+	var d = abs(a*vp.x+vp.y+c)/sqrt(a*a+1)
+	return d
+
+func simplify_line(line,tolerance=4):
+	if line.size()>2:
+		var new_line = [line[0],line[1]]
+		var p1 = line[0]
+		var p2 = line[1]
+		var i = 2
+		while i<line.size():
+			while line_dist(p1,p2,line[i])<tolerance:
+				i+=1
+				if i==line.size():
+					new_line.append(line[i-1])
+					return new_line
+			new_line.append(line[i])
+			p1 = line[i-1]
+			p2 = line[i]
+			i+=1
+			
+		return new_line
+	else:
+		return line
+	
 func get_line_color_and_with(index):
 	for ca in colors_and_widths:
 		if index<ca[0]:
@@ -71,15 +99,17 @@ func update_mouse(vec):
 	
 	if len(current_line)==0:#If array empty, append it regarless
 		current_line.append(vec)
-	elif (dist(vec,current_line[-1])) > 3: #Ignore points that are too close together
+	elif (dist(vec,current_line[-1])) > 4: #Ignore points that are too close together
 		current_line.append(vec)
+			
 		#print('x = ' + str(X) + ';  y = ' + str(Y))
 
 func include_line():
+	current_line = simplify_line(current_line)
 	if current_line.size()>0:
 		lines.append(current_line)
 		current_line = []
-
+	
 func include_svg_path(svg_path):
 	for segment in svg_path:
 		var pen = Vector2(0,0)
