@@ -21,11 +21,14 @@ func _ready():
 	
 	question_manager = $"/root/QuestionManager"
 	question_manager.load_questions()
-	for question in question_manager.get_question_titles():
+	for question in question_manager.get_questions():
 		var questionButton = preload("res://Interface/Buttons/SelectLessonButton.tscn").instance()
 		$VBoxContainer/ScrollContainer/VBoxContainer.add_child(questionButton)
-		#questionButton.call('set_label',f.substr(0,f.find_last('.')))
-		questionButton.set_label(question)
+		if not ('good_answer_date' in question) and not('bad_answer_date' in question):
+			questionButton.add_color_override("font_color",global.skill_color_dict[null])
+		else:
+			questionButton.add_color_override("font_color",global.skill_color_dict[int(question['skill'])])
+		questionButton.set_label(question['question'])
 		questionButton.connect("pressed",self,'_on_question_prerssed',[questionButton.text])
 	lesson_file.close()
 	

@@ -20,9 +20,10 @@ var skill_color_dict = {0:Color(1,0,0),
 						1:Color(1,0.2,0.2),
 						2:Color(0.5,0.2,0),
 						3:Color(0.3,0.4,0),
-						4:Color(0.5,0.5,0.5),
+						4:Color(0.2,0.6,0),
 						5:Color(0.2,0.8,0),
-						6:Color(0,1,0)}
+						6:Color(0,1,0),
+						null:Color(0.7,0.7,0.7)}
 
 func set_ui_scale(val):
 	UI_SCALE = val
