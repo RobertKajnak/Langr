@@ -4,6 +4,7 @@ var current_lesson
 
 var question_manager
 var global
+var cd
 
 func _ready():
 	global = $"/root/GlobalVars"
@@ -24,7 +25,12 @@ func _ready():
 		questionButton.set_label(question)
 		questionButton.connect("pressed",self,'_on_question_prerssed',[questionButton.text])
 	lesson_file.close()
+	
+	cd = preload('res://Interface/Interactive/ConfirmationDialog.tscn').instance()
+	$VBoxContainer.add_child(cd)
 
+	cd.set_contents(tr('confirmDeleteLessonTitle'),tr('confirmDeleteLessonMessage').format({'lesson':current_lesson}))
+	cd.connect("OK",self,"_delete_current_lesson")
 #%% Helper functions
 func go_back():
 	var _err = get_tree().change_scene('res://Screens/Manage.tscn')
@@ -49,18 +55,22 @@ func _on_question_prerssed(question_text):
 func _on_ButtonAddWord_pressed():
 	var _err = get_tree().change_scene('res://Screens/CreateQuestion.tscn')
 
+
+func _on_ButtonAddDictionary_pressed():
+	pass
+
 func _on_ButtonDeleteLesson_pressed():
+
+	var vpp = get_viewport_rect().size
+	cd.rect_position = (vpp-cd.rect_size)/2
+	cd.popup()
+
+func _delete_current_lesson():
 	print('Deleting lesson: ' + current_lesson)
-	var dir = Directory.new()
-	var dir_name = 'user://lessons/' + current_lesson
-	dir.remove(dir_name + '.les')
-	#remove all files from the directory first, otherwise the request will fail
-	for f in global.list_files_in_directory(dir_name):
-		dir.remove(dir_name + '/' + f)
-	dir.remove(dir_name)
+	global.delete_lesson(current_lesson)
 	current_lesson = ''
-	global.current_lesson = current_lesson
 	go_back()
+	
 
 
 #%% Input handling
@@ -76,3 +86,4 @@ func _notification(what):
 	if what == MainLoop.NOTIFICATION_WM_GO_BACK_REQUEST: 
 		# For android
 		go_back()
+

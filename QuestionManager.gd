@@ -251,3 +251,5 @@ func get_lesson_for_question(question, cut_extension=false):
 	if cut_extension:
 		ln = ln.substr(0,ln.find_last('.'))
 	return ln
+	
+	

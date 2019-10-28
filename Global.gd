@@ -282,3 +282,15 @@ func to_transition_scene(current_tree,next_scene_name,title,message):
 	_transition_message = message
 	var _err = current_tree.change_scene("res://Screens/TransitionScene.tscn")
 	
+	
+func delete_lesson(lesson):
+	var dir = Directory.new()
+	var dir_name = 'user://lessons/' + lesson
+	dir.remove(dir_name + '.les')
+	#remove all files from the directory first, otherwise the request will fail
+	for f in self.list_files_in_directory(dir_name):
+		dir.remove(dir_name + '/' + f)
+	dir.remove(dir_name)
+	
+	if lesson == current_lesson:
+		current_lesson = ''

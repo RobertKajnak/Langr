@@ -1,13 +1,16 @@
 extends Control
 
-var text setget set_text,get_text
+
 var valign setget set_valign,get_valign
 
 const LABEL_MODE_SMALL = 0
 const LABEL_MODE_NORMAL = 1
 const LABEL_MODE_TITLE = 2
 
-var mode
+var _mode
+export var mode = ''
+export var text = '' setget set_text,get_text
+
 
 func get_text():
 	return $Label.text
@@ -25,7 +28,12 @@ func set_width(w):
 	self.rect_size = Vector2(w,self.rect_size.y)
 
 func _ready():
-	set_mode(LABEL_MODE_NORMAL)
+	if mode == '':
+		set_mode(LABEL_MODE_NORMAL)
+	else:
+		set_mode(mode)
+	if text != '':
+		self.set_text(text)
 	
 func set_mode(mode=LABEL_MODE_NORMAL):
 	if mode is String:
@@ -34,12 +42,12 @@ func set_mode(mode=LABEL_MODE_NORMAL):
 				'MEDIUM':LABEL_MODE_NORMAL,
 				'TITLE':LABEL_MODE_TITLE
 				}[mode.to_upper()]
-	self.mode = mode
+	self._mode = mode
 	adapt()
 
 func adapt():
 	var global = $"/root/GlobalVars"
-	match self.mode:
+	match self._mode:
 		LABEL_MODE_SMALL:
 			global.adapt_font($Label,global.FONT_SIZE_SMALL)
 			$Label.align = Label.ALIGN_LEFT

@@ -1,6 +1,7 @@
 id,en,hu
-OK,Ok,Ok
+OK,Ok,Jó
 cancel,Cancel,Mégse
+comingSoon,Coming Soon,Fejlesztés Alatt
 start,Start Lesson,Lecke Elkezdés
 manage,Manage Lessons,Leckék Kezelése
 settings,Settings,Beállítások
@@ -41,3 +42,5 @@ noActiveLessons,No active lessons are selected,Egyetlen lecke sem aktív
 noLessonsRedirect,Tap or click to be redirected to the lessons management scene,Kattintson vagy tappintson és át lesz vezényelve a lecke rendezés részre
 noActiveQuestions,There no questions to ask,Nincs több kérdés
 noQuestionsRedirect,There no questions available that have not been already asked and answered correctly today. Please add new questions or change lesson,Nincs több kérdés amit ma lehetne még kérdezni. Kérem adjon hozzá új kérdéseket vagy váltson leckét
+confirmDeleteLessonTitle,Confirm Deletion,Biztos Törölni Szertné?
+confirmDeleteLessonMessage,You are about to delete lesson {lesson}. This action cannot be undone. Consider exporting it first,A '{lesson}' lecke törlésre kerül. Ezt a műveletet nem lehet visszafordítani. Esetleg exportálja előszőr a leckét

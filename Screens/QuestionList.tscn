@@ -68,11 +68,12 @@ margin_top = 720.0
 margin_right = 664.0
 margin_bottom = 796.455
 
-[node name="ButtonAddWord2" parent="VBoxContainer/CenterContainer2" instance=ExtResource( 5 )]
+[node name="ButtonAddDictionary" parent="VBoxContainer/CenterContainer2" instance=ExtResource( 5 )]
 margin_left = 132.0
 margin_right = 532.0
 margin_bottom = 76.4549
-text_loc = "appendDictionary"
+disabled = true
+text_loc = "comingSoon"
 
 [node name="CenterContainer3" type="CenterContainer" parent="VBoxContainer"]
 margin_top = 811.0
@@ -87,4 +88,5 @@ scene_to_load = "res://Manage.tscn"
 text_loc = "deleteLesson"
 [connection signal="pressed" from="VBoxContainer/HeaderContainer/BackButton" to="." method="go_back"]
 [connection signal="pressed" from="VBoxContainer/CenterContainer/ButtonAddWord" to="." method="_on_ButtonAddWord_pressed"]
+[connection signal="pressed" from="VBoxContainer/CenterContainer2/ButtonAddDictionary" to="." method="_on_ButtonAddDictionary_pressed"]
 [connection signal="pressed" from="VBoxContainer/CenterContainer3/ButtonDeleteLesson" to="." method="_on_ButtonDeleteLesson_pressed"]
