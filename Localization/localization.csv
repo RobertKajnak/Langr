@@ -46,3 +46,13 @@ confirmDeleteLessonTitle,Confirm Deletion,Biztos Törölni Szertné?
 confirmDeleteLessonMessage,You are about to delete lesson {lesson}. This action cannot be undone. Consider exporting it first,A '{lesson}' lecke törlésre kerül. Ezt a műveletet nem lehet visszafordítani. Esetleg exportálja előszőr a leckét
 lessonAlreadyExitsTitle,Lesson already exists,A lecke már létezik
 lessonAlreadyExitsMessage,Try entering a different name of leave the field blank to revert to the original name,Próbáljon beírni egy másik nevet vagy üresen hagyni a mezőt"," ha nem szeretné megváltoztatni
+exportLesson,Export,Exportálás
+importLesson,Import Lesson,Lecke Importálása
+fileSaveSuccessTitle,Success!,Siker!
+fileSaveSuccessMessage,Lesson saved successfully under '{filename}',Lecke sikeresen elmentve '{filename}' néven
+fileSaveFailTitle,Saving Failed,Mentés sikertelen
+fileSaveFailMessage,Could not save file. Please try again,Fájl mentése kudarcba fulladt. Kérem próbálja újra
+importSuccessTitle,Import Successful,Importálás sikeres
+importSuccessMessage,Importing '{lesson}' successful,'{lesson}' sikeresen importálva
+importFailTitle,Import Failed,Importálás sikertelen
+importFailMessage,Could not import lesson,Nem sikerül importálni a leckét

@@ -50,13 +50,24 @@ margin_bottom = 52.0
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
 margin_top = 56.0
 margin_right = 620.0
-margin_bottom = 770.0
+margin_bottom = 690.0
 rect_min_size = Vector2( 0, 400 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 scroll_horizontal_enabled = false
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
+margin_top = 694.0
+margin_right = 620.0
+margin_bottom = 770.455
+
+[node name="ButtonImport" parent="VBoxContainer/CenterContainer" instance=ExtResource( 5 )]
+margin_left = 110.0
+margin_right = 510.0
+margin_bottom = 76.4549
+text_loc = "importLesson"
 
 [node name="HBoxContainer" type="CenterContainer" parent="VBoxContainer"]
 margin_top = 774.0
@@ -70,4 +81,5 @@ margin_bottom = 76.4549
 rect_min_size = Vector2( 100, 60 )
 text_loc = "createLesson"
 [connection signal="pressed" from="VBoxContainer/HeaderContainer/BackButton" to="." method="go_back"]
+[connection signal="pressed" from="VBoxContainer/CenterContainer/ButtonImport" to="." method="_on_ButtonImport_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/ButtonAddLesson" to="." method="_on_ButtonAddLesson_pressed"]

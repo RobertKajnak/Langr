@@ -305,13 +305,59 @@ func change_lesson_name(old_name,new_name):
 		dir.rename(dir_name_old+'.les',dir_name_new+'.les')
 		return 0
 
+func import_lesson(file_name:String):
+	file_name = strip_les_ending(file_name)
+		
+	var dir = Directory.new()
+	var dest_dir = 'user://lessons/' + file_name.substr(file_name.rfind("/")+1,file_name.length()-1)
+
+	if dir.file_exists(dest_dir+'.les') or dir.dir_exists(dest_dir):
+		return false
+	else:
+		var success = true
+		if dir.file_exists(file_name+'.les'):
+			var err = dir.copy(file_name+'.les',dest_dir+'.les')
+			success = success and (err == OK)
+		if dir.dir_exists(file_name):
+			var err = dir.make_dir(dest_dir)
+			for f in list_files_in_directory(file_name):
+				print(file_name+'/'+f)
+				print(dest_dir +'/' + f)
+				var err2 = dir.copy(file_name+'/'+f,dest_dir +'/' + f)
+				err = err and err2
+				print('File copy Error: ',err2)
+		return success
+
+func export_lesson(file_name, lesson=null):
+	if lesson == null:
+		lesson = current_lesson
+	
+	lesson = strip_les_ending(lesson)
+	file_name = strip_les_ending(file_name)
+	var dir = Directory.new()
+	var dir_name = 'user://lessons/' + lesson
+	
+	var success = true
+	if dir.file_exists(dir_name+'.les'):
+		var err = dir.copy(dir_name+'.les',file_name+'.les')
+		success = success and (err == OK)
+	if dir.dir_exists(dir_name):
+		var err = dir.make_dir(file_name)
+		for f in list_files_in_directory(dir_name):
+			var err2 = dir.copy(dir_name+'/'+f,file_name +'/' + f)
+			err = err and err2
+			print('File copy Error: ',err2)
+		#success = success and (err == OK if err is bool else false)
+	return success
+
 func delete_lesson(lesson):
 	var dir = Directory.new()
 	var dir_name = 'user://lessons/' + lesson
-	dir.remove(dir_name + '.les')
+	dir_name = strip_les_ending(dir_name)
 	#remove all files from the directory first, otherwise the request will fail
 	for f in self.list_files_in_directory(dir_name):
 		dir.remove(dir_name + '/' + f)
+	dir.remove(dir_name + '.les')
 	dir.remove(dir_name)
 	
 	if lesson == current_lesson:

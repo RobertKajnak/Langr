@@ -5,6 +5,9 @@ var to_translate = {'LabelLesson':'lessonList',
 					'LabelCheckActiveLessons':'checkActiveLessons',
 					}
 var global 
+
+var lesson_container
+
 func _ready():
 	global = $"/root/GlobalVars"
 	global.retranslate($VBoxContainer,to_translate)
@@ -13,6 +16,11 @@ func _ready():
 	$VBoxContainer/LabelCheckActiveLessons/Label.rect_size = Vector2($VBoxContainer.rect_size.x,60)
 	$VBoxContainer/LabelCheckActiveLessons.set_mode('small')
 	
+	lesson_container = $VBoxContainer/ScrollContainer/VBoxContainer
+	populate_with_lessons(lesson_container)
+
+#%% Helper functions
+func populate_with_lessons(node):
 	var lesson_directory = Directory.new()
 	if not lesson_directory.dir_exists('user://lessons/'):
 		lesson_directory.make_dir('user://lessons')
@@ -39,13 +47,12 @@ func _ready():
 		
 		box.add_child(checkBox)
 		box.add_child(lessonButton)
-		$VBoxContainer/ScrollContainer/VBoxContainer.add_child(box)
+		node.add_child(box)
 		
 		#TODO: change f to title in f
 		lessonButton.call('set_label',f.substr(0,f.find_last('.')))
 		lessonButton.connect("pressed",self,'_on_lesson_pressed',[lessonButton.text])
 
-#%% Helper functions
 func go_back():
 	change_active_lessons()
 	var _err = get_tree().change_scene('res://Screens/MainMenu.tscn')
@@ -63,6 +70,37 @@ func _on_lesson_pressed(lesson_name):
 	change_active_lessons()
 	get_node("/root/GlobalVars").current_lesson = lesson_name
 	var _err = get_tree().change_scene('res://Screens/QuestionList.tscn')
+
+
+func import_lesson(filename):
+	var popup = preload("res://Interface/Interactive/ErrorPopup.tscn").instance()
+	add_child(popup)
+	if global.import_lesson(filename):
+		popup.display(tr('importSuccessTitle'),tr('importSuccessMessage').format({'filename':filename}))
+		#for child in lesson_container.get_children():
+		#	lesson_container.remove_child(child)
+		#	child.queue_free()
+		#populate_with_lessons(lesson_container)
+		go_back()
+	else:
+		popup.display(tr('importFailTitle'),tr('importFailMessage'))
+		
+
+func _on_ButtonImport_pressed():
+	var fd = FileDialog.new()
+	fd.set_theme( preload('res://res/DefaultJPTheme.tres'))
+	var vps = get_viewport().size 
+	fd.rect_size = vps * 0.8
+	fd.rect_position = vps *0.1
+	fd.set_mode_overrides_title(true)
+	fd.access = FileDialog.ACCESS_FILESYSTEM
+	fd.mode = FileDialog.MODE_OPEN_FILE
+	fd.set_filters(PoolStringArray(["*.les ; Lesson File"]))
+	get_node('.').add_child(fd)
+	fd.show()
+	fd.invalidate()#AKA Refresh
+	fd.connect("file_selected",self,"import_lesson")
+	
 
 func _on_ButtonAddLesson_pressed():
 	change_active_lessons()
@@ -92,4 +130,5 @@ func _notification(what):
 	if what == MainLoop.NOTIFICATION_WM_GO_BACK_REQUEST: 
 		# For android
 		go_back()
+
 

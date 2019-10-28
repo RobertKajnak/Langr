@@ -37,6 +37,10 @@ func _ready():
 
 #%% Helper functions
 func go_back():
+	if $VBoxContainer/HeaderContainer/LabelTitle == null:
+		push_warning('TItle was null')
+		var _err = get_tree().change_scene('res://Screens/Manage.tscn')
+		return
 	var new_title = $VBoxContainer/HeaderContainer/LabelTitle.text
 	if current_lesson =='' or new_title == '' or new_title == title_original or \
 			global.change_lesson_name(current_lesson,new_title) == 0:
@@ -66,9 +70,29 @@ func _on_question_prerssed(question_text):
 func _on_ButtonAddWord_pressed():
 	var _err = get_tree().change_scene('res://Screens/CreateQuestion.tscn')
 
+func export_lesson_to_file(filename):
+	var popup = preload("res://Interface/Interactive/ErrorPopup.tscn").instance()
+	add_child(popup)
+	if global.export_lesson(filename,current_lesson):
+		popup.display(tr('fileSaveSuccessTitle'),tr('fileSaveSuccessMessage').format({'filename':current_lesson}))
+	else:
+		popup.display(tr('fileSaveFailTitle'),tr('fileSaveFailMessage'))
+		
 
-func _on_ButtonAddDictionary_pressed():
-	pass
+func _on_Export_pressed():
+	var fd = FileDialog.new()
+	fd.set_theme( preload('res://res/DefaultJPTheme.tres'))
+	var vps = get_viewport().size 
+	fd.rect_size = vps * 0.8
+	fd.rect_position = vps *0.1
+	fd.set_mode_overrides_title(true)
+	fd.access = FileDialog.ACCESS_FILESYSTEM
+	fd.mode = FileDialog.MODE_SAVE_FILE
+	fd.set_filters(PoolStringArray(["*.les ; Lesson File"]))
+	get_node('.').add_child(fd)
+	fd.show()
+	fd.invalidate()#AKA Refresh
+	fd.connect("file_selected",self,"export_lesson_to_file")
 
 func _on_ButtonDeleteLesson_pressed():
 
