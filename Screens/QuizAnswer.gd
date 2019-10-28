@@ -16,7 +16,13 @@ func _ready():
 	#global.retranslate($VBoxContainer,to_translate)
 	
 	current_question = global.current_question
-	$VBoxContainer/HeaderContainer/LabelLessonTitle.text = global.get_active_lessons_string()
+	
+	var title_string = str(qm.get_lesson_for_question(current_question))
+	title_string = title_string.substr(0,title_string.rfind('.'))
+	if global.active_lessons.size()>1:
+		title_string += ' [' + global.get_active_lessons_string(20) + ']'
+	$VBoxContainer/HeaderContainer/LabelLessonTitle.text =  title_string
+	
 	$VBoxContainer/LabelQuestion.text = current_question['question']
 	$VBoxContainer/LabelQuestion/Label.add_color_override("font_color",global.skill_color_dict[int(current_question['skill'])])
 	
