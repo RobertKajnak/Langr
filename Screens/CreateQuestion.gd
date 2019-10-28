@@ -53,8 +53,10 @@ func load_data(file_name,question_title):
 				node.select(int(question_data[key]))
 			'answer_free':
 				node.text = question_data[key]
+				node.adapt()
 			'question':
 				node.text = question_data[key]
+				node.adapt()
 			'id': pass
 			'good_answer_date':pass
 			'bad_answer_date':pass

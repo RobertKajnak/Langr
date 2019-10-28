@@ -298,6 +298,7 @@ func create_file_dialog(viewport_rect : Rect2, parent: Node, access_mode):
 	fd.access = FileDialog.ACCESS_FILESYSTEM
 	fd.mode = access_mode
 	fd.set_filters(PoolStringArray(["*.les ; Lesson File"]))
+	fd.set_current_dir(OS.get_user_data_dir())
 	parent.add_child(fd)
 	fd.show()
 	fd.invalidate()#AKA Refresh

@@ -68,7 +68,7 @@ func change_active_lessons():
 func _on_lesson_pressed(lesson_name):
 	print('Opening lesson: ' + lesson_name)
 	change_active_lessons()
-	get_node("/root/GlobalVars").current_lesson = lesson_name
+	global.current_lesson = lesson_name
 	var _err = get_tree().change_scene('res://Screens/QuestionList.tscn')
 
 
