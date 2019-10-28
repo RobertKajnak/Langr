@@ -288,6 +288,21 @@ func to_transition_scene(current_tree,next_scene_name,title,message):
 	_transition_message = message
 	var _err = current_tree.change_scene("res://Screens/TransitionScene.tscn")
 	
+func create_file_dialog(viewport_rect : Rect2, parent: Node, access_mode):
+	var fd = FileDialog.new()
+	fd.set_theme( preload('res://res/DefaultJPTheme.tres'))
+	var vps = viewport_rect.size 
+	fd.rect_size = vps * 0.8
+	fd.rect_position = vps *0.1
+	fd.set_mode_overrides_title(true)
+	fd.access = FileDialog.ACCESS_FILESYSTEM
+	fd.mode = access_mode
+	fd.set_filters(PoolStringArray(["*.les ; Lesson File"]))
+	parent.add_child(fd)
+	fd.show()
+	fd.invalidate()#AKA Refresh
+	return fd
+	
 #Returns -1 if the lesson could not be changed. If there is no '.les' ending, it will be implied
 func change_lesson_name(old_name,new_name):
 	old_name = strip_les_ending(old_name)

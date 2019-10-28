@@ -83,18 +83,7 @@ func export_lesson_to_file(filename):
 		
 
 func _on_Export_pressed():
-	var fd = FileDialog.new()
-	fd.set_theme( preload('res://res/DefaultJPTheme.tres'))
-	var vps = get_viewport().size 
-	fd.rect_size = vps * 0.8
-	fd.rect_position = vps *0.1
-	fd.set_mode_overrides_title(true)
-	fd.access = FileDialog.ACCESS_FILESYSTEM
-	fd.mode = FileDialog.MODE_SAVE_FILE
-	fd.set_filters(PoolStringArray(["*.les ; Lesson File"]))
-	get_node('.').add_child(fd)
-	fd.show()
-	fd.invalidate()#AKA Refresh
+	var fd = global.create_file_dialog(get_viewport_rect(),get_node('.'),FileDialog.MODE_SAVE_FILE)
 	fd.connect("file_selected",self,"export_lesson_to_file")
 
 func _on_ButtonDeleteLesson_pressed():
