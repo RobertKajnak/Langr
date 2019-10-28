@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://ConfirmationDialog.gd" type="Script" id=1]
+[ext_resource path="res://Interface/Interactive/ConfirmationDialog.gd" type="Script" id=1]
 [ext_resource path="res://res/Fabric24.jpg" type="Texture" id=2]
 [ext_resource path="res://Interface/TextDisplay/LabelAdaptive.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Interface/Buttons/MenuButton.tscn" type="PackedScene" id=4]

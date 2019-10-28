@@ -1,6 +1,7 @@
 extends Control
 
 var current_lesson
+var title_original
 
 var question_manager
 var global
@@ -9,7 +10,9 @@ var cd
 func _ready():
 	global = $"/root/GlobalVars"
 	current_lesson = global.current_lesson
+	title_original = current_lesson
 	$VBoxContainer/HeaderContainer/LabelTitle.text = current_lesson
+	$VBoxContainer/HeaderContainer/LabelTitle.set_text_size(global.FONT_SIZE_MEDIUM)
 	print('Opened ' + current_lesson)
 	
 	var lesson_file = File.new()
@@ -31,9 +34,17 @@ func _ready():
 
 	cd.set_contents(tr('confirmDeleteLessonTitle'),tr('confirmDeleteLessonMessage').format({'lesson':current_lesson}))
 	cd.connect("OK",self,"_delete_current_lesson")
+
 #%% Helper functions
 func go_back():
-	var _err = get_tree().change_scene('res://Screens/Manage.tscn')
+	var new_title = $VBoxContainer/HeaderContainer/LabelTitle.text
+	if current_lesson =='' or new_title == '' or new_title == title_original or \
+			global.change_lesson_name(current_lesson,new_title) == 0:
+		var _err = get_tree().change_scene('res://Screens/Manage.tscn')
+	else:
+		var popup = preload("res://Interface/Interactive/ErrorPopup.tscn").instance()
+		add_child(popup)
+		popup.display(tr('lessonAlreadyExitsTitle'),tr('lessonAlreadyExitsMessage'))
 
 
 #%% Interface handling

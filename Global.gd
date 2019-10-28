@@ -276,13 +276,35 @@ func save_svg_path(file_name,svg_path_array):
 #func _process(delta):
 #	pass
 
+func strip_les_ending(string):
+	if string.substr(string.length()-4,string.length()) == '.les':
+		string = string.substr(0,string.length()-4)
+	return string
+
 func to_transition_scene(current_tree,next_scene_name,title,message):
 	_transition_goal = next_scene_name
 	_transition_title = title
 	_transition_message = message
 	var _err = current_tree.change_scene("res://Screens/TransitionScene.tscn")
 	
-	
+#Returns -1 if the lesson could not be changed. If there is no '.les' ending, it will be implied
+func change_lesson_name(old_name,new_name):
+	old_name = strip_les_ending(old_name)
+	new_name = strip_les_ending(new_name)
+		
+	var dir = Directory.new()
+	var dir_name_old = 'user://lessons/' + old_name
+	var dir_name_new = 'user://lessons/' + new_name
+
+	#While the two individual rename functions do return errors themselves, 
+	#it would be bad if only one was renamed, while the other failed
+	if dir.file_exists(dir_name_new+'.les') or dir.dir_exists(dir_name_new):
+		return -1
+	else:
+		dir.rename(dir_name_old,dir_name_new)
+		dir.rename(dir_name_old+'.les',dir_name_new+'.les')
+		return 0
+
 func delete_lesson(lesson):
 	var dir = Directory.new()
 	var dir_name = 'user://lessons/' + lesson

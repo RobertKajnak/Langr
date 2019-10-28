@@ -44,3 +44,5 @@ noActiveQuestions,There no questions to ask,Nincs több kérdés
 noQuestionsRedirect,There no questions available that have not been already asked and answered correctly today. Please add new questions or change lesson,Nincs több kérdés amit ma lehetne még kérdezni. Kérem adjon hozzá új kérdéseket vagy váltson leckét
 confirmDeleteLessonTitle,Confirm Deletion,Biztos Törölni Szertné?
 confirmDeleteLessonMessage,You are about to delete lesson {lesson}. This action cannot be undone. Consider exporting it first,A '{lesson}' lecke törlésre kerül. Ezt a műveletet nem lehet visszafordítani. Esetleg exportálja előszőr a leckét
+lessonAlreadyExitsTitle,Lesson already exists,A lecke már létezik
+lessonAlreadyExitsMessage,Try entering a different name of leave the field blank to revert to the original name,Próbáljon beírni egy másik nevet vagy üresen hagyni a mezőt"," ha nem szeretné megváltoztatni

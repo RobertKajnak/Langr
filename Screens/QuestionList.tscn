@@ -3,7 +3,7 @@
 [ext_resource path="res://Screens/QuestionList.gd" type="Script" id=1]
 [ext_resource path="res://res/Wood15.jpg" type="Texture" id=2]
 [ext_resource path="res://Interface/Buttons/BackButton.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Interface/TextDisplay/LabelAdaptive.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Interface/Input/TextEditFreeForm.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Interface/Buttons/MenuButton.tscn" type="PackedScene" id=5]
 
 [node name="WordListRoot" type="Control"]
@@ -28,20 +28,23 @@ alignment = 1
 
 [node name="HeaderContainer" type="HBoxContainer" parent="VBoxContainer"]
 margin_right = 664.0
-margin_bottom = 40.0
+margin_bottom = 60.0
 custom_constants/separation = 30
 
 [node name="BackButton" parent="VBoxContainer/HeaderContainer" instance=ExtResource( 3 )]
 margin_left = 0.0
+margin_top = 10.0
 margin_right = 30.0
+margin_bottom = 50.0
 
 [node name="LabelTitle" parent="VBoxContainer/HeaderContainer" instance=ExtResource( 4 )]
 margin_left = 60.0
-margin_right = 60.0
-margin_bottom = 40.0
+margin_right = 510.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 450, 60 )
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
-margin_top = 55.0
+margin_top = 75.0
 margin_right = 664.0
 margin_bottom = 614.0
 rect_min_size = Vector2( 0, 450 )
