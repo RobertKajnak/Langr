@@ -164,6 +164,7 @@ func clear_drawing():
 	current_line = []
 	lines = []
 	texts = []
+	
 	#$"/root/GlobalVars".save_svg_path('user://lessons/lesson0/06f5c_re.svg',segments)
 
 func is_empty():
@@ -216,16 +217,16 @@ func remove_last_line():
 	lines.remove(lines.size()-1)
 	
 func load_prev_cached():
-	return load_chached(currently_loaded-1)
+	return load_cached(currently_loaded-1)
 	
 func load_next_cached():
-	return load_chached(currently_loaded+1)
+	return load_cached(currently_loaded+1)
 	
 #Return values: 
 #  0 -- loaded successfully
 #  -1 -- cannot load negative index or already loaded
 #  1 -- added next index
-func load_chached(index):
+func load_cached(index):
 	if currently_loaded == index || index<0:
 		return -1
 	
@@ -260,7 +261,7 @@ func get_cache_and_lines(remove_empty_from_end = true):
 	if remove_empty_from_end:
 		if lines.empty() or cache.size()!=currently_loaded:
 			remove_empty_cached_from_end()
-	load_chached(cache.size()+1)
+	load_cached(cache.size()+1)
 	 
 	return cache
 
@@ -294,3 +295,5 @@ func _on_AnswerDraw_gui_input(event):
 		button_down = !button_down
 	if button_down and event is InputEventMouseMotion:
 		update_mouse(event.position)
+		
+	#get_tree().set_input_as_handled()

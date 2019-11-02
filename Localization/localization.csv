@@ -20,7 +20,7 @@ modifyQuestion,Modify Question,Kérdés megváltoztatása
 deleteQuestion,Delete Question,Kérdés törlése
 questionPlaceholder,Modify Question text here,Kérdés szövegének módosítása itt
 answerTextPlaceholder,Modify Answer Here (free text),Válasz szövegének módosítása itt (korlátlan bevitel)
-drawLabel,Draw answer in the following field,Válasz lerajzolása a következő mezőbe
+drawLabel,Draw Answer here:,Rajzolja ide a választ:
 drawClear,Clear,Törlés
 drawUndo,Undo,Vissza
 createQuestionDict,Add Word from Dictionary,Szó hozzáadása a szótárból
@@ -41,13 +41,13 @@ checkActiveLessons,Please check the lessons you want to use in your training ses
 noActiveLessons,No active lessons are selected,Egyetlen lecke sem aktív
 noLessonsRedirect,Tap or click to be redirected to the lessons management scene,Kattintson vagy tappintson és át lesz vezényelve a lecke rendezés részre
 noActiveQuestions,There no questions to ask,Nincs több kérdés
-noQuestionsRedirect,There no questions available that have not been already asked and answered correctly today. Please add new questions or change lesson,Nincs több kérdés amit ma lehetne még kérdezni. Kérem adjon hozzá új kérdéseket vagy váltson leckét
+noQuestionsRedirect,There no questions available that have not been already asked and answered correctly today. Please add new questions"," change lesson or come back tomorrow,Nincs több kérdés amit ma lehetne még kérdezni. Kérem adjon hozzá új kérdéseket"," váltson leckét vagy jöjjön vissza holnap
+exportLesson,Export,Exportálás
+importLesson,Import Lesson,Lecke Importálása
 confirmDeleteLessonTitle,Confirm Deletion,Biztos Törölni Szertné?
 confirmDeleteLessonMessage,You are about to delete lesson {lesson}. This action cannot be undone. Consider exporting it first,A '{lesson}' lecke törlésre kerül. Ezt a műveletet nem lehet visszafordítani. Esetleg exportálja előszőr a leckét
 lessonAlreadyExitsTitle,Lesson already exists,A lecke már létezik
 lessonAlreadyExitsMessage,Try entering a different name of leave the field blank to revert to the original name,Próbáljon beírni egy másik nevet vagy üresen hagyni a mezőt"," ha nem szeretné megváltoztatni
-exportLesson,Export,Exportálás
-importLesson,Import Lesson,Lecke Importálása
 fileSaveSuccessTitle,Success!,Siker!
 fileSaveSuccessMessage,Lesson saved successfully under '{filename}',Lecke sikeresen elmentve '{filename}' néven
 fileSaveFailTitle,Saving Failed,Mentés sikertelen

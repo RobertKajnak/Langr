@@ -12,8 +12,12 @@ func _ready():
 	global = $"/root/GlobalVars"
 	global.retranslate($VBoxContainer,to_translate)
 	
-	$VBoxContainer/HeaderContainer/LabelLesson/Label.rect_size = Vector2($VBoxContainer.rect_size.x,60)
-	$VBoxContainer/LabelCheckActiveLessons/Label.rect_size = Vector2($VBoxContainer.rect_size.x,60)
+	#$VBoxContainer/HeaderContainer/LabelLesson/Label.rect_size = Vector2($VBoxContainer.rect_size.x,60)
+	#$VBoxContainer/LabelCheckActiveLessons/Label.rect_size = Vector2($VBoxContainer.rect_size.x,60)
+	$VBoxContainer/HeaderContainer/LabelLesson.set_width(get_viewport_rect().size.x*0.75)
+	$VBoxContainer/LabelCheckActiveLessons.set_width(get_viewport_rect().size.x*0.75)
+	$VBoxContainer/LabelCheckActiveLessons.rect_size.y=0
+	$VBoxContainer/LabelCheckActiveLessons/Label.rect_size.y=0
 	$VBoxContainer/LabelCheckActiveLessons.set_mode('small')
 	
 	lesson_container = $VBoxContainer/ScrollContainer/VBoxContainer

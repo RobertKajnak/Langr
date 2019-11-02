@@ -24,8 +24,8 @@ func set_valign(val):
 	$label.valign = val
 
 func set_width(w):
-	$Label.rect_size = Vector2(w,$Label.rect_size.y)
-	self.rect_size = Vector2(w,self.rect_size.y)
+	$Label.rect_size.x = w
+	self.rect_size.x = w
 
 func _ready():
 	if mode == '':

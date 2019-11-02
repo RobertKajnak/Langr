@@ -44,7 +44,8 @@ func _ready():
 			nr_drawings = nr_drawings.size()
 		dr_answer.create_empty_drawings(nr_drawings-1)
 		dr_answer.disable_add_drawing()
-
+	
+	
 func go_back():
 	qm.exit_quiz()
 	var _err = get_tree().change_scene('res://Screens/MainMenu.tscn')

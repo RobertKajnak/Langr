@@ -50,7 +50,7 @@ func set_cache_status_label():
 	$HBoxContainer/PreviousButton.set_icon("left")
 	
 	var cst = $AnswerDraw.get_cache_status()
-	if cst[0] == cst[1] and can_add_drawing:
+	if cst[0] == cst[1]:
 		if can_add_drawing:
 			$HBoxContainer/NextButton.set_icon("plus")
 		else:
@@ -67,7 +67,7 @@ func create_empty_drawings(count,reset_position_to_0=true):
 	for _i in range(count):
 		$AnswerDraw.load_next_cached()
 	if reset_position_to_0:
-		$AnswerDraw.load_chached(0)
+		$AnswerDraw.load_cached(0)
 	set_cache_status_label()
 
 func disable_add_drawing():
@@ -87,3 +87,6 @@ func _on_NextButton_pressed():
 	if can_add_drawing or cst[0]<cst[1]:
 		var _cp = $AnswerDraw.load_next_cached()
 		set_cache_status_label()
+
+func load_image(indx : int):
+	$AnswerDraw.load_cached(indx)

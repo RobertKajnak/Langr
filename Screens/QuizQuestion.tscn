@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Screens/QuizQuestion.gd" type="Script" id=1]
 [ext_resource path="res://res/Wood15.jpg" type="Texture" id=2]
 [ext_resource path="res://Interface/Buttons/BackButton.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Interface/TextDisplay/LabelAdaptive.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Interface/Buttons/MenuButton.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Interface/Interactive/ScrollContainerDraggable.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Interface/Buttons/MenuButton.tscn" type="PackedScene" id=6]
 
 [node name="QuizQuestionRoot" type="Control"]
 anchor_right = 1.0
@@ -54,26 +55,25 @@ margin_right = 650.0
 margin_bottom = 64.0
 rect_min_size = Vector2( 650, 0 )
 
-[node name="ScrollContainerAnswers" type="ScrollContainer" parent="VBoxContainer"]
-margin_top = 74.0
+[node name="ScrollContainerAnswers" parent="VBoxContainer" instance=ExtResource( 5 )]
 margin_right = 650.0
-margin_bottom = 674.0
-rect_min_size = Vector2( 550, 600 )
+margin_bottom = 1084.0
+
+[node name="VBoxContainerAnswers" type="VBoxContainer" parent="VBoxContainer/ScrollContainerAnswers"]
+margin_right = 650.0
+margin_bottom = 1010.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="VBoxContainerAnswers" type="VBoxContainer" parent="VBoxContainer/ScrollContainerAnswers"]
-
 [node name="HBoxContainer2" type="CenterContainer" parent="VBoxContainer"]
-margin_top = 684.0
+margin_top = 1094.0
 margin_right = 650.0
-margin_bottom = 760.455
+margin_bottom = 1170.45
 size_flags_horizontal = 15
 
-[node name="ButtonCheck" parent="VBoxContainer/HBoxContainer2" instance=ExtResource( 5 )]
-margin_left = 125.0
-margin_right = 525.0
-margin_bottom = 76.4549
+[node name="ButtonCheck" parent="VBoxContainer/HBoxContainer2" instance=ExtResource( 6 )]
+margin_left = 275.0
+margin_right = 375.0
 text_loc = "checkAnswer"
 
 [node name="CenterContainer" type="CenterContainer" parent="."]

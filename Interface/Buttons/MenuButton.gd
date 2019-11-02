@@ -9,6 +9,6 @@ func _ready():
 	
 	
 func _process(delta):
-	rect_min_size = $Label.rect_size*1.1
-	rect_size = $Label.rect_size*1.1
+	rect_min_size = Vector2($Label.rect_size.x*1.1,$Label.rect_size.y)
+	rect_size = Vector2($Label.rect_size.x*1.1,$Label.rect_size.y)
 	set_process(false)

@@ -12,18 +12,19 @@ axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
 [node name="Button" type="Button"]
-margin_left = -0.814514
-margin_right = 449.185
-margin_bottom = 60.0
-rect_min_size = Vector2( 400, 60 )
+margin_left = -1.0
+margin_right = 196.0
+margin_bottom = 76.4549
+rect_min_size = Vector2( 100, 60 )
 custom_styles/normal = SubResource( 1 )
 script = ExtResource( 2 )
 
 [node name="Label" type="Label" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -3.33209
-margin_right = -3.33209
+margin_left = 1.0
+margin_top = 1.0
+margin_bottom = 0.545097
 custom_fonts/font = ExtResource( 3 )
 custom_colors/font_color = Color( 0.309804, 0.4, 0.866667, 1 )
 custom_colors/font_color_shadow = Color( 0.0784314, 0.14902, 0.164706, 1 )

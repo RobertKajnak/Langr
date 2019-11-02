@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Screens/QuizAnswer.gd" type="Script" id=1]
 [ext_resource path="res://res/Wood15.jpg" type="Texture" id=2]
 [ext_resource path="res://Interface/Buttons/BackButton.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Interface/TextDisplay/LabelAdaptive.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Interface/Buttons/MenuButton.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Interface/Interactive/ScrollContainerDraggable.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Interface/Buttons/MenuButton.tscn" type="PackedScene" id=6]
 
 [node name="QuizQuestionRoot" type="Control"]
 anchor_right = 1.0
@@ -52,14 +53,16 @@ margin_right = 664.0
 margin_bottom = 52.0
 rect_min_size = Vector2( 550, 0 )
 
-[node name="ScrollContainerAnswers" type="ScrollContainer" parent="VBoxContainer"]
+[node name="ScrollContainerAnswers" parent="VBoxContainer" instance=ExtResource( 5 )]
 margin_top = 56.0
 margin_right = 664.0
 margin_bottom = 713.0
-rect_min_size = Vector2( 550, 500 )
-size_flags_vertical = 3
 
 [node name="VBoxContainerAnswers" type="VBoxContainer" parent="VBoxContainer/ScrollContainerAnswers"]
+margin_right = 664.0
+margin_bottom = 657.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 717.0
@@ -67,17 +70,15 @@ margin_right = 664.0
 margin_bottom = 793.0
 alignment = 1
 
-[node name="ButtonForceIncorrect" parent="VBoxContainer/HBoxContainer2" instance=ExtResource( 5 )]
+[node name="ButtonForceIncorrect" parent="VBoxContainer/HBoxContainer2" instance=ExtResource( 6 )]
 margin_left = 30.0
 margin_right = 330.0
-margin_bottom = 76.4549
 rect_min_size = Vector2( 300, 60 )
 text_loc = "forceIncorrect"
 
-[node name="ButtonForceCorrect" parent="VBoxContainer/HBoxContainer2" instance=ExtResource( 5 )]
+[node name="ButtonForceCorrect" parent="VBoxContainer/HBoxContainer2" instance=ExtResource( 6 )]
 margin_left = 334.0
 margin_right = 634.0
-margin_bottom = 76.4549
 rect_min_size = Vector2( 300, 60 )
 text_loc = "forceCorrect"
 
@@ -86,11 +87,9 @@ margin_top = 797.0
 margin_right = 664.0
 margin_bottom = 873.455
 
-[node name="ButtonOnlyCorrect" parent="VBoxContainer/CenterContainer" instance=ExtResource( 5 )]
+[node name="ButtonOnlyCorrect" parent="VBoxContainer/CenterContainer" instance=ExtResource( 6 )]
 margin_left = 282.0
 margin_right = 382.0
-margin_bottom = 76.4549
-rect_min_size = Vector2( 100, 60 )
 text_loc = "showOnlyCorrect"
 [connection signal="pressed" from="VBoxContainer/HeaderContainer/BackButton" to="." method="go_back"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/ButtonForceIncorrect" to="." method="_on_ButtonForceIncorrect_pressed"]

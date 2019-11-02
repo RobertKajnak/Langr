@@ -33,7 +33,7 @@ func _ready():
 		current_question['answer_free'] == temp_answer['answer_free']:
 			answer_color = Color(0.1,0.9,0.2) 
 	else:
-		 answer_color = Color(0.7,0.1,0.1)
+		 answer_color = Color(1,0.5,0.3)
 	if 'answer_free' in current_question:
 		for txt in ['Expected Answer:',
 					'      ' + current_question['answer_free'],
@@ -59,7 +59,22 @@ func _ready():
 		display_answers()
 		
 
-func display_answers(only_correct = false):
+func set_color_to_retry(dr_internal):
+	dr_internal.change_line_color_to(Color(0.4,0.1,0.6),4)
+	dr_answer.disable_add_drawing()
+	dr_answer.set_cache_status_label()
+
+func draw_correct_answer(dr_internal, idx: int):
+	dr_internal.change_line_color_to(Color(0,0.8,0.2,0.6),9)
+	var fns = current_question['answer_draw']
+	if fns is String:
+		fns = [fns]
+	
+	var drawing_file_name = 'user://lessons/' + qm.get_lesson_for_question(current_question,true) \
+							+ '/' + fns[idx]
+	dr_internal.load_drawing(drawing_file_name)
+
+func display_answers():
 	#if not correct_dr_answer:
 	var fns = current_question['answer_draw']
 	var temp_answer_cache = temp_answer['answer_draw']
@@ -70,25 +85,28 @@ func display_answers(only_correct = false):
 	var lim = max(temp_answer_cache.size(),fns.size())
 	for i in range(lim):
 		if i<fns.size():
-			dr_internal.change_line_color_to(Color(0,0.8,0.2,0.6),9)
-			var drawing_file_name = 'user://lessons/' + qm.get_lesson_for_question(current_question,true) \
-									+ '/' + fns[i]
-			dr_internal.load_drawing(drawing_file_name)
+			draw_correct_answer(dr_internal,i)
 			#var correct_dr_answer = dr_answer.get_lines()
 		#else:
 		#	dr_answer.add_lines(correct_dr_answer)	
-		if (not only_correct) and i<temp_answer_cache.size():
+		if i<temp_answer_cache.size():
 			dr_internal.change_line_color_to(Color(0.4,0.1,0.6),3)
-			
 			
 			dr_internal.change_line_color_to()
 			dr_answer.add_lines(temp_answer_cache[i][0])
 		if i<lim-1:
 			dr_internal.load_next_cached()
-	dr_internal.load_chached(0)
-	dr_internal.change_line_color_to(Color(0.4,0.1,0.6),3)
-	dr_answer.disable_add_drawing()
-	dr_answer.set_cache_status_label()
+	dr_internal.load_cached(0)
+	set_color_to_retry(dr_internal)
+	
+func load_and_show_correct_answer(idx=-1):
+	var dr_internal = dr_answer.find_node('AnswerDraw')
+	if idx == -1:
+		idx = dr_internal.currently_loaded
+	dr_internal.load_cached(idx)
+	dr_internal.clear_drawing()
+	draw_correct_answer(dr_internal,idx)	
+	set_color_to_retry(dr_internal)
 	
 func go_back():
 	qm.exit_quiz()
@@ -105,8 +123,8 @@ func _on_ButtonForceCorrect_pressed():
 	var _err = get_tree().change_scene('res://Screens/QuizQuestion.tscn')
 
 func _on_ButtonOnlyCorrect_pressed():
-	dr_answer.clear_drawing()
-	display_answers(true)
+	#dr_answer.clear_drawing()
+	load_and_show_correct_answer()
 
 
 func _unhandled_input(event):

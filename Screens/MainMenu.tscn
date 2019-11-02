@@ -20,23 +20,23 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="CenterContainer"]
-margin_left = 160.0
+margin_left = 162.0
 margin_top = 71.0
-margin_right = 560.0
+margin_right = 557.0
 margin_bottom = 878.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 custom_constants/separation = 100
 
 [node name="TextureRect" type="TextureRect" parent="CenterContainer/VBoxContainer2"]
-margin_right = 400.0
+margin_right = 395.0
 margin_bottom = 254.0
 texture = ExtResource( 3 )
 stretch_mode = 4
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer2"]
 margin_top = 354.0
-margin_right = 400.0
+margin_right = 395.0
 margin_bottom = 807.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
@@ -45,22 +45,21 @@ alignment = 1
 
 [node name="ButtonStart2" parent="CenterContainer/VBoxContainer2/VBoxContainer" instance=ExtResource( 4 )]
 margin_left = 0.0
-margin_right = 400.0
-margin_bottom = 76.4549
+margin_right = 395.0
 scene_to_load = "res://Screens/QuizQuestion.tscn"
 text_loc = "start"
 
 [node name="ButtonManage2" parent="CenterContainer/VBoxContainer2/VBoxContainer" instance=ExtResource( 4 )]
 margin_left = 0.0
 margin_top = 126.0
-margin_right = 400.0
+margin_right = 395.0
 margin_bottom = 202.455
 scene_to_load = "res://Screens/Manage.tscn"
 text_loc = "manage"
 
 [node name="TextureRect" type="TextureRect" parent="CenterContainer/VBoxContainer2/VBoxContainer"]
 margin_top = 252.0
-margin_right = 400.0
+margin_right = 395.0
 margin_bottom = 327.0
 texture = ExtResource( 5 )
 stretch_mode = 4
@@ -68,7 +67,7 @@ stretch_mode = 4
 [node name="ButtonSettings" parent="CenterContainer/VBoxContainer2/VBoxContainer" instance=ExtResource( 4 )]
 margin_left = 0.0
 margin_top = 377.0
-margin_right = 400.0
+margin_right = 395.0
 margin_bottom = 453.455
 scene_to_load = "res://Screens/Settings.tscn"
 text_loc = "settings"
