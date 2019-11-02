@@ -1,7 +1,7 @@
 extends Node
 
 #Constants
-var max_skill_level = 7
+var max_skill_level = 6
 var random_key_length = 8 # 7e14 possibilities
 
 #Not constants
@@ -11,6 +11,10 @@ var _all_questions = []
 
 var temp_answer = {}
 var _quiz_map = {} #maps question to a lesson
+
+var quiz_rotation = []
+var rotation_size = 9
+var skill_value_map = {0:15,1:10,2:7,3:6,4:5,5:3,6:1}
 
 func _ready():
 	randomize()
@@ -203,6 +207,27 @@ func _get_lowest_scored_questions(questions = null):
 			cskill = q['skill']
 	return candidates
 
+func _get_question_for_rotation(questions_to_ignore):
+	var roulette = []
+	var S = 0
+	for q in _all_questions:
+		if 'good_answer_date' in q and q['good_answer_date']==global.get_date_compact():
+			continue
+		if q in questions_to_ignore:
+			continue
+		var sk = skill_value_map[int(q['skill'])] if 'skill' in q else skill_value_map[0]
+		S += sk
+		roulette.append([q,sk])
+	if S == 0:
+		return null
+		
+	var slot = randi()%S
+	var cp = 0
+	for sc in roulette:
+		cp += sc[1]
+		if cp>=slot:
+			return sc[0]
+	return roulette[-1][0] # just in case
 #if questions is set to null, currently loaded questions are used (_all_questions)	
 func _get_earliest_dated(questions = null):
 	if questions == null:
@@ -233,18 +258,39 @@ func exit_quiz():
 	global.current_lesson = ''
 	lesson_path = ''
 
+func _print_current_rotation():
+	var s := '['
+	for i in quiz_rotation:
+		s+=i['question']
+		s+=', '
+	if s.length()>1:
+		s = s.substr(0,s.length()-2)
+	print(s+']')
+
 #Also sets the current_question in global
 func get_next_question_to_ask():
-	if not _all_questions:
+	rotation_size = global.rotation_size
+	while quiz_rotation.size()<rotation_size:
+		var qcand = _get_question_for_rotation(quiz_rotation)
+		if qcand == null:
+			break
+		quiz_rotation.append(qcand)
+	
+	if quiz_rotation.empty():
+		return null
+		
+	return quiz_rotation.pop_front()
+	
+	"""if not _all_questions:
 		return null
 	var questions = _get_lowest_scored_questions()
 	if not questions: #No valid questions found
 		return null
 		
 	var next_question = questions[randi()%questions.size()]
-	global.current_question = next_question
+	global.current_question = next_question #--moved this to the invocation location
 	
-	return next_question
+	return next_question"""
 	
 func get_lesson_for_question(question, cut_extension=false):
 	var ln = _quiz_map[question['id']]

@@ -27,7 +27,6 @@ func _ready():
 	$VBoxContainer/LabelQuestion/Label.add_color_override("font_color",global.skill_color_dict[int(current_question['skill'])])
 	
 	temp_answer = qm.get_temp_answer()
-	print(temp_answer)
 	var answer_color
 	if 'answer_free' in current_question and 'answer_free' in temp_answer and \
 		current_question['answer_free'] == temp_answer['answer_free']:

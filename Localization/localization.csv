@@ -56,3 +56,4 @@ importSuccessTitle,Import Successful,Importálás sikeres
 importSuccessMessage,Importing '{lesson}' successful,'{lesson}' sikeresen importálva
 importFailTitle,Import Failed,Importálás sikertelen
 importFailMessage,Could not import lesson,Nem sikerül importálni a leckét
+quizRotationSize,Quiz Pool Size,Kvíz Kérdéshalom mérete

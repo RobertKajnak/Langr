@@ -11,6 +11,7 @@ func _ready():
 	global = $"/root/GlobalVars"
 	
 	current_question = qm.get_next_question_to_ask()
+	global.current_question = current_question
 	if not global.active_lessons:
 		global.to_transition_scene(get_tree(),'res://Screens/Manage.tscn','noActiveLessons','noLessonsRedirect')
 		return

@@ -63,6 +63,8 @@ var _transition_message = ''
 var _transition_goal = ''
 
 #Quiz
+var rotation_size = 9
+
 #Answer dictionary -- continuing the LSD joke from ?2nd? year
 var adict = {'TextEditQuestion':'question',
 			'AnswerTextEdit':'answer_free',
@@ -89,6 +91,7 @@ func _ready():
 		set_ui_scale(ui_scale_temp)
 		
 		active_lessons = config.get_value("quiz", "active_lessons", [''])
+		rotation_size = config.get_value("quiz","rotation_size",9)
 	TranslationServer.set_locale(langs[currentLang])
 
 func get_date_compact():
@@ -160,6 +163,7 @@ func save_settings():
 	config.set_value("general","allLangs",langs)
 	config.set_value("render","ui_scale",UI_SCALE)
 	config.set_value("quiz","active_lessons",active_lessons)
+	config.set_value("quiz","rotation_size",rotation_size)
 	config.save("user://settings.cfg")
 	
 #If text is left as null, node.text is used.
