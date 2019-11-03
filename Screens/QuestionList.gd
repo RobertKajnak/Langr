@@ -29,6 +29,7 @@ func _ready():
 		else:
 			questionButton.add_color_override("font_color",global.skill_color_dict[int(question['skill'])])
 		questionButton.set_label(question['question'])
+		questionButton.auto_ellipse(get_viewport_rect().size.x*0.85)
 		questionButton.connect("pressed",self,'_on_question_prerssed',[questionButton.text])
 	lesson_file.close()
 	

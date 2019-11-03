@@ -24,6 +24,8 @@ func _ready():
 	if global.active_lessons.size()>1:
 		title_string += ' [' + global.get_active_lessons_string(20) + ']'
 	$VBoxContainer/HeaderContainer/LabelLessonTitle.text =  title_string
+	#$VBoxContainer/HeaderContainer/LabelLessonTitle/Label.autowrap = false
+	#global.auto_ellipse(get_viewport_rect().size.x*0.8,$VBoxContainer/HeaderContainer/LabelLessonTitle/Label)
 	
 	$VBoxContainer/LabelQuestion.set_mode('small')
 	$VBoxContainer/LabelQuestion.text = current_question['question']
@@ -83,6 +85,8 @@ func _on_QuizQuestionRoot_resized():
 	$VBoxContainer.rect_position = Vector2(vpr.size.x*0.05,vpr.size.y*0.05)
 	$VBoxContainer.rect_size = vpr.size*0.9
 	$VBoxContainer.rect_min_size = vpr.size*0.9
+	#if global:
+	#	global.auto_ellipse(vpr.size.x,$VBoxContainer/HeaderContainer/LabelLessonTitle)
 	
 	if te_answer:
 		te_answer.rect_size.x = vpr.size.x*0.85

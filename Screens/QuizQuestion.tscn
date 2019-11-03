@@ -57,18 +57,18 @@ rect_min_size = Vector2( 650, 0 )
 
 [node name="ScrollContainerAnswers" parent="VBoxContainer" instance=ExtResource( 5 )]
 margin_right = 650.0
-margin_bottom = 1084.0
+margin_bottom = 670.0
 
 [node name="VBoxContainerAnswers" type="VBoxContainer" parent="VBoxContainer/ScrollContainerAnswers"]
 margin_right = 650.0
-margin_bottom = 1010.0
+margin_bottom = 596.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="HBoxContainer2" type="CenterContainer" parent="VBoxContainer"]
-margin_top = 1094.0
+margin_top = 680.0
 margin_right = 650.0
-margin_bottom = 1170.45
+margin_bottom = 756.455
 size_flags_horizontal = 15
 
 [node name="ButtonCheck" parent="VBoxContainer/HBoxContainer2" instance=ExtResource( 6 )]

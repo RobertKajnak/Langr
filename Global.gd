@@ -91,7 +91,7 @@ func _ready():
 		set_ui_scale(ui_scale_temp)
 		
 		active_lessons = config.get_value("quiz", "active_lessons", [''])
-		rotation_size = config.get_value("quiz","rotation_size",9)
+		rotation_size = config.get_value("quiz","rotation_size",7)
 	TranslationServer.set_locale(langs[currentLang])
 
 func get_date_compact():
@@ -148,7 +148,7 @@ func set_active_lessons(active_lessons):
 	save_settings()
 
 #Auto_ellipse<=0 =>no ellipse
-func get_active_lessons_string(auto_ellipse=30):
+func get_active_lessons_string(auto_ellipse=-1):
 	var s = ''
 	for lesson in active_lessons:
 		s += lesson.substr(0,lesson.find('.les')) + ', '
@@ -192,6 +192,22 @@ func adapt_font(node,size=FONT_SIZE_SMALL,text = null):
 			font = FONTS['FONT_LARGE_JP']
 		
 	node.set('custom_fonts/font',font)
+
+func get_actual_width(text_node):
+	text_node.set_size(Vector2(8, 8))
+	return text_node.rect_size.x
+
+func auto_ellipse(max_width:int,node:Node,ellipse_replacement : String = '[...]'):
+	""" The node should contain both the .text and .rect_size elements.
+	based on these the node is automatically resized to the requested size
+	"""
+	
+	var gen_w = get_actual_width(node)
+	if max_width<gen_w:
+		var original_text = node.text
+		node.text = node.text.substr(0,int(node.text.length()*(max_width*1.3/gen_w))) #not all characters are equally large
+		while get_actual_width(node)>max_width:
+			node.text = node.text.substr(0,node.text.length()-ellipse_replacement.length()-1) + ellipse_replacement
 
 func read_svg(file_name):
 	var components = []
