@@ -6,6 +6,9 @@ var to_translate = {'ButtonClearDrawing':'drawClear',
 
 var can_add_drawing = true
 
+var color_on_clear = null
+var width_on_clear = 0
+
 func _ready():
 	var global = $"/root/GlobalVars"
 	global.retranslate(get_node('/root'),to_translate)
@@ -17,20 +20,23 @@ func _ready():
 	
 	$LabelDraw.set_mode($LabelDraw.LABEL_MODE_SMALL)
 	$LabelDraw.set_width(430)
-	#no effect...
-	#$HBoxContainer/ButtonClearDrawing.rect_min_size = Vector2($HBoxContainer/ButtonClearDrawing.rect_size.x+5,
-#															$HBoxContainer/ButtonClearDrawing.rect_size.y-20)
-#	$HBoxContainer/ButtonClearDrawing.rect_size = Vector2($HBoxContainer/ButtonClearDrawing.rect_size.x+5,
-#															$HBoxContainer/ButtonClearDrawing.rect_size.y-20)
+	
 	
 func _on_ButtonClearDrawing_pressed():
-	$AnswerDraw.clear_drawing()
+	clear_drawing()
 
 func _on_ButtonUndoDrawing_pressed():
 	$AnswerDraw.remove_last_line()
 
+func set_color_on_clear(color:Color,width:int=4):
+	self.color_on_clear = color
+	self.width_on_clear = width
+
 func clear_drawing():
 	$AnswerDraw.clear_drawing()
+	if self.color_on_clear!= null:
+		print("Resetting color")
+		$AnswerDraw.change_line_color_to(color_on_clear,width_on_clear)
 
 func get_lines(include_cache=true):
 	if include_cache:

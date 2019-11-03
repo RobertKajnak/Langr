@@ -1,5 +1,6 @@
 extends LinkButton
 
+var original_text : String
 
 func _ready():
 	pass
@@ -10,6 +11,7 @@ func set_label(label):
 
 
 func auto_ellipse(max_width):
+	self.original_text = self.text
 	$"/root/GlobalVars".auto_ellipse(max_width,self)
 
 		

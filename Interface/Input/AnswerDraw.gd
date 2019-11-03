@@ -164,8 +164,8 @@ func clear_drawing():
 	current_line = []
 	lines = []
 	texts = []
-	
-	#$"/root/GlobalVars".save_svg_path('user://lessons/lesson0/06f5c_re.svg',segments)
+	_init_colors_and_widths()
+	 
 
 func is_empty():
 	var empty =  lines.empty()

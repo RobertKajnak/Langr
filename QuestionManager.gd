@@ -122,7 +122,7 @@ func replace_question(to_replace_title,new_question):
 		_all_questions.insert(index,new_question)
 
 #Can be either a question or a question title. Question has faster lookup
-func update_question_skill(question,delta,date = null, force_reduction=false):
+func update_question_skill(question,delta,date = null, force_update=false):
 	if not question:
 		print('Question not specified')
 		return -1
@@ -135,9 +135,13 @@ func update_question_skill(question,delta,date = null, force_reduction=false):
 		cc = get_question(question)
 	else:
 		cc = question
-		
-	if delta>0 or force_reduction or not 'bad_answer_date' in cc \
-		or ('bad_answer_date' in cc and cc['bad_answer_date']!=global.get_date_compact()):
+	
+	#The basic idea is that either it is forced, or neither the good nor the bad dates are 'today'
+	if force_update \
+		or ((not 'bad_answer_date' in cc) \
+			or ('bad_answer_date' in cc and cc['bad_answer_date']!=global.get_date_compact())) \
+		or ((not 'good_answer_date' in cc) \
+			or ('good_answer_date' in cc and cc['good_answer_date']!=global.get_date_compact())):
 		cc['skill'] = max(1,min(max_skill_level,cc['skill']+delta))
 	if delta>0:
 		cc['good_answer_date'] = date
@@ -149,8 +153,10 @@ func update_question_skill(question,delta,date = null, force_reduction=false):
 		lesson = _quiz_map[cc['id']]
 	_save_current_questions(lesson)
 
-#removes a single question from the lsit with the specified question name
+
 func remove_question(question_title):
+	"""removes a single question from the lsit with the specified question name"""
+	
 	var index = self.get_question_titles().find(question_title)
 	
 	if index == -1:
@@ -207,19 +213,39 @@ func _get_lowest_scored_questions(questions = null):
 			cskill = q['skill']
 	return candidates
 
+func compare_questions(q1,q2):
+	if not 'id' in q1 or not 'id' in q2:
+		return false
+	return q1['id']==q2['id']
+
+func question_in_list(question,list_of_questions):
+	for q in list_of_questions:
+		if compare_questions(q,question):
+			return true
+	return false
+
 func _get_question_for_rotation(questions_to_ignore):
 	var roulette = []
 	var S = 0
+	var roulette_candidates_without_new = []
+	var roulette_candidates_with_new = []
 	for q in _all_questions:
-		if 'good_answer_date' in q and q['good_answer_date']==global.get_date_compact():
+		if question_in_list(q, questions_to_ignore) or \
+				('good_answer_date' in q and q['good_answer_date']==global.get_date_compact()):
 			continue
-		if q in questions_to_ignore:
-			continue
+			
+		roulette_candidates_with_new.append(q)
+		if 'bad_answer_date' in q or 'good_answer_date' in q:
+			roulette_candidates_without_new.append(q)
+	
+	var roulette_candidates = roulette_candidates_without_new if roulette_candidates_without_new.size()>0 else roulette_candidates_with_new
+	if roulette_candidates.size()<1:
+		return null
+	
+	for q in roulette_candidates:
 		var sk = skill_value_map[int(q['skill'])] if 'skill' in q else skill_value_map[0]
 		S += sk
 		roulette.append([q,sk])
-	if S == 0:
-		return null
 		
 	var slot = randi()%S
 	var cp = 0
@@ -229,6 +255,7 @@ func _get_question_for_rotation(questions_to_ignore):
 			return sc[0]
 	return roulette[-1][0] # just in case
 #if questions is set to null, currently loaded questions are used (_all_questions)	
+#DEPR(quizz approach changed)
 func _get_earliest_dated(questions = null):
 	if questions == null:
 		questions = _all_questions
@@ -258,9 +285,9 @@ func exit_quiz():
 	global.current_lesson = ''
 	lesson_path = ''
 
-func _print_current_rotation():
+func _print_question_list(question_list):
 	var s := '['
-	for i in quiz_rotation:
+	for i in question_list:
 		s+=i['question']
 		s+=', '
 	if s.length()>1:
@@ -270,6 +297,21 @@ func _print_current_rotation():
 #Also sets the current_question in global
 func get_next_question_to_ask():
 	rotation_size = global.rotation_size
+	
+	#If the lessons have been changed meanwhile, the questions from those lessons are removed
+	var to_remove = []
+	for q in quiz_rotation:
+		if not q['id'] in _quiz_map:
+			to_remove.append(q)
+	for q in to_remove:
+		quiz_rotation.erase(q)
+	
+	#If the settings have been changed, the surplus is removed
+	while quiz_rotation.size()>rotation_size:
+		quiz_rotation.pop_back()
+		
+	print('CUrrent Rotation:')
+	#Fill up with roulette-based selection of questions that are not already inside
 	while quiz_rotation.size()<rotation_size:
 		var qcand = _get_question_for_rotation(quiz_rotation)
 		if qcand == null:
@@ -281,16 +323,6 @@ func get_next_question_to_ask():
 		
 	return quiz_rotation.pop_front()
 	
-	"""if not _all_questions:
-		return null
-	var questions = _get_lowest_scored_questions()
-	if not questions: #No valid questions found
-		return null
-		
-	var next_question = questions[randi()%questions.size()]
-	global.current_question = next_question #--moved this to the invocation location
-	
-	return next_question"""
 	
 func get_lesson_for_question(question, cut_extension=false):
 	var ln = _quiz_map[question['id']]

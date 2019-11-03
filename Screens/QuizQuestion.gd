@@ -29,6 +29,10 @@ func _ready():
 	
 	$VBoxContainer/LabelQuestion.set_mode('small')
 	$VBoxContainer/LabelQuestion.text = current_question['question']
+	var q_color = global.skill_color_dict[int(current_question['skill'])] \
+		if 'good_answer_date' in current_question or 'bad_answer_date' in current_question \
+		else global.skill_color_dict[null]
+	$VBoxContainer/LabelQuestion/Label.add_color_override("font_color",q_color)
 	
 	if 'answer_free' in current_question:
 		te_answer = load('res://Interface/Input/TextEditFreeForm.tscn').instance()
@@ -47,7 +51,7 @@ func _ready():
 			nr_drawings = nr_drawings.size()
 		dr_answer.create_empty_drawings(nr_drawings-1)
 		dr_answer.disable_add_drawing()
-	
+		
 	
 func go_back():
 	qm.exit_quiz()

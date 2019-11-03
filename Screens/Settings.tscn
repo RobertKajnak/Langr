@@ -95,7 +95,9 @@ margin_left = 289.0
 margin_right = 439.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 150, 20 )
+min_value = 3.0
 max_value = 25.0
+value = 3.0
 tick_count = 25
 ticks_on_borders = false
 

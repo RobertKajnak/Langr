@@ -23,8 +23,12 @@ func _ready():
 		title_string += ' [' + global.get_active_lessons_string(20) + ']'
 	$VBoxContainer/HeaderContainer/LabelLessonTitle.text =  title_string
 	
+	$VBoxContainer/LabelQuestion.set_mode('small')
 	$VBoxContainer/LabelQuestion.text = current_question['question']
-	$VBoxContainer/LabelQuestion/Label.add_color_override("font_color",global.skill_color_dict[int(current_question['skill'])])
+	var q_color = global.skill_color_dict[int(current_question['skill'])] \
+		if 'good_answer_date' in current_question or 'bad_answer_date' in current_question \
+		else global.skill_color_dict[null]
+	$VBoxContainer/LabelQuestion/Label.add_color_override("font_color",q_color)
 	
 	temp_answer = qm.get_temp_answer()
 	var answer_color
@@ -56,6 +60,7 @@ func _ready():
 		cc.add_child(dr_answer)
 		
 		display_answers()
+		dr_answer.set_color_on_clear(Color(0.4,0.1,0.6),4)
 		
 
 func set_color_to_retry(dr_internal):
@@ -114,7 +119,7 @@ func go_back():
 
 #INput handling
 func _on_ButtonForceIncorrect_pressed():
-	qm.update_question_skill(current_question,-2)
+	qm.update_question_skill(current_question,-1)
 	var _err = get_tree().change_scene('res://Screens/QuizQuestion.tscn')
 
 func _on_ButtonForceCorrect_pressed():
