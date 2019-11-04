@@ -101,6 +101,26 @@ func get_date_compact():
 	var dd = OS.get_date()
 	return dd['year']*10000+dd['month']*100+dd['day']
 	
+func get_date_from_date_compact(date_compact):
+	var date := int(date_compact)
+	return {'year':date/10000,
+			'month':date/100%100,
+			'day':date%100,
+			'hour':0,
+			'minute':0,
+			'second':0}
+	
+func get_date_difference(date_later,date_earlier):
+	var date1 = date_earlier
+	var date2 = date_later
+	if not date1 is Dictionary:
+		date1 = get_date_from_date_compact(date1)
+	if not date2 is Dictionary:
+		date2 = get_date_from_date_compact(date2)
+	date1 = OS.get_unix_time_from_datetime(date1)
+	date2 = OS.get_unix_time_from_datetime(date2)
+	return int((date2-date1)/86400)
+	
 func retranslate(node,to_translate_list):
 	if node.name in to_translate_list:
 		node.text = tr(to_translate_list[node.name])

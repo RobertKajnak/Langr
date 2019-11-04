@@ -54,7 +54,7 @@ func _ready():
 	if global.DEBUG:
 		var cq = current_question
 		var dbs = '\n'
-		for dbst in ['skill','good_answer_date','bad_answer_date']:
+		for dbst in ['skill','good_answer_date','bad_answer_date','skip_days']:
 			dbs += '| '+ (str(cq[dbst]) if dbst in cq else 'ns') + ' '
 		dbs += '\n['
 		for rq in qm.quiz_rotation:

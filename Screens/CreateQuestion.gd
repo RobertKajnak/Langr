@@ -30,7 +30,7 @@ func _ready():
 	qm = $"/root/QuestionManager"
 	
 	#Add current profficiency skill level
-	for i in range(qm.max_skill_level+1):
+	for i in range(qm.MAX_SKILL_LEVEL+1):
 		$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/OptionButtonSkill.add_item(str(i))
 	modifying_mode = false
 

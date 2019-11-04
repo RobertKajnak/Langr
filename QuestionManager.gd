@@ -1,8 +1,8 @@
 extends Node
 
 #Constants
-var max_skill_level = 6
-var random_key_length = 8 # 7e14 possibilities
+const MAX_SKILL_LEVEL = 6
+const random_key_length = 8 # 7e14 possibilities
 
 #Not constants
 var global
@@ -122,7 +122,7 @@ func replace_question(to_replace_title,new_question):
 		_all_questions.insert(index,new_question)
 
 
-func update_question_skill(question,delta, date=null, force_update_skill=false):
+func update_question_skill(question,delta, force_update_skill=false):
 	"""Updates the skill associated with a question. Date can aslo be set.
 		params: 
 			question: Can be either a question or a question title. Question has faster lookup
@@ -135,8 +135,7 @@ func update_question_skill(question,delta, date=null, force_update_skill=false):
 		print('Question not specified')
 		return -1
 		
-	if not date:
-		date = global.get_date_compact()
+	var today = global.get_date_compact()
 		
 	var cc
 	if question is String:
@@ -146,15 +145,25 @@ func update_question_skill(question,delta, date=null, force_update_skill=false):
 	
 	#The basic idea is that either it is forced, or neither the good nor the bad dates are 'today'
 	if force_update_skill \
-		or ((not 'bad_answer_date' in cc) \
-			or ('bad_answer_date' in cc and cc['bad_answer_date']!=global.get_date_compact())) \
-		or ((not 'good_answer_date' in cc) \
-			or ('good_answer_date' in cc and cc['good_answer_date']!=global.get_date_compact())):
-		cc['skill'] = max(1,min(max_skill_level,cc['skill']+delta))
+		or (((not 'bad_answer_date' in cc) \
+				or ('bad_answer_date' in cc and cc['bad_answer_date']!=today)) \
+			and ((not 'good_answer_date' in cc) \
+				or ('good_answer_date' in cc and cc['good_answer_date']!=today))):
+		cc['skill'] = max(1,min(MAX_SKILL_LEVEL,cc['skill']+delta))
+		
 	if delta>0:
-		cc['good_answer_date'] = date
+		cc['good_answer_date'] = today
+		#Check for first try success and update it
+		if (not 'bad_answer_date' in cc) or ('bad_answer_date' in cc and cc['bad_answer_date']!=today):
+			if not 'skip_days' in cc:
+				cc['skip_days'] = 1
+			else:
+				cc['skip_days'] = min(14,cc['skip_days']+2)
 	elif delta<0:
-		cc['bad_answer_date'] = date
+		cc['bad_answer_date'] = today
+		if 'skip_days' in cc:
+			cc.erase('skip_days')
+	
 	
 	var lesson = null
 	if _quiz_map and 'id' in cc:
@@ -209,7 +218,7 @@ func get_temp_answer():
 func _get_lowest_scored_questions(questions = null):
 	if questions == null:
 		questions = _all_questions
-	var cskill = max_skill_level
+	var cskill = MAX_SKILL_LEVEL
 	var candidates = []
 	for q in questions:
 		if 'good_answer_date' in q and q['good_answer_date']==global.get_date_compact():
@@ -240,9 +249,16 @@ func _get_question_for_rotation(questions_to_ignore):
 	var S = 0
 	var roulette_candidates_without_new = []
 	var roulette_candidates_with_new = []
+	var today = global.get_date_compact()
 	for q in _all_questions:
-		if question_in_list(q, questions_to_ignore) or \
-				('good_answer_date' in q and q['good_answer_date']==global.get_date_compact()):
+		#Basically, the skip conditions are:
+		#1: it is in the ignore list (e.g. the current rotation, so no duplicates)
+		#2: already answered correctly today
+		#3: It was answered correctly on first try and earned skip-days which have not yet expired
+		if question_in_list(q, questions_to_ignore) \
+				or ('good_answer_date' in q and q['good_answer_date']==today) \
+				or ('skip_days' in q and 'good_answer_date' in q \
+					and global.get_date_difference(today,global.get_date_from_date_compact(q['good_answer_date']))<=q['skip_days']):
 			continue
 			#TODO ADD days to ignore
 		roulette_candidates_with_new.append(q)

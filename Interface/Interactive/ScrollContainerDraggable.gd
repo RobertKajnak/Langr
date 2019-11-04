@@ -36,6 +36,9 @@ func _input(ev) -> void:
 				var node_rect = Rect2(node.get_global_transform()[2],node.rect_size)
 				if node_rect.has_point(ev.global_position): #If the cursor is in any of them, it stops
 					return
+			#this covers the actual scroll bar on the side
+			if ev.position.x-self.get_global_rect().position.x>=self.rect_size.x-self.get_v_scrollbar().rect_size.x:
+				return
 			look_for_swipe = true
 			swipe_mouse_start = ev.global_position
 		elif swiping:
