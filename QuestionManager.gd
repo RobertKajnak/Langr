@@ -244,7 +244,7 @@ func _get_question_for_rotation(questions_to_ignore):
 		if question_in_list(q, questions_to_ignore) or \
 				('good_answer_date' in q and q['good_answer_date']==global.get_date_compact()):
 			continue
-			
+			#TODO ADD days to ignore
 		roulette_candidates_with_new.append(q)
 		if 'bad_answer_date' in q or 'good_answer_date' in q:
 			roulette_candidates_without_new.append(q)
@@ -331,12 +331,20 @@ func get_next_question_to_ask():
 	if quiz_rotation.empty():
 		return null
 		
+	_print_question_list(quiz_rotation)
 	return quiz_rotation[0]
+	
+func move_question_to_rotation_end(question):
+	question = question_in_list(question,quiz_rotation,true)
+	if question:
+		quiz_rotation.erase(question)
+	quiz_rotation.push_back(question)
 	
 func remove_from_rotation(question):
 	question = question_in_list(question,quiz_rotation,true)
 	if question:
 		quiz_rotation.erase(question)
+	
 	
 func get_lesson_for_question(question, cut_extension=false):
 	var ln = _quiz_map[question['id']]

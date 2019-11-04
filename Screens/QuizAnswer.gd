@@ -50,7 +50,18 @@ func _ready():
 		#var te = load('res://Interface/TextDisplay/TextEditFreeForm.tscn').instance()
 		#$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(te)
 		#te.text = current_question['answer_free']
-		
+	
+	if global.DEBUG:
+		var cq = current_question
+		var dbs = '\n'
+		for dbst in ['skill','good_answer_date','bad_answer_date']:
+			dbs += '| '+ (str(cq[dbst]) if dbst in cq else 'ns') + ' '
+		dbs += '\n['
+		for rq in qm.quiz_rotation:
+			dbs += rq['question'].substr(0,10) + '| ' 
+		dbs = dbs.substr(0,dbs.length()-2)
+		dbs += ']'
+		$VBoxContainer/LabelQuestion.text += dbs
 	
 	if 'answer_draw' in current_question:
 		var cc = CenterContainer.new()
@@ -120,7 +131,7 @@ func go_back():
 #INput handling
 func _on_ButtonForceIncorrect_pressed():
 	qm.update_question_skill(current_question,-1)
-	qm.remove_from_rotation(current_question)
+	qm.move_question_to_rotation_end(current_question)
 	global.current_question = ''
 	var _err = get_tree().change_scene('res://Screens/QuizQuestion.tscn')
 

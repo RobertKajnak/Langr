@@ -15,6 +15,7 @@ const FONT_SIZE_SMALL = 'SMALL'
 const FONT_SIZE_MEDIUM = 'MEDIUM'
 const FONT_SIZE_LARGE = 'LARGE'
 var FONTS = {}
+var DEBUG = false
 
 var skill_color_dict = {0:Color(1,0,0),
 						1:Color(1,0.3,0.35),
@@ -92,6 +93,8 @@ func _ready():
 		
 		active_lessons = config.get_value("quiz", "active_lessons", [''])
 		rotation_size = config.get_value("quiz","rotation_size",7)
+		
+		DEBUG = config.get_value("debug","debug_enabled",false)
 	TranslationServer.set_locale(langs[currentLang])
 
 func get_date_compact():
@@ -164,6 +167,7 @@ func save_settings():
 	config.set_value("render","ui_scale",UI_SCALE)
 	config.set_value("quiz","active_lessons",active_lessons)
 	config.set_value("quiz","rotation_size",rotation_size)
+	config.set_value("debug","debug_enabled",DEBUG)
 	config.save("user://settings.cfg")
 	
 #If text is left as null, node.text is used.
@@ -318,7 +322,8 @@ func create_file_dialog(viewport_rect : Rect2, parent: Node, access_mode):
 	fd.access = FileDialog.ACCESS_FILESYSTEM
 	fd.mode = access_mode
 	fd.set_filters(PoolStringArray(["*.les ; Lesson File"]))
-	fd.set_current_dir(OS.get_user_data_dir())
+	OS.request_permission("WRITE_EXTERNAL_STORAGE")
+	fd.set_current_dir(OS.get_system_dir(3))
 	parent.add_child(fd)
 	fd.show()
 	fd.invalidate()#AKA Refresh

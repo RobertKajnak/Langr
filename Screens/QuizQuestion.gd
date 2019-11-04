@@ -52,6 +52,17 @@ func _ready():
 		dr_answer.create_empty_drawings(nr_drawings-1)
 		dr_answer.disable_add_drawing()
 		
+	if global.DEBUG:
+		var cq = current_question
+		var dbs = '\n'
+		for dbst in ['skill','good_answer_date','bad_answer_date']:
+			dbs += '| '+ (str(cq[dbst]) if dbst in cq else 'ns') + ' '
+		dbs += '\n['
+		for rq in qm.quiz_rotation:
+			dbs += rq['question'].substr(0,10) + '| ' 
+		dbs = dbs.substr(0,dbs.length()-2)
+		dbs += ']'
+		$VBoxContainer/LabelQuestion.text += dbs
 	
 func go_back():
 	qm.exit_quiz()

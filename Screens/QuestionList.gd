@@ -86,6 +86,18 @@ func export_lesson_to_file(filename):
 func _on_Export_pressed():
 	var fd = global.create_file_dialog(get_viewport_rect(),get_node('.'),FileDialog.MODE_SAVE_FILE)
 	fd.connect("file_selected",self,"export_lesson_to_file")
+	disable_scroll()
+	#fd.connect("mouse_entered",self,"disable_scroll")
+	#fd.connect("confirmed",self,"enable_scroll")
+	#fd.connect("mouse_exited",self,"enable_scroll")
+
+func disable_scroll():
+	print('disabled')
+	$VBoxContainer/ScrollContainer.scroll_vertical_enabled = false
+
+func enable_scroll():
+	print("enabled")
+	$VBoxContainer/ScrollContainer.scroll_vertical_enabled = true
 
 func _on_ButtonDeleteLesson_pressed():
 

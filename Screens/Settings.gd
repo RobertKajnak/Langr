@@ -4,7 +4,8 @@ extends Control
 var buttonTexts = {'LabelTitle':'settings',
 					'LabelLanguage':'language',
 					'LabelScale':'scale',
-					'LabelRotationSize':'quizRotationSize'}
+					'LabelRotationSize':'quizRotationSize',
+					'LabelDebug':'enableDebug'}
 var global
 
 
@@ -33,10 +34,13 @@ func _ready():
 		ButtonScale.add_item(str(i));
 	ButtonScale.select(index);
 	
-	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/HSliderRotationSize.value = global.rotation_size
-	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/LableRotationSizeValue.text = str(global.rotation_size)
-	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/LabelRotationSize.set_width(250)
-	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/LableRotationSizeValue.set_width(60)
+	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerRotation/HSliderRotationSize.value = global.rotation_size
+	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerRotation/LableRotationSizeValue.text = str(global.rotation_size)
+	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerRotation/LabelRotationSize.set_width(get_viewport_rect().size.x*0.45)
+	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerRotation/LableRotationSizeValue.set_width(60)
+	
+	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerDebug/LabelDebug.set_width(get_viewport_rect().size.x*0.45)
+	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerDebug/CheckBoxDebug.pressed = global.DEBUG
 
 #%% returns the index of, or closest index to the left of the searched value.
 func find_closest(array,value):
@@ -46,6 +50,8 @@ func find_closest(array,value):
 	return array.size()-1
 
 func go_back():
+	global.DEBUG = $VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerDebug/CheckBoxDebug.is_pressed()
+	global.save_settings()
 	var _err = get_tree().change_scene('res://Screens/MainMenu.tscn')
 
 
@@ -62,13 +68,13 @@ func _on_ButtonScale_item_selected(ID):
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerScale/LabelScale._ready()
 
 func _on_HSliderRotationSize_value_changed(value):
-	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/LableRotationSizeValue.text = str(value)
+	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerRotation/LableRotationSizeValue.text = str(value)
 	global.rotation_size = value
+	
 #%%Input handling
 func _unhandled_input(event):
 	if event is InputEventKey:
 		if event.pressed and event.scancode == KEY_ESCAPE:
-			global.save_settings()
 			go_back()
 			
 func _notification(what):
@@ -77,7 +83,6 @@ func _notification(what):
 		pass        
 	if what == MainLoop.NOTIFICATION_WM_GO_BACK_REQUEST: 
 		# For android
-		global.save_settings()
 		go_back()
 
 
