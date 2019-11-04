@@ -120,10 +120,14 @@ func go_back():
 #INput handling
 func _on_ButtonForceIncorrect_pressed():
 	qm.update_question_skill(current_question,-1)
+	qm.remove_from_rotation(current_question)
+	global.current_question = ''
 	var _err = get_tree().change_scene('res://Screens/QuizQuestion.tscn')
 
 func _on_ButtonForceCorrect_pressed():
 	qm.update_question_skill(current_question,2)
+	qm.remove_from_rotation(current_question)
+	global.current_question = ''
 	var _err = get_tree().change_scene('res://Screens/QuizQuestion.tscn')
 
 func _on_ButtonOnlyCorrect_pressed():

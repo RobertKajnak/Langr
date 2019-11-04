@@ -13,8 +13,8 @@ var temp_answer = {}
 var _quiz_map = {} #maps question to a lesson
 
 var quiz_rotation = []
-var rotation_size = 9
-var skill_value_map = {0:15,1:10,2:7,3:6,4:5,5:3,6:1}
+var rotation_size = 7
+var skill_value_map = {0:20,1:15,2:12,3:10,4:7,5:5,6:1}
 
 func _ready():
 	randomize()
@@ -121,8 +121,16 @@ func replace_question(to_replace_title,new_question):
 		_all_questions.remove(index)
 		_all_questions.insert(index,new_question)
 
-#Can be either a question or a question title. Question has faster lookup
-func update_question_skill(question,delta,date = null, force_update=false):
+
+func update_question_skill(question,delta, date=null, force_update_skill=false):
+	"""Updates the skill associated with a question. Date can aslo be set.
+		params: 
+			question: Can be either a question or a question title. Question has faster lookup
+			delta: The difference to be added to the skill. Plus increases the skill. Capped between set limits
+			date: the date to be added with the delta. Positive adds 'good_answer_date'. Negative adds 'bad_answer_date'.
+			force_update_skill: Updates the field even if it has already been modified 'today'
+		
+	"""
 	if not question:
 		print('Question not specified')
 		return -1
@@ -137,7 +145,7 @@ func update_question_skill(question,delta,date = null, force_update=false):
 		cc = question
 	
 	#The basic idea is that either it is forced, or neither the good nor the bad dates are 'today'
-	if force_update \
+	if force_update_skill \
 		or ((not 'bad_answer_date' in cc) \
 			or ('bad_answer_date' in cc and cc['bad_answer_date']!=global.get_date_compact())) \
 		or ((not 'good_answer_date' in cc) \
@@ -218,10 +226,13 @@ func compare_questions(q1,q2):
 		return false
 	return q1['id']==q2['id']
 
-func question_in_list(question,list_of_questions):
+func question_in_list(question,list_of_questions, return_question=false):
 	for q in list_of_questions:
 		if compare_questions(q,question):
-			return true
+			if return_question:
+				return q
+			else:
+				return true
 	return false
 
 func _get_question_for_rotation(questions_to_ignore):
@@ -310,7 +321,6 @@ func get_next_question_to_ask():
 	while quiz_rotation.size()>rotation_size:
 		quiz_rotation.pop_back()
 		
-	print('CUrrent Rotation:')
 	#Fill up with roulette-based selection of questions that are not already inside
 	while quiz_rotation.size()<rotation_size:
 		var qcand = _get_question_for_rotation(quiz_rotation)
@@ -321,8 +331,12 @@ func get_next_question_to_ask():
 	if quiz_rotation.empty():
 		return null
 		
-	return quiz_rotation.pop_front()
+	return quiz_rotation[0]
 	
+func remove_from_rotation(question):
+	question = question_in_list(question,quiz_rotation,true)
+	if question:
+		quiz_rotation.erase(question)
 	
 func get_lesson_for_question(question, cut_extension=false):
 	var ln = _quiz_map[question['id']]

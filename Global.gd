@@ -17,11 +17,11 @@ const FONT_SIZE_LARGE = 'LARGE'
 var FONTS = {}
 
 var skill_color_dict = {0:Color(1,0,0),
-						1:Color(1,0.2,0.2),
-						2:Color(0.5,0.2,0),
-						3:Color(0.3,0.4,0),
-						4:Color(0.2,0.6,0),
-						5:Color(0.2,0.8,0),
+						1:Color(1,0.3,0.35),
+						2:Color(1,0.4,0.5),
+						3:Color(0.8,0.5,0.5),
+						4:Color(0.6,0.8,0.6),
+						5:Color(0.35,0.8,0.35),
 						6:Color(0,1,0),
 						null:Color(0.7,0.7,0.7)}
 

@@ -10,7 +10,7 @@ var to_translate = {'TextEditQuestion':'questionPlaceholder',
 					'ButtonUndoDrawing':'drawUndo',
 					tbm + '0':'multiChoiceCheckbox'}
 var qm
-var original_question_title
+var original_question
 var modifying_mode
 
 func _ready():
@@ -30,7 +30,7 @@ func _ready():
 	qm = $"/root/QuestionManager"
 	
 	#Add current profficiency skill level
-	for i in range(qm.max_skill_level):
+	for i in range(qm.max_skill_level+1):
 		$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/OptionButtonSkill.add_item(str(i))
 	modifying_mode = false
 
@@ -66,7 +66,7 @@ func load_data(file_name,question_title):
 	$VBoxContainer/CenterContainer/ButtonCreateQuestion.text_loc = 'modifyQuestion'
 	$VBoxContainer/CenterContainer/ButtonCreateQuestion._ready()
 	
-	original_question_title = question_title
+	original_question = question_data
 	$VBoxContainer/CenterContainer2/ButtonCancel.text_loc = 'deleteQuestion'
 	$VBoxContainer/CenterContainer2/ButtonCancel._ready()
 	
@@ -120,7 +120,7 @@ func _on_Button_pressed():
 	to_save[adict['OptionButtonSkill']] = $VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/OptionButtonSkill.selected
 	if modifying_mode:
 		if not 'question' in to_save:
-			to_save['question'] = original_question_title #This must happen before the 'AnswerDraw'='placeholder' draw,
+			to_save['question'] = original_question['question'] #This must happen before the 'AnswerDraw'='placeholder' draw,
 			# so a 'questionNotSet' Error is not thrown
 	
 	#TODO this feels like a wokraround
@@ -131,10 +131,16 @@ func _on_Button_pressed():
 		else:
 			to_save.erase(adict['VBoxContainerDraw'])
 
+	if modifying_mode:
+		if 'good_answer_date' in original_question:
+			to_save['good_answer_date'] = original_question['good_answer_date']
+		if 'bad_answer_date' in original_question:
+			to_save['bad_answer_date'] = original_question['bad_answer_date']
+		
 	var err = null
 	var popup_title = null
 	if self.modifying_mode:
-		err = qm.replace_question(original_question_title,to_save)
+		err = qm.replace_question(original_question['question'],to_save)
 		if err!=null:
 			popup_title = 'couldNotCreateQuestion'
 	else:
@@ -169,6 +175,6 @@ func _notification(what):
 
 func _on_ButtonCancel_pressed():
 	if $VBoxContainer/CenterContainer2/ButtonCancel.text_loc == 'deleteQuestion':
-		qm.remove_question(original_question_title)
+		qm.remove_question(original_question['question'])
 	go_back()
 		
