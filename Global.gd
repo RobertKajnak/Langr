@@ -19,7 +19,7 @@ var DEBUG = false
 
 var skill_color_dict = {0:Color(1,0,0),
 						1:Color(1,0.3,0.35),
-						2:Color(1,0.4,0.5),
+						2:Color(1,0.3,0.35),
 						3:Color(0.8,0.5,0.5),
 						4:Color(0.6,0.8,0.6),
 						5:Color(0.35,0.8,0.35),

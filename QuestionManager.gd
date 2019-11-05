@@ -143,6 +143,9 @@ func update_question_skill(question,delta, force_update_skill=false):
 	else:
 		cc = question
 	
+	#This helsp with the skip day. the inverse of the cc modification could also be used, but this is more robust
+	var skill_original = cc['skill'] if 'skill' in cc else -1
+	
 	#The basic idea is that either it is forced, or neither the good nor the bad dates are 'today'
 	if force_update_skill \
 		or (((not 'bad_answer_date' in cc) \
@@ -154,7 +157,11 @@ func update_question_skill(question,delta, force_update_skill=false):
 	if delta>0:
 		cc['good_answer_date'] = today
 		#Check for first try success and update it
-		if (not 'bad_answer_date' in cc) or ('bad_answer_date' in cc and cc['bad_answer_date']!=today):
+		#If you are seeing it for the first time, you might remember it from adding it, or 
+		#if you made enough mistakes to bring it down to 1 point, it would be counter-productive to let 
+		#you off for a day
+		if (not 'bad_answer_date' in cc) or ('bad_answer_date' in cc and cc['bad_answer_date']!=today)\
+				and (skill_original>=2):
 			if not 'skip_days' in cc:
 				cc['skip_days'] = 1
 			else:
