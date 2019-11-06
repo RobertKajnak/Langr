@@ -1,7 +1,11 @@
 extends Control
 
-var color_default = Color(0,0.1,0.6,255)
-var width_default = 5
+var color_default = Color(0,0.1,0.6,255) setget ,get_color_default
+var width_default = 5 setget ,get_width_default
+func get_color_default():
+	return color_default
+func get_width_default():
+	return width_default
 
 var lines = []
 var current_line = []

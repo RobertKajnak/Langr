@@ -1,3 +1,4 @@
+#warning-ignore-all:unused_variable
 extends Node
 
 var config;
@@ -7,7 +8,9 @@ var currentLang = 0; #currently used languge index from langs
 var langs = ['en','hu']
 
 #Render Constants
-var POSSIBLE_SCALES = [8,12,14,16,24,32,48,56,64,72]
+var POSSIBLE_SCALES = [8,12,14,16,24,32,48,56,64,72] setget ,get_possible_scales
+func get_possible_scales():
+	return POSSIBLE_SCALES
 var UI_SCALE = 32 setget set_ui_scale
 const LARGE_FACTOR = 1.5
 const MEDIUM_FACTOR = 1.15
@@ -24,7 +27,9 @@ var skill_color_dict = {0:Color(1,0,0),
 						4:Color(0.6,0.8,0.6),
 						5:Color(0.35,0.8,0.35),
 						6:Color(0,1,0),
-						null:Color(0.7,0.7,0.7)}
+						null:Color(0.7,0.7,0.7)} setget ,get_skill_color_dict
+func get_skill_color_dict():
+	return skill_color_dict
 
 func set_ui_scale(val):
 	UI_SCALE = val
@@ -56,7 +61,11 @@ func set_ui_scale(val):
 
 #Question list editing
 var current_lesson = ''
-var current_question = ''
+var current_question = '' setget set_current_question,get_current_question
+func set_current_question(val):
+	current_question = val
+func get_current_question():
+	return current_question
 
 #Transition scenes. E.g. when not enough words are present and the user is redirected
 var _transition_title = ''
@@ -75,8 +84,11 @@ var adict = {'TextEditQuestion':'question',
 			'LabelID':'id',
 			'LabelGoodDate':'good_answer_date',
 			'LabelBadDate':'bad_answer_date',
-			'LabelSkipDays':'skip_days'} #TODO: Ez még mindig elég hándi
-var adict_inv = reverse_dict(adict)
+			'LabelSkipDays':'skip_days'} setget ,get_adict#TODO: Ez még mindig elég hándi
+func get_adict():
+	return adict
+func adict_inv():
+	return reverse_dict(adict)
 var active_lessons = []
 
 func _ready():
@@ -89,7 +101,7 @@ func _ready():
 		
 		#Render options, such as font size
 		var ui_scale_default = 32 if OS.get_name() in ["iOS", "HTML5", "Server", "Windows","UWP", "X11"] else 48
-		var ui_scale_temp = config.get_value("render", "ui_scale", 32)
+		var ui_scale_temp = config.get_value("render", "ui_scale", ui_scale_default)
 		set_ui_scale(ui_scale_temp)
 		
 		active_lessons = config.get_value("quiz", "active_lessons", [''])
@@ -153,14 +165,14 @@ func list_files_in_directory(path):
 
 func fill_array(size,value):
 	var a = []
-	for i in range(size):
+	for _i in range(size):
 		a.append(value)
 	return a
 
 func random_string(length):
 	var a = ''
 	var v
-	for i in range(length):
+	for _i in range(length):
 		v = randi()%(122-48) + 48
 		if v ==92 or v == 96:
 			v+=1
@@ -229,7 +241,6 @@ func auto_ellipse(max_width:int,node:Node,ellipse_replacement : String = '[...]'
 	
 	var gen_w = get_actual_width(node)
 	if max_width<gen_w:
-		var original_text = node.text
 		node.text = node.text.substr(0,int(node.text.length()*(max_width*1.3/gen_w))) #not all characters are equally large
 		while get_actual_width(node)>max_width:
 			node.text = node.text.substr(0,node.text.length()-ellipse_replacement.length()-1) + ellipse_replacement
@@ -343,8 +354,7 @@ func create_file_dialog(viewport_rect : Rect2, parent: Node, access_mode):
 	fd.access = FileDialog.ACCESS_FILESYSTEM
 	fd.mode = access_mode
 	fd.set_filters(PoolStringArray(["*.les ; Lesson File"]))
-	OS.request_permission("WRITE_EXTERNAL_STORAGE")
-	fd.set_current_dir(OS.get_system_dir(3))
+	var _err = fd.set_current_dir(OS.get_system_dir(2))
 	parent.add_child(fd)
 	fd.show()
 	fd.invalidate()#AKA Refresh

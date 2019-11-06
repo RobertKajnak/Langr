@@ -37,7 +37,7 @@ func _ready():
 func load_data(file_name,question_title):
 	var question_data = qm.get_question(question_title)
 
-	var inv_dict = $"/root/GlobalVars".adict_inv
+	var inv_dict = $"/root/GlobalVars".adict_inv()
 	for key in question_data.keys():
 		if not key in inv_dict:
 			push_warning("unkown key found: " + key)

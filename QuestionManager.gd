@@ -83,7 +83,7 @@ func _check_question(question, check_duplicate=true):
 	return null
 		
 #if null is specified, the current lesson is used
-func add_question(question,lesson=null):
+func add_question(question,lesson_path=null):
 	var err = _check_question(question,true)
 	if err:
 		return err
@@ -91,7 +91,9 @@ func add_question(question,lesson=null):
 		question['id'] = global.random_string(random_key_length)
 	self._all_questions.append(question)
 	var lesson_file = File.new()
-	lesson_file.open(self.lesson_path, File.READ_WRITE)
+	if lesson_path == null:
+		lesson_path = self.lesson_path
+	lesson_file.open(lesson_path, File.READ_WRITE)
 	lesson_file.seek_end()
 	lesson_file.store_line(to_json(question))
 	lesson_file.close()
@@ -289,15 +291,6 @@ func _get_question_for_rotation(questions_to_ignore):
 			return sc[0]
 	return roulette[-1][0] # just in case
 #if questions is set to null, currently loaded questions are used (_all_questions)	
-#DEPR(quizz approach changed)
-func _get_earliest_dated(questions = null):
-	if questions == null:
-		questions = _all_questions
-	var cdate = global.get_date_compact()
-	var candidates = []
-	for q in questions:
-		pass
-	return candidates
 
 func load_lessons_for_quiz():
 	_all_questions = [] #Empty current list, then replace
@@ -354,7 +347,6 @@ func get_next_question_to_ask():
 	if quiz_rotation.empty():
 		return null
 		
-	_print_question_list(quiz_rotation)
 	return quiz_rotation[0]
 	
 func move_question_to_rotation_end(question):

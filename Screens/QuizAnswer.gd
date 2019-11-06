@@ -21,7 +21,9 @@ func _ready():
 	title_string = title_string.substr(0,title_string.rfind('.'))
 	if global.active_lessons.size()>1:
 		title_string += ' [' + global.get_active_lessons_string(20) + ']'
-	title_string += ' (' + str(qm.get_recap_question_count()) + ')'
+	var to_recap_count = qm.get_recap_question_count()
+	if to_recap_count>0:
+		title_string += ' (' + str(to_recap_count) + ')'
 	$VBoxContainer/HeaderContainer/LabelLessonTitle.text =  title_string
 	
 	$VBoxContainer/LabelQuestion.set_mode('small')
@@ -73,7 +75,8 @@ func _ready():
 		
 		display_answers()
 		dr_answer.set_color_on_clear(Color(0.4,0.1,0.6),4)
-		
+	else:
+		$VBoxContainer/CenterContainer/ButtonOnlyCorrect.visible = false
 
 func set_color_to_retry(dr_internal):
 	dr_internal.change_line_color_to(Color(0.4,0.1,0.6),4)
@@ -116,6 +119,8 @@ func display_answers():
 	set_color_to_retry(dr_internal)
 	
 func load_and_show_correct_answer(idx=-1):
+	if dr_answer==null:
+		return
 	var dr_internal = dr_answer.find_node('AnswerDraw')
 	if idx == -1:
 		idx = dr_internal.currently_loaded

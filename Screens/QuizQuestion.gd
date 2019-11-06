@@ -13,9 +13,11 @@ func _ready():
 	current_question = qm.get_next_question_to_ask()
 	global.current_question = current_question
 	if not global.active_lessons:
+		qm.exit_quiz()
 		global.to_transition_scene(get_tree(),'res://Screens/Manage.tscn','noActiveLessons','noLessonsRedirect')
 		return
 	if not current_question:
+		qm.exit_quiz()
 		global.to_transition_scene(get_tree(),'res://Screens/Manage.tscn','noActiveQuestions','noQuestionsRedirect')
 		return
 		
@@ -23,7 +25,9 @@ func _ready():
 	title_string = title_string.substr(0,title_string.rfind('.'))
 	if global.active_lessons.size()>1:
 		title_string += ' [' + global.get_active_lessons_string(20) + ']'
-	title_string += ' (' + str(qm.get_recap_question_count()) + ')'
+	var to_recap_count = qm.get_recap_question_count()
+	if to_recap_count>0:
+		title_string += ' (' + str(to_recap_count) + ')'
 	$VBoxContainer/HeaderContainer/LabelLessonTitle.text =  title_string
 	#$VBoxContainer/HeaderContainer/LabelLessonTitle/Label.autowrap = false
 	#global.auto_ellipse(get_viewport_rect().size.x*0.8,$VBoxContainer/HeaderContainer/LabelLessonTitle/Label)

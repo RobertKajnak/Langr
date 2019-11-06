@@ -41,8 +41,8 @@ func _ready():
 
 #%% Helper functions
 func go_back():
-	if $VBoxContainer/HeaderContainer/LabelTitle == null:
-		push_warning('TItle was null')
+	if get_node("VBoxContainer/HeaderContainer/LabelTitle") == null:
+		push_warning('Title was null')
 		var _err = get_tree().change_scene('res://Screens/Manage.tscn')
 		return
 	var new_title = $VBoxContainer/HeaderContainer/LabelTitle.text

@@ -1,6 +1,5 @@
 extends Control
 
-
 var valign setget set_valign,get_valign
 
 const LABEL_MODE_SMALL = 0
@@ -35,6 +34,9 @@ func _ready():
 	if text != '':
 		self.set_text(text)
 	
+	
+	var _valign = valign #The only purpose of this line is to silence the warning
+	
 func set_mode(mode=LABEL_MODE_NORMAL):
 	if mode is String:
 		mode = {'SMALL':LABEL_MODE_SMALL,
@@ -46,19 +48,20 @@ func set_mode(mode=LABEL_MODE_NORMAL):
 	adapt()
 
 func adapt():
-	var global = $"/root/GlobalVars"
-	match self._mode:
-		LABEL_MODE_SMALL:
-			global.adapt_font($Label,global.FONT_SIZE_SMALL)
-			$Label.align = Label.ALIGN_LEFT
-		LABEL_MODE_NORMAL:
-			global.adapt_font($Label,global.FONT_SIZE_MEDIUM)
-			$Label.align = Label.ALIGN_LEFT
-		LABEL_MODE_TITLE:
-			global.adapt_font($Label,global.FONT_SIZE_LARGE)
-			$Label.align = Label.ALIGN_CENTER
+	if self.is_inside_tree():
+		var global = $"/root/GlobalVars"
+		match self._mode:
+			LABEL_MODE_SMALL:
+				global.adapt_font($Label,global.FONT_SIZE_SMALL)
+				$Label.align = Label.ALIGN_LEFT
+			LABEL_MODE_NORMAL:
+				global.adapt_font($Label,global.FONT_SIZE_MEDIUM)
+				$Label.align = Label.ALIGN_LEFT
+			LABEL_MODE_TITLE:
+				global.adapt_font($Label,global.FONT_SIZE_LARGE)
+				$Label.align = Label.ALIGN_CENTER
 	
-func _process(delta):
+func _process(_delta):
 	self.rect_min_size = $Label.rect_size
 	
 	set_process(false)
