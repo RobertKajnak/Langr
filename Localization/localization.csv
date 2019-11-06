@@ -57,4 +57,4 @@ importSuccessMessage,Importing '{lesson}' successful,'{lesson}' sikeresen import
 importFailTitle,Import Failed,Importálás sikertelen
 importFailMessage,Could not import lesson,Nem sikerül importálni a leckét
 quizRotationSize,Quiz Pool Size,Kvíz Kérdéshalom mérete
-enableDebug,Enable Developer Mode,Fejlesztői Mód Aktiválása
+enableDebug,Developer Mode,Fejlesztői Mód

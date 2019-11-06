@@ -74,7 +74,8 @@ var adict = {'TextEditQuestion':'question',
 			'OptionButtonSkill':'skill',
 			'LabelID':'id',
 			'LabelGoodDate':'good_answer_date',
-			'LabelBadDate':'bad_answer_date'} #TODO: Ez még mindig elég hándi
+			'LabelBadDate':'bad_answer_date',
+			'LabelSkipDays':'skip_days'} #TODO: Ez még mindig elég hándi
 var adict_inv = reverse_dict(adict)
 var active_lessons = []
 

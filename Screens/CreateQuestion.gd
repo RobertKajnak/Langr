@@ -39,6 +39,9 @@ func load_data(file_name,question_title):
 
 	var inv_dict = $"/root/GlobalVars".adict_inv
 	for key in question_data.keys():
+		if not key in inv_dict:
+			push_warning("unkown key found: " + key)
+			continue
 		var node = $VBoxContainer/ScrollContainer/VBoxContainer/.find_node(inv_dict[key])
 		match key:
 			'answer_draw':
@@ -60,6 +63,7 @@ func load_data(file_name,question_title):
 			'id': pass
 			'good_answer_date':pass
 			'bad_answer_date':pass
+			'skip_days':pass
 			_:
 				push_warning("unkown key found: " + key)
 	

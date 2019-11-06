@@ -267,7 +267,7 @@ func _get_question_for_rotation(questions_to_ignore):
 				or ('skip_days' in q and 'good_answer_date' in q \
 					and global.get_date_difference(today,global.get_date_from_date_compact(q['good_answer_date']))<=q['skip_days']):
 			continue
-			#TODO ADD days to ignore
+			
 		roulette_candidates_with_new.append(q)
 		if 'bad_answer_date' in q or 'good_answer_date' in q:
 			roulette_candidates_without_new.append(q)
@@ -368,6 +368,18 @@ func remove_from_rotation(question):
 	if question:
 		quiz_rotation.erase(question)
 	
+func get_recap_question_count():
+	var rqcr = 0
+	for q in _all_questions:
+		var today = global.get_date_compact()
+		if ('good_answer_date' in q and q['good_answer_date']==today) \
+			or ('skip_days' in q and 'good_answer_date' in q \
+				and global.get_date_difference(today,global.get_date_from_date_compact(q['good_answer_date']))<=q['skip_days']):
+			continue
+			
+		if 'bad_answer_date' in q or 'good_answer_date' in q:
+			rqcr +=1
+	return rqcr
 	
 func get_lesson_for_question(question, cut_extension=false):
 	var ln = _quiz_map[question['id']]

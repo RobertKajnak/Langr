@@ -21,6 +21,7 @@ func _ready():
 	title_string = title_string.substr(0,title_string.rfind('.'))
 	if global.active_lessons.size()>1:
 		title_string += ' [' + global.get_active_lessons_string(20) + ']'
+	title_string += ' (' + str(qm.get_recap_question_count()) + ')'
 	$VBoxContainer/HeaderContainer/LabelLessonTitle.text =  title_string
 	
 	$VBoxContainer/LabelQuestion.set_mode('small')
