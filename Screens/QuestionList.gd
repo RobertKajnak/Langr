@@ -3,38 +3,49 @@ extends Control
 var current_lesson
 var title_original
 
-var question_manager
+var qm
 var global
 var cd
 
+var sorted_questions = []
+
+var to_translate = {'LabelSort':'sortBy',
+					'TextEditSearch':'search'}
+
+
 func _ready():
 	global = $"/root/GlobalVars"
+	global.retranslate($VBoxContainer,to_translate)
+	
+	qm = $"/root/QuestionManager"
+	
 	current_lesson = global.current_lesson
 	title_original = current_lesson
 	$VBoxContainer/HeaderContainer/LabelTitle.text = current_lesson
 	$VBoxContainer/HeaderContainer/LabelTitle.set_text_size(global.FONT_SIZE_MEDIUM)
 	print('Opened ' + current_lesson)
+	$VBoxContainer/HBoxContainerSearch/LabelSort.set_width(200)
+
+	var searchBar = $VBoxContainer/HBoxContainerSearch/TextEditSearch
+	var _err = searchBar.connect("focus_entered",self,"_tapped_to_edit",[searchBar])
+	_err = searchBar.connect("focus_exited",self,"_tapped_away",[searchBar])
 	
-	var lesson_file = File.new()
-	if not lesson_file.file_exists('user://lessons/' + current_lesson +'.les'):
-		var _err = get_tree().change_scene('res://Screens/MainMenu.tscn')
+	global.adapt_font($VBoxContainer/HBoxContainerSearch/OptionButtonSort)
+	for crit in qm.SORT_MODES:
+		$VBoxContainer/HBoxContainerSearch/OptionButtonSort.add_item(tr(crit))
 	
-	question_manager = $"/root/QuestionManager"
-	question_manager.load_questions()
-	for question in question_manager.get_questions():
-		var questionButton = preload("res://Interface/Buttons/SelectLessonButton.tscn").instance()
-		$VBoxContainer/ScrollContainer/VBoxContainer.add_child(questionButton)
-		if not ('good_answer_date' in question) and not('bad_answer_date' in question):
-			questionButton.add_color_override("font_color",global.skill_color_dict[null])
-		else:
-			questionButton.add_color_override("font_color",global.skill_color_dict[int(question['skill'])])
-		questionButton.set_label(question['question'])
-		questionButton.auto_ellipse(get_viewport_rect().size.x*0.85)
-		questionButton.connect("pressed",self,'_on_question_prerssed',[questionButton.original_text])
-	lesson_file.close()
+	#var lesson_file = File.new()
+	#if not lesson_file.file_exists('user://lessons/' + current_lesson +'.les'):
+	#	_err = get_tree().change_scene('res://Screens/MainMenu.tscn')
+	#lesson_file.close()
+	
+	qm.load_questions()
+	$VBoxContainer/HBoxContainerSearch/OptionButtonSort.select(global.question_sort_mode)
+	_on_OptionButtonSort_item_selected(global.question_sort_mode)
 	
 	cd = preload('res://Interface/Interactive/ConfirmationDialog.tscn').instance()
 	$VBoxContainer.add_child(cd)
+		
 
 	cd.set_contents(tr('confirmDeleteLessonTitle'),tr('confirmDeleteLessonMessage').format({'lesson':current_lesson}))
 	cd.connect("OK",self,"_delete_current_lesson")
@@ -54,6 +65,19 @@ func go_back():
 		add_child(popup)
 		popup.display(tr('lessonAlreadyExitsTitle'),tr('lessonAlreadyExitsMessage'))
 
+func populate_with_questions(questions):
+	for child in $VBoxContainer/ScrollContainer/VBoxContainer.get_children():
+		$VBoxContainer/ScrollContainer/VBoxContainer.remove_child(child)
+	for question in questions:
+		var questionButton = preload("res://Interface/Buttons/SelectLessonButton.tscn").instance()
+		$VBoxContainer/ScrollContainer/VBoxContainer.add_child(questionButton)
+		if not ('good_answer_date' in question) and not('bad_answer_date' in question):
+			questionButton.add_color_override("font_color",global.skill_color_dict[null])
+		else:
+			questionButton.add_color_override("font_color",global.skill_color_dict[int(question['skill'])])
+		questionButton.set_label(question['question'])
+		questionButton.auto_ellipse(get_viewport_rect().size.x*0.85)
+		questionButton.connect("pressed",self,'_on_question_prerssed',[questionButton.original_text])
 
 #%% Interface handling
 func _on_question_prerssed(question_text):
@@ -114,6 +138,33 @@ func _delete_current_lesson():
 
 
 #%% Input handling
+func _tapped_to_edit(control):
+	if control.text == tr(to_translate[control.name]):
+		control.text = ''
+		
+func _tapped_away(control):
+	if control.text == '':
+		control.text = tr(to_translate[control.name])
+	
+func _on_TextEditSearch_text_changed():
+	var tes :String= $VBoxContainer/HBoxContainerSearch/TextEditSearch.text
+	sorted_questions = qm.get_questions()
+	if tes != tr(to_translate['TextEditSearch']) and tes != '':
+		sorted_questions = qm.fitler_quesiton_list(sorted_questions,tes)
+	
+	populate_with_questions(sorted_questions)
+
+func _on_OptionButtonSort_item_selected(ID):
+	sorted_questions = qm.get_questions().duplicate()
+	match ID:
+		1: sorted_questions.sort_custom(qm,'sort_alphabetical')
+		2: sorted_questions.sort_custom(qm,'sort_skill')
+		_: pass
+	populate_with_questions(sorted_questions)
+	if 	global.question_sort_mode != ID:
+		global.question_sort_mode = ID
+		global.save_settings()
+		
 func _unhandled_input(event):
 	if event is InputEventKey:
 		if event.pressed and event.scancode == KEY_ESCAPE:
@@ -126,4 +177,6 @@ func _notification(what):
 	if what == MainLoop.NOTIFICATION_WM_GO_BACK_REQUEST: 
 		# For android
 		go_back()
+
+
 

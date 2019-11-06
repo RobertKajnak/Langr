@@ -1,11 +1,12 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Screens/QuestionList.gd" type="Script" id=1]
 [ext_resource path="res://res/Wood15.jpg" type="Texture" id=2]
 [ext_resource path="res://Interface/Buttons/BackButton.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Interface/Input/TextEditFreeForm.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Interface/Interactive/ScrollContainerDraggable.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Interface/Buttons/MenuButton.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Interface/TextDisplay/LabelAdaptive.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Interface/Interactive/ScrollContainerDraggable.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Interface/Buttons/MenuButton.tscn" type="PackedScene" id=7]
 
 [node name="WordListRoot" type="Control"]
 anchor_right = 1.0
@@ -44,21 +45,47 @@ margin_right = 510.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 450, 60 )
 
-[node name="ScrollContainer" parent="VBoxContainer" instance=ExtResource( 5 )]
+[node name="HBoxContainerSearch" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 75.0
+margin_right = 664.0
+margin_bottom = 139.0
+
+[node name="TextEditSearch" parent="VBoxContainer/HBoxContainerSearch" instance=ExtResource( 4 )]
+margin_right = 200.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 200, 60 )
+
+[node name="LabelSort" parent="VBoxContainer/HBoxContainerSearch" instance=ExtResource( 5 )]
+margin_left = 204.0
+margin_right = 204.0
+margin_bottom = 64.0
+text = "sortBy"
+
+[node name="OptionButtonSort" type="OptionButton" parent="VBoxContainer/HBoxContainerSearch"]
+margin_left = 208.0
+margin_right = 249.0
+margin_bottom = 64.0
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+margin_top = 154.0
+margin_right = 664.0
+margin_bottom = 158.0
+
+[node name="ScrollContainer" parent="VBoxContainer" instance=ExtResource( 6 )]
+margin_top = 173.0
 margin_right = 664.0
 margin_bottom = 614.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
-margin_bottom = 450.0
-rect_min_size = Vector2( 0, 450 )
+margin_bottom = 300.0
+rect_min_size = Vector2( 0, 300 )
 
 [node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
 margin_top = 629.0
 margin_right = 664.0
 margin_bottom = 705.455
 
-[node name="ButtonAddWord" parent="VBoxContainer/CenterContainer" instance=ExtResource( 6 )]
+[node name="ButtonAddWord" parent="VBoxContainer/CenterContainer" instance=ExtResource( 7 )]
 margin_left = 282.0
 margin_right = 382.0
 text_loc = "createQuestion"
@@ -68,7 +95,7 @@ margin_top = 720.0
 margin_right = 664.0
 margin_bottom = 796.455
 
-[node name="ButtonExport" parent="VBoxContainer/CenterContainer2" instance=ExtResource( 6 )]
+[node name="ButtonExport" parent="VBoxContainer/CenterContainer2" instance=ExtResource( 7 )]
 margin_left = 282.0
 margin_right = 382.0
 text_loc = "exportLesson"
@@ -78,12 +105,14 @@ margin_top = 811.0
 margin_right = 664.0
 margin_bottom = 887.455
 
-[node name="ButtonDeleteLesson" parent="VBoxContainer/CenterContainer3" instance=ExtResource( 6 )]
+[node name="ButtonDeleteLesson" parent="VBoxContainer/CenterContainer3" instance=ExtResource( 7 )]
 margin_left = 282.0
 margin_right = 382.0
 scene_to_load = "res://Manage.tscn"
 text_loc = "deleteLesson"
 [connection signal="pressed" from="VBoxContainer/HeaderContainer/BackButton" to="." method="go_back"]
+[connection signal="text_changed" from="VBoxContainer/HBoxContainerSearch/TextEditSearch" to="." method="_on_TextEditSearch_text_changed"]
+[connection signal="item_selected" from="VBoxContainer/HBoxContainerSearch/OptionButtonSort" to="." method="_on_OptionButtonSort_item_selected"]
 [connection signal="pressed" from="VBoxContainer/CenterContainer/ButtonAddWord" to="." method="_on_ButtonAddWord_pressed"]
 [connection signal="pressed" from="VBoxContainer/CenterContainer2/ButtonExport" to="." method="_on_Export_pressed"]
 [connection signal="pressed" from="VBoxContainer/CenterContainer3/ButtonDeleteLesson" to="." method="_on_ButtonDeleteLesson_pressed"]

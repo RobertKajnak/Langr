@@ -37,7 +37,7 @@ checkAnswer,Check Answer,Válasz Ellenőrzése
 forceCorrect,Correct!,Helyes!
 forceIncorrect,Incorrect!,Helytelen!
 showOnlyCorrect,Show Correct Only,Csak helyes mutatása
-checkActiveLessons,Please check the lessons you want to use in your training sessions:,Kérem válassza ki azokat a leckéket amelyekből szeretné a kérdéseket kapni tanulás közben:
+checkActiveLessons,The training session will be based on:,A kérdések a kiválaszott leckékből lesznek:
 noActiveLessons,No active lessons are selected,Egyetlen lecke sem aktív
 noLessonsRedirect,Tap or click to be redirected to the lessons management scene,Kattintson vagy tappintson és át lesz vezényelve a lecke rendezés részre
 noActiveQuestions,There no questions to ask,Nincs több kérdés
@@ -58,3 +58,8 @@ importFailTitle,Import Failed,Importálás sikertelen
 importFailMessage,Could not import lesson,Nem sikerül importálni a leckét
 quizRotationSize,Quiz Pool Size,Kvíz Kérdéshalom mérete
 enableDebug,Developer Mode,Fejlesztői Mód
+sortBy,Sort By:,Rendezés:
+search,Search,Keresés
+alphabetical,Alphabetical,ABC Sorrend
+dateAdded,Added,Dátum
+skill,Skill,Megjegyzés

@@ -84,7 +84,7 @@ func set_color_to_retry(dr_internal):
 	dr_answer.set_cache_status_label()
 
 func draw_correct_answer(dr_internal, idx: int):
-	dr_internal.change_line_color_to(Color(0,0.8,0.2,0.6),9)
+	dr_internal.change_line_color_to(Color(0,0.8,0.2,0.6),7)
 	var fns = current_question['answer_draw']
 	if fns is String:
 		fns = [fns]
@@ -115,8 +115,8 @@ func display_answers():
 			dr_answer.add_lines(temp_answer_cache[i][0])
 		if i<lim-1:
 			dr_internal.load_next_cached()
+		set_color_to_retry(dr_internal)
 	dr_internal.load_cached(0)
-	set_color_to_retry(dr_internal)
 	
 func load_and_show_correct_answer(idx=-1):
 	if dr_answer==null:

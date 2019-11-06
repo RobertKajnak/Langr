@@ -19,6 +19,7 @@ const FONT_SIZE_MEDIUM = 'MEDIUM'
 const FONT_SIZE_LARGE = 'LARGE'
 var FONTS = {}
 var DEBUG = false
+var question_sort_mode = 0
 
 var skill_color_dict = {0:Color(1,0,0),
 						1:Color(1,0.3,0.35),
@@ -106,6 +107,8 @@ func _ready():
 		
 		active_lessons = config.get_value("quiz", "active_lessons", [''])
 		rotation_size = config.get_value("quiz","rotation_size",7)
+		
+		question_sort_mode = config.get_value("editing","question_sort_mode",0)
 		
 		DEBUG = config.get_value("debug","debug_enabled",false)
 	TranslationServer.set_locale(langs[currentLang])
@@ -200,6 +203,7 @@ func save_settings():
 	config.set_value("render","ui_scale",UI_SCALE)
 	config.set_value("quiz","active_lessons",active_lessons)
 	config.set_value("quiz","rotation_size",rotation_size)
+	config.set_value("editing","question_sort_mode",question_sort_mode)
 	config.set_value("debug","debug_enabled",DEBUG)
 	config.save("user://settings.cfg")
 	

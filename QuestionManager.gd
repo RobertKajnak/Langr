@@ -16,10 +16,32 @@ var quiz_rotation = []
 var rotation_size = 7
 var skill_value_map = {0:20,1:15,2:12,3:10,4:7,5:5,6:1}
 
+const SORT_MODES = ['dateAdded','alphabetical','skill']
+
 func _ready():
 	randomize()
 	global = $"/root/GlobalVars"
 	pass
+
+static func sort_alphabetical(q1, q2):
+	if q1['question'] < q2['question']:
+		return true
+	return false
+
+static func sort_skill(q1, q2):
+	if q1['skill'] < q2['skill']:
+		return true
+	return false
+
+static func fitler_quesiton_list(question_list,regex):
+	"""Returns a new array containing the elements that match the regex"""
+	var rc = RegEx.new()
+	rc.compile(regex)
+	var good = []
+	for q in question_list:
+		if rc.search(q['question']) or ('answer_free' in q and rc.search(q['answer_free'])):
+			good.append(q)
+	return good
 
 #Loads the questions associated to the currently open lesson. Can be overriden by specifiying the parameter
 func load_questions(lesson_path=null, replace_current_questions = true):
@@ -134,7 +156,7 @@ func update_question_skill(question,delta, force_update_skill=false):
 		
 	"""
 	if not question:
-		print('Question not specified')
+		push_warning('Question not specified')
 		return -1
 		
 	var today = global.get_date_compact()
@@ -302,6 +324,10 @@ func load_lessons_for_quiz():
 		for i in range(last_end,_all_questions.size()):
 			var q = _all_questions[i]
 			if not 'id' in q:
+				q['id'] = global.random_string(random_key_length)
+			
+			while q['id'] in _quiz_map:
+				push_warning('Quesiton ID Already Exists for quesiton '+q['question']+'. Assigning new temp id')
 				q['id'] = global.random_string(random_key_length)
 			_quiz_map[q['id']] = str(lesson)
 	self.lesson_path = ''
