@@ -1,14 +1,11 @@
 extends Control
 
-var tbm = 'TextEditCheckBoxMulti'
-var mbox_count = 1 # Keeps track of how many boxes there are
 var to_translate = {'TextEditQuestion':'questionPlaceholder',
 					'AnswerTextEdit':'answerTextPlaceholder',
 					'LabelSkill':'currentSkill',
 					'LabelMultiChoice':'multiChoiceTooltip',
 					'ButtonClearDrawing':'drawClear',
-					'ButtonUndoDrawing':'drawUndo',
-					tbm + '0':'multiChoiceCheckbox'}
+					'ButtonUndoDrawing':'drawUndo'}
 var qm
 var original_question
 var modifying_mode
@@ -22,10 +19,7 @@ func _ready():
 	
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/LabelSkill/Label.rect_min_size = Vector2(180,0)
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/LabelSkill/Label.rect_size = Vector2(400,0)
-	var chbox = $VBoxContainer/ScrollContainer/VBoxContainer/ScrollContainerMultiChoice/VBoxContainerMultiChoice/HBoxContainer/TextEditCheckBoxMulti0
-	chbox.connect("focus_entered",self,"_tapped_to_edit",[chbox])
-	chbox.connect("focus_exited",self,"_tapped_away",[chbox])
-	chbox.connect("text_changed",self,"_text_modified_chbox",[chbox])
+
 
 	qm = $"/root/QuestionManager"
 	
@@ -92,32 +86,11 @@ func _tapped_away(control):
 func _count_boxes():
 	pass
 
-func _text_modified_chbox(box):
-	print("modifying " + box.name)
-	if box.text != tr(to_translate[box.name]) and box.text != '' and box.name == tbm + str(mbox_count-1):
-		print('adding buttons')
-		var box_list = $VBoxContainer/ScrollContainer/VBoxContainer/ScrollContainerMultiChoice/VBoxContainerMultiChoice
-		var hbox = HBoxContainer.new()
-		$VBoxContainer/ScrollContainer/VBoxContainer/ScrollContainerMultiChoice.rect_size.y+=80
-		box_list.add_child(hbox)
-		hbox.rect_size.y = 180
-		var tick = CheckBox.new()
-		var text = TextEdit.new()
-		hbox.add_child(tick)
-		hbox.add_child(text)
-		text.rect_size.y = 180
-		text.name = tbm + str(mbox_count)
-		mbox_count += 1
-		text.connect("focus_entered",self,"_tapped_to_edit",[text])
-		text.connect("focus_exited",self,"_tapped_away",[text])
-		text.connect("text_changed",self,"_text_modified_chbox",[text])
-
 
 func _on_Button_pressed():
 	var to_save = {}
 	var adict = $"/root/GlobalVars".adict;
 	for q in [$VBoxContainer/ScrollContainer/VBoxContainer/AnswerTextEdit,
-				$VBoxContainer/ScrollContainer/VBoxContainer/ScrollContainerMultiChoice/VBoxContainerMultiChoice/HBoxContainer/TextEditCheckBoxMulti0,
 				$VBoxContainer/ScrollContainer/VBoxContainer/TextEditQuestion]:
 		if q.text!='' and q.text!=tr(to_translate[q.name]):
 			to_save[adict[q.name]] = q.text

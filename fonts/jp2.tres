@@ -2,7 +2,7 @@
 
 [sub_resource type="DynamicFontData" id=1]
 antialiased = false
-font_path = "res://fonts/yumin.ttf"
+font_path = "res://fonts/851H-kktt.ttf"
 
 [resource]
 size = 32

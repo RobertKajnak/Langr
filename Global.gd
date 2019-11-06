@@ -40,7 +40,7 @@ func set_ui_scale(val):
 		FONTS[font] = DynamicFont.new()
 		var font_data = DynamicFontData.new()
 		if 'JP' in font:
-			font_data.font_path = 'res://fonts/yumin.ttf'
+			font_data.font_path = 'res://fonts/851H-kktt.ttf'
 		else:
 			if 'SMALL' in font:
 				font_data.font_path = 'res://fonts/AA_Brush Stroke_Hun.ttf'
