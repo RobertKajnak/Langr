@@ -63,3 +63,8 @@ search,Search,Keresés
 alphabetical,Alphabetical,ABC Sorrend
 dateAdded,Added,Dátum
 skill,Skill,Megjegyzés
+good_answer_date,Last time correctly answered,Utolsó helyes válasz
+bad_answer_date,Last incorrect answer,Utolsó helytelen válasz
+skip_days,Hide for (days),Rejtés hossza (nap)
+id,ID,Azonosító
+N/A,N/A,N/A

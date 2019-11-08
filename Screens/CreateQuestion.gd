@@ -6,12 +6,14 @@ var to_translate = {'TextEditQuestion':'questionPlaceholder',
 					'LabelMultiChoice':'multiChoiceTooltip',
 					'ButtonClearDrawing':'drawClear',
 					'ButtonUndoDrawing':'drawUndo'}
+var global
 var qm
 var original_question
 var modifying_mode
 
 func _ready():
-	$"/root/GlobalVars".retranslate($VBoxContainer,to_translate)
+	global = $"/root/GlobalVars"
+	global.retranslate($VBoxContainer,to_translate)
 	for control in [$VBoxContainer/ScrollContainer/VBoxContainer/TextEditQuestion,
 					$VBoxContainer/ScrollContainer/VBoxContainer/AnswerTextEdit]:
 		var _err = control.connect("focus_entered",self,"_tapped_to_edit",[control])
@@ -28,7 +30,8 @@ func _ready():
 		$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/OptionButtonSkill.add_item(str(i))
 	modifying_mode = false
 
-func load_data(file_name,question_title):
+
+func load_data(file_name,question_title,dev_mode = false):
 	var question_data = qm.get_question(question_title)
 
 	var inv_dict = $"/root/GlobalVars".adict_inv()
@@ -60,16 +63,34 @@ func load_data(file_name,question_title):
 			'skip_days':pass
 			_:
 				push_warning("unkown key found: " + key)
-	
+		
 	$VBoxContainer/CenterContainer/ButtonCreateQuestion.text_loc = 'modifyQuestion'
 	$VBoxContainer/CenterContainer/ButtonCreateQuestion._ready()
 	
 	original_question = question_data
 	$VBoxContainer/CenterContainer2/ButtonCancel.text_loc = 'deleteQuestion'
 	$VBoxContainer/CenterContainer2/ButtonCancel._ready()
-	
+
 	modifying_mode = true
 
+	if dev_mode:
+		var stx = '' #stats text
+		for s in ['id','good_answer_date','bad_answer_date','skip_days']:
+			var smod = (str(question_data[s]) if s in question_data else tr('N/A'))
+			if (s == 'good_answer_date' or s=='bad_answer_date') and smod!=tr('N/A'):
+				var lang = TranslationServer.get_locale()
+				if lang in ['ja','zh']:
+					smod = smod.insert(4,'年')
+					smod = smod.insert(7,'月')
+				else:
+					smod = smod.insert(4,'/')
+					smod = smod.insert(7,'/')
+			stx +=  tr(s) + ': '+ smod + '\n'
+		$VBoxContainer/ScrollContainer/VBoxContainer/LableStats.text = stx
+		$VBoxContainer/ScrollContainer/VBoxContainer/LableStats.set_mode('small')
+	else:
+		$VBoxContainer/ScrollContainer/VBoxContainer/LableStats.visible = false
+		$VBoxContainer/ScrollContainer/VBoxContainer/HSeparator.visible = false
 #%% Helper functions
 func go_back():
 	var _err = get_tree().change_scene('res://Screens/QuestionList.tscn')

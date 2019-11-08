@@ -219,6 +219,7 @@ func _save_current_questions(lesson=null):
 		lesson_path = ''
 		for question in _all_questions:
 			if lesson != _quiz_map[question['id']]:
+				push_warning('Question was not in quiz map!')
 				continue
 			var les_path = 'user://lessons/' + _quiz_map[question['id']]
 			if les_path != lesson_path:

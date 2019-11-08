@@ -93,7 +93,7 @@ func _on_question_prerssed(question_text):
 		node.call_deferred("free")
 	
 	add_child(q)
-	q.load_data('user://lessons/' + current_lesson +'.les', question_text)
+	q.load_data('user://lessons/' + current_lesson +'.les', question_text,global.DEBUG)
 	
 func _on_ButtonAddWord_pressed():
 	var _err = get_tree().change_scene('res://Screens/CreateQuestion.tscn')
