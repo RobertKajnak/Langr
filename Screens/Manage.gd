@@ -71,7 +71,7 @@ func change_active_lessons():
 #%% Interface Handling
 func _on_lesson_pressed(lesson_name):
 	print('Opening lesson: ' + lesson_name)
-	change_active_lessons()
+	#change_active_lessons()
 	global.current_lesson = lesson_name
 	var _err = get_tree().change_scene('res://Screens/QuestionList.tscn')
 

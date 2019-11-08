@@ -116,7 +116,7 @@ func display_answers():
 		if i<lim-1:
 			dr_internal.load_next_cached()
 		set_color_to_retry(dr_internal)
-	dr_internal.load_cached(0)
+	dr_answer.load_image(0)
 	
 func load_and_show_correct_answer(idx=-1):
 	if dr_answer==null:
@@ -124,7 +124,7 @@ func load_and_show_correct_answer(idx=-1):
 	var dr_internal = dr_answer.find_node('AnswerDraw')
 	if idx == -1:
 		idx = dr_internal.currently_loaded
-	dr_internal.load_cached(idx)
+	dr_answer.load_image(idx)
 	dr_internal.clear_drawing()
 	draw_correct_answer(dr_internal,idx)	
 	set_color_to_retry(dr_internal)

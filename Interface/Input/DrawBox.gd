@@ -96,3 +96,4 @@ func _on_NextButton_pressed():
 
 func load_image(indx : int):
 	$AnswerDraw.load_cached(indx)
+	set_cache_status_label()

@@ -155,6 +155,7 @@ func update_question_skill(question,delta, force_update_skill=false):
 			force_update_skill: Updates the field even if it has already been modified 'today'
 		
 	"""
+	
 	if not question:
 		push_warning('Question not specified')
 		return -1
@@ -219,10 +220,9 @@ func _save_current_questions(lesson=null):
 		lesson_path = ''
 		for question in _all_questions:
 			if lesson != _quiz_map[question['id']]:
-				push_warning('Question was not in quiz map!')
 				continue
 			var les_path = 'user://lessons/' + _quiz_map[question['id']]
-			if les_path != lesson_path:
+			if les_path != lesson_path:# Assumed to be in blocks
 				if lesson_path != '':
 					lesson_file.close()
 				lesson_path = les_path
