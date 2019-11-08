@@ -26,8 +26,8 @@ func _ready():
 	if global.active_lessons.size()>1:
 		title_string += ' [' + global.get_active_lessons_string(20) + ']'
 	var to_recap_count = qm.get_recap_question_count()
-	if to_recap_count>0:
-		title_string += ' (' + str(to_recap_count) + ')'
+	if to_recap_count[0]>0 or to_recap_count[1]>0:
+		title_string += ' (' + str(to_recap_count[0]) + '/' + str(to_recap_count[1]) + ')'
 	$VBoxContainer/HeaderContainer/LabelLessonTitle.text =  title_string
 	#$VBoxContainer/HeaderContainer/LabelLessonTitle/Label.autowrap = false
 	#global.auto_ellipse(get_viewport_rect().size.x*0.8,$VBoxContainer/HeaderContainer/LabelLessonTitle/Label)
@@ -56,6 +56,8 @@ func _ready():
 			nr_drawings = nr_drawings.size()
 		dr_answer.create_empty_drawings(nr_drawings-1)
 		dr_answer.disable_add_drawing()
+		
+	$VBoxContainer/LabelQuestion.set_width($VBoxContainer.rect_size.x)
 		
 	if global.DEBUG:
 		var cq = current_question

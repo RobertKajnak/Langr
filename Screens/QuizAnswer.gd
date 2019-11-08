@@ -22,8 +22,8 @@ func _ready():
 	if global.active_lessons.size()>1:
 		title_string += ' [' + global.get_active_lessons_string(20) + ']'
 	var to_recap_count = qm.get_recap_question_count()
-	if to_recap_count>0:
-		title_string += ' (' + str(to_recap_count) + ')'
+	if to_recap_count[0]>0 or to_recap_count[1]>0:
+		title_string += ' (' + str(to_recap_count[0]) + '/' + str(to_recap_count[1]) + ')'
 	$VBoxContainer/HeaderContainer/LabelLessonTitle.text =  title_string
 	
 	$VBoxContainer/LabelQuestion.set_mode('small')
@@ -78,6 +78,8 @@ func _ready():
 	else:
 		$VBoxContainer/CenterContainer/ButtonOnlyCorrect.visible = false
 
+	$VBoxContainer/LabelQuestion.set_width($VBoxContainer.rect_size.x)
+	
 func set_color_to_retry(dr_internal):
 	dr_internal.change_line_color_to(Color(0.4,0.1,0.6),4)
 	dr_answer.disable_add_drawing()

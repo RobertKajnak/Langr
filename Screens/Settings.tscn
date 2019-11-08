@@ -99,6 +99,7 @@ min_value = 3.0
 max_value = 25.0
 value = 3.0
 tick_count = 25
+ticks_on_borders = true
 
 [node name="HBoxContainerDebug" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 238.0

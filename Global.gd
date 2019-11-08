@@ -1,7 +1,7 @@
 #warning-ignore-all:unused_variable
 extends Node
 
-var config;
+var config
 
 #CONSTANTS
 var currentLang = 0; #currently used languge index from langs

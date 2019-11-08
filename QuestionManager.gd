@@ -200,6 +200,9 @@ func update_question_skill(question,delta, force_update_skill=false):
 	var lesson = null
 	if _quiz_map and 'id' in cc:
 		lesson = _quiz_map[cc['id']]
+	
+	if not cc in _all_questions:
+		_all_questions[find_question_in_list(cc,_all_questions)] = cc
 	_save_current_questions(lesson)
 
 
@@ -275,6 +278,12 @@ func question_in_list(question,list_of_questions, return_question=false):
 			else:
 				return true
 	return false
+	
+func find_question_in_list(question,list_of_questions):
+	for idx in range(list_of_questions.size()):
+		if compare_questions(question,list_of_questions[idx]):
+			return idx
+	return -1
 
 func _get_question_for_rotation(questions_to_ignore):
 	var roulette = []
@@ -389,6 +398,7 @@ func remove_from_rotation(question):
 	
 func get_recap_question_count():
 	var rqcr = 0
+	var nq = 0
 	for q in _all_questions:
 		var today = global.get_date_compact()
 		if ('good_answer_date' in q and q['good_answer_date']==today) \
@@ -398,7 +408,9 @@ func get_recap_question_count():
 			
 		if 'bad_answer_date' in q or 'good_answer_date' in q:
 			rqcr +=1
-	return rqcr
+		else:
+			nq += 1
+	return [rqcr,nq]
 	
 func get_lesson_for_question(question, cut_extension=false):
 	var ln = _quiz_map[question['id']]
