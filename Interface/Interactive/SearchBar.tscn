@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Interface/Interactive/SearchBar.gd" type="Script" id=1]
+[ext_resource path="res://Interface/Input/TextEditFreeForm.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Interface/TextDisplay/LabelAdaptive.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Interface/Buttons/OptionButtonAdaptive.tscn" type="PackedScene" id=4]
+
+[node name="SearchBar" type="HBoxContainer"]
+margin_top = 75.0
+margin_right = 664.0
+margin_bottom = 139.0
+script = ExtResource( 1 )
+
+[node name="TextEditSearch" parent="." instance=ExtResource( 2 )]
+margin_right = 200.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 200, 60 )
+
+[node name="LabelSort" parent="." instance=ExtResource( 3 )]
+margin_left = 204.0
+margin_right = 204.0
+margin_bottom = 64.0
+text = "sortBy"
+
+[node name="OptionButtonSort" parent="." instance=ExtResource( 4 )]
+[connection signal="text_changed" from="TextEditSearch" to="." method="_on_TextEditSearch_text_changed"]
+[connection signal="item_selected" from="OptionButtonSort" to="." method="_on_OptionButtonSort_item_selected"]

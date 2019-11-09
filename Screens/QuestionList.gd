@@ -24,24 +24,15 @@ func _ready():
 	$VBoxContainer/HeaderContainer/LabelTitle.text = current_lesson
 	$VBoxContainer/HeaderContainer/LabelTitle.set_text_size(global.FONT_SIZE_MEDIUM)
 	print('Opened ' + current_lesson)
-	$VBoxContainer/HBoxContainerSearch/LabelSort.set_width(200)
-
-	var searchBar = $VBoxContainer/HBoxContainerSearch/TextEditSearch
-	var _err = searchBar.connect("focus_entered",self,"_tapped_to_edit",[searchBar])
-	_err = searchBar.connect("focus_exited",self,"_tapped_away",[searchBar])
 	
-	for crit in qm.SORT_MODES:
-		for dir in ['↓','↑']:
-			$VBoxContainer/HBoxContainerSearch/OptionButtonSort.add_item(dir+tr(crit))
-	
-	$VBoxContainer/HBoxContainerSearch/OptionButtonSort.adapt()
+	$VBoxContainer/SearchBar.add_options(qm.SORT_MODES)
 	#var lesson_file = File.new()
 	#if not lesson_file.file_exists('user://lessons/' + current_lesson +'.les'):
 	#	_err = get_tree().change_scene('res://Screens/MainMenu.tscn')
 	#lesson_file.close()
 	
 	qm.load_questions()
-	$VBoxContainer/HBoxContainerSearch/OptionButtonSort.select(global.question_sort_mode)
+	$VBoxContainer/SearchBar.select(global.question_sort_mode)
 	_on_OptionButtonSort_item_selected(global.question_sort_mode)
 	
 	cd = preload('res://Interface/Interactive/ConfirmationDialog.tscn').instance()
@@ -137,17 +128,8 @@ func _delete_current_lesson():
 	
 
 
-#%% Input handling
-func _tapped_to_edit(control):
-	if control.text == tr(to_translate[control.name]):
-		control.text = ''
-		
-func _tapped_away(control):
-	if control.text == '':
-		control.text = tr(to_translate[control.name])
-	
-func _on_TextEditSearch_text_changed():
-	var tes :String= $VBoxContainer/HBoxContainerSearch/TextEditSearch.text
+#%% Input handling	
+func _on_TextEditSearch_text_changed(tes):
 	sorted_questions = qm.get_questions()
 	if tes != tr(to_translate['TextEditSearch']) and tes != '':
 		sorted_questions = qm.fitler_quesiton_list(sorted_questions,tes)
