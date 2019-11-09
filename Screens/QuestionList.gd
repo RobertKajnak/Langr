@@ -30,10 +30,11 @@ func _ready():
 	var _err = searchBar.connect("focus_entered",self,"_tapped_to_edit",[searchBar])
 	_err = searchBar.connect("focus_exited",self,"_tapped_away",[searchBar])
 	
-	global.adapt_font($VBoxContainer/HBoxContainerSearch/OptionButtonSort)
 	for crit in qm.SORT_MODES:
-		$VBoxContainer/HBoxContainerSearch/OptionButtonSort.add_item(tr(crit))
+		for dir in ['↓','↑']:
+			$VBoxContainer/HBoxContainerSearch/OptionButtonSort.add_item(dir+tr(crit))
 	
+	$VBoxContainer/HBoxContainerSearch/OptionButtonSort.adapt()
 	#var lesson_file = File.new()
 	#if not lesson_file.file_exists('user://lessons/' + current_lesson +'.les'):
 	#	_err = get_tree().change_scene('res://Screens/MainMenu.tscn')
@@ -46,7 +47,6 @@ func _ready():
 	cd = preload('res://Interface/Interactive/ConfirmationDialog.tscn').instance()
 	$VBoxContainer.add_child(cd)
 		
-
 	cd.set_contents(tr('confirmDeleteLessonTitle'),tr('confirmDeleteLessonMessage').format({'lesson':current_lesson}))
 	cd.connect("OK",self,"_delete_current_lesson")
 
@@ -156,10 +156,12 @@ func _on_TextEditSearch_text_changed():
 
 func _on_OptionButtonSort_item_selected(ID):
 	sorted_questions = qm.get_questions().duplicate()
-	match ID:
+	match ID/2:
 		1: sorted_questions.sort_custom(qm,'sort_alphabetical')
 		2: sorted_questions.sort_custom(qm,'sort_skill')
 		_: pass
+	if ID%2==1:
+		sorted_questions.invert()
 	populate_with_questions(sorted_questions)
 	if 	global.question_sort_mode != ID:
 		global.question_sort_mode = ID

@@ -1,12 +1,13 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Screens/QuestionList.gd" type="Script" id=1]
 [ext_resource path="res://res/Wood15.jpg" type="Texture" id=2]
 [ext_resource path="res://Interface/Buttons/BackButton.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Interface/Input/TextEditFreeForm.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Interface/TextDisplay/LabelAdaptive.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Interface/Interactive/ScrollContainerDraggable.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Interface/Buttons/MenuButton.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Interface/Buttons/OptionButtonAdaptive.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Interface/Interactive/ScrollContainerDraggable.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Interface/Buttons/MenuButton.tscn" type="PackedScene" id=8]
 
 [node name="WordListRoot" type="Control"]
 anchor_right = 1.0
@@ -61,17 +62,14 @@ margin_right = 204.0
 margin_bottom = 64.0
 text = "sortBy"
 
-[node name="OptionButtonSort" type="OptionButton" parent="VBoxContainer/HBoxContainerSearch"]
-margin_left = 208.0
-margin_right = 249.0
-margin_bottom = 64.0
+[node name="OptionButtonSort" parent="VBoxContainer/HBoxContainerSearch" instance=ExtResource( 6 )]
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 margin_top = 154.0
 margin_right = 664.0
 margin_bottom = 158.0
 
-[node name="ScrollContainer" parent="VBoxContainer" instance=ExtResource( 6 )]
+[node name="ScrollContainer" parent="VBoxContainer" instance=ExtResource( 7 )]
 margin_top = 173.0
 margin_right = 664.0
 margin_bottom = 614.0
@@ -85,7 +83,7 @@ margin_top = 629.0
 margin_right = 664.0
 margin_bottom = 705.455
 
-[node name="ButtonAddWord" parent="VBoxContainer/CenterContainer" instance=ExtResource( 7 )]
+[node name="ButtonAddWord" parent="VBoxContainer/CenterContainer" instance=ExtResource( 8 )]
 margin_left = 282.0
 margin_right = 382.0
 text_loc = "createQuestion"
@@ -95,7 +93,7 @@ margin_top = 720.0
 margin_right = 664.0
 margin_bottom = 796.455
 
-[node name="ButtonExport" parent="VBoxContainer/CenterContainer2" instance=ExtResource( 7 )]
+[node name="ButtonExport" parent="VBoxContainer/CenterContainer2" instance=ExtResource( 8 )]
 margin_left = 282.0
 margin_right = 382.0
 text_loc = "exportLesson"
@@ -105,7 +103,7 @@ margin_top = 811.0
 margin_right = 664.0
 margin_bottom = 887.455
 
-[node name="ButtonDeleteLesson" parent="VBoxContainer/CenterContainer3" instance=ExtResource( 7 )]
+[node name="ButtonDeleteLesson" parent="VBoxContainer/CenterContainer3" instance=ExtResource( 8 )]
 margin_left = 282.0
 margin_right = 382.0
 scene_to_load = "res://Manage.tscn"

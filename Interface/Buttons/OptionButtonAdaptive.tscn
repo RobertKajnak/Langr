@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Interface/Buttons/OptionButtonAdaptive.gd" type="Script" id=1]
+
+[node name="OptionButtonAdaptive" type="OptionButton"]
+margin_left = 208.0
+margin_right = 249.0
+margin_bottom = 64.0
+script = ExtResource( 1 )

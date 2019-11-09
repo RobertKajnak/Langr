@@ -209,7 +209,7 @@ func save_settings():
 	
 #If text is left as null, node.text is used.
 #Size should be one of the FONT_SIZE constants
-func adapt_font(node,size=FONT_SIZE_SMALL,text = null):
+func adapt_font(node,size=FONT_SIZE_SMALL,text = null,apply_theme=false):
 	var latin_only = true
 	if not text:
 		text = node.text
@@ -233,6 +233,10 @@ func adapt_font(node,size=FONT_SIZE_SMALL,text = null):
 			font = FONTS['FONT_LARGE_JP']
 		
 	node.set('custom_fonts/font',font)
+	
+	if apply_theme:
+		node.theme = Theme.new()
+		node.theme.default_font = font
 
 func get_actual_width(text_node):
 	text_node.set_size(Vector2(8, 8))

@@ -4,7 +4,7 @@
 [ext_resource path="res://res/Wood24.jpg" type="Texture" id=2]
 [ext_resource path="res://Interface/TextDisplay/LabelAdaptive.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Interface/Interactive/ScrollContainerDraggable.tscn" type="PackedScene" id=4]
-[ext_resource path="res://fonts/MainMenuFont.tres" type="DynamicFont" id=5]
+[ext_resource path="res://Interface/Buttons/OptionButtonAdaptive.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Interface/Buttons/BackButton.tscn" type="PackedScene" id=6]
 
 [node name="Control" type="Control"]
@@ -48,11 +48,9 @@ margin_right = 487.0
 margin_bottom = 64.0
 rect_min_size = Vector2( 300, 0 )
 
-[node name="ButtonLanguage" type="OptionButton" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerLang"]
+[node name="ButtonLanguage" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerLang" instance=ExtResource( 5 )]
 margin_left = 491.0
 margin_right = 532.0
-margin_bottom = 64.0
-custom_fonts/font = ExtResource( 5 )
 
 [node name="HBoxContainerScale" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 94.0
@@ -66,11 +64,9 @@ margin_right = 437.0
 margin_bottom = 64.0
 rect_min_size = Vector2( 200, 0 )
 
-[node name="ButtonScale" type="OptionButton" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerScale"]
+[node name="ButtonScale" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerScale" instance=ExtResource( 5 )]
 margin_left = 441.0
 margin_right = 482.0
-margin_bottom = 64.0
-custom_fonts/font = ExtResource( 5 )
 
 [node name="HBoxContainerRotation" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 188.0

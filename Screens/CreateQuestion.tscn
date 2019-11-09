@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Screens/CreateQuestion.gd" type="Script" id=1]
 [ext_resource path="res://res/Wood15.jpg" type="Texture" id=2]
@@ -7,7 +7,8 @@
 [ext_resource path="res://Interface/Input/DrawBox.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Interface/TextDisplay/LabelAdaptive.tscn" type="PackedScene" id=6]
 [ext_resource path="res://fonts/SubMenuFont.tres" type="DynamicFont" id=7]
-[ext_resource path="res://Interface/Buttons/MenuButton.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Interface/Buttons/SelectLessonButton.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Interface/Buttons/MenuButton.tscn" type="PackedScene" id=9]
 
 [node name="CreateQuestionRoot" type="Control"]
 anchor_right = 1.0
@@ -75,6 +76,26 @@ margin_right = 245.0
 margin_bottom = 45.0
 custom_fonts/font = ExtResource( 7 )
 
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+visible = false
+margin_top = 939.0
+margin_right = 600.0
+margin_bottom = 978.0
+
+[node name="LabelRequires" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer2" instance=ExtResource( 6 )]
+margin_right = 0.0
+margin_bottom = 39.0
+
+[node name="LinkRequires" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer2" instance=ExtResource( 8 )]
+margin_left = 4.0
+margin_right = 117.0
+
+[node name="VBoxContainerRequires" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+visible = false
+margin_top = 939.0
+margin_right = 600.0
+margin_bottom = 939.0
+
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 939.0
 margin_right = 600.0
@@ -90,7 +111,7 @@ margin_top = 729.0
 margin_right = 660.0
 margin_bottom = 805.455
 
-[node name="ButtonCreateQuestion" parent="VBoxContainer/CenterContainer" instance=ExtResource( 8 )]
+[node name="ButtonCreateQuestion" parent="VBoxContainer/CenterContainer" instance=ExtResource( 9 )]
 margin_left = 280.0
 margin_right = 380.0
 text_loc = "createQuestion"
@@ -100,9 +121,10 @@ margin_top = 820.0
 margin_right = 660.0
 margin_bottom = 896.455
 
-[node name="ButtonCancel" parent="VBoxContainer/CenterContainer2" instance=ExtResource( 8 )]
+[node name="ButtonCancel" parent="VBoxContainer/CenterContainer2" instance=ExtResource( 9 )]
 margin_left = 280.0
 margin_right = 380.0
 text_loc = "cancel"
+[connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer2/LinkRequires" to="." method="_on_LabelRequires_pressed"]
 [connection signal="pressed" from="VBoxContainer/CenterContainer/ButtonCreateQuestion" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="VBoxContainer/CenterContainer2/ButtonCancel" to="." method="_on_ButtonCancel_pressed"]

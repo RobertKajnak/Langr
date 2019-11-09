@@ -68,3 +68,6 @@ bad_answer_date,Last incorrect answer,Utolsó helytelen válasz
 skip_days,Hide for (days),Rejtés hossza (nap)
 id,ID,Azonosító
 N/A,N/A,N/A
+none,None,Semmi
+requires,Requires:,Igényli:
+selectLesson,Please select a lesson,Válasszon egy leckét

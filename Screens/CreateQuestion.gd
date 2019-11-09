@@ -5,7 +5,9 @@ var to_translate = {'TextEditQuestion':'questionPlaceholder',
 					'LabelSkill':'currentSkill',
 					'LabelMultiChoice':'multiChoiceTooltip',
 					'ButtonClearDrawing':'drawClear',
-					'ButtonUndoDrawing':'drawUndo'}
+					'ButtonUndoDrawing':'drawUndo',
+					'LabelRequires':'requires',
+					'LinkRequires':'none'}
 var global
 var qm
 var original_question
@@ -19,9 +21,7 @@ func _ready():
 		var _err = control.connect("focus_entered",self,"_tapped_to_edit",[control])
 		_err = control.connect("focus_exited",self,"_tapped_away",[control])
 	
-	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/LabelSkill/Label.rect_min_size = Vector2(180,0)
-	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/LabelSkill/Label.rect_size = Vector2(400,0)
-
+	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/LabelSkill.set_width_auto(20)
 
 	qm = $"/root/QuestionManager"
 	
@@ -30,6 +30,8 @@ func _ready():
 		$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/OptionButtonSkill.add_item(str(i))
 	modifying_mode = false
 
+	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer2/LabelRequires.set_mode('medium')
+	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer2/LabelRequires.set_width_auto(5)
 
 func load_data(file_name,question_title,dev_mode = false):
 	var question_data = qm.get_question(question_title)
@@ -120,7 +122,11 @@ func _on_Button_pressed():
 		if not 'question' in to_save:
 			to_save['question'] = original_question['question'] #This must happen before the 'AnswerDraw'='placeholder' draw,
 			# so a 'questionNotSet' Error is not thrown
-	
+		elif to_save['question'] != original_question['question'] and to_save['question'] in qm.get_question_titles():
+			var popup = preload("res://Interface/Interactive/ErrorPopup.tscn").instance()
+			add_child(popup)
+			popup.display(tr('couldNotModifyQuestion'),tr('questionAlreadyExists'))
+			return
 	#TODO this feels like a wokraround
 	if not $VBoxContainer/ScrollContainer/VBoxContainer/CenterContainer/VBoxContainerDraw/AnswerDraw.is_empty():
 		to_save[adict['VBoxContainerDraw']] = 'placeholder'
@@ -153,6 +159,20 @@ func _on_Button_pressed():
 	else:
 		go_back()
 
+
+func _on_LabelRequires_pressed():
+	var epu = preload("res://Interface/Interactive/ErrorPopup.tscn").instance()
+	add_child(epu)
+	epu.add_extra(load('res://Interface/Buttons/SelectLessonButton.tscn').instance())
+	epu.display(tr('selectLesson'),'')
+
+func _on_ButtonCancel_pressed():
+	if $VBoxContainer/CenterContainer2/ButtonCancel.text_loc == 'deleteQuestion':
+		qm.remove_question(original_question['question'])
+	go_back()
+		
+
+
 #%% Input handling
 func _unhandled_input(event):
 	if event is InputEventKey:
@@ -167,12 +187,5 @@ func _notification(what):
 		# For android
 		go_back()
 
-
-
 		
 
-func _on_ButtonCancel_pressed():
-	if $VBoxContainer/CenterContainer2/ButtonCancel.text_loc == 'deleteQuestion':
-		qm.remove_question(original_question['question'])
-	go_back()
-		

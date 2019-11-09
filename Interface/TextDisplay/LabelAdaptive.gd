@@ -61,6 +61,15 @@ func adapt():
 				global.adapt_font($Label,global.FONT_SIZE_LARGE)
 				$Label.align = Label.ALIGN_CENTER
 	
+func set_width_auto(extra_spacing=0):
+	var auto_original = $Label.autowrap
+	$Label.autowrap = false
+	$Label.set_size(Vector2(8, 8))
+	$Label.rect_size.x+=1+extra_spacing
+	self.rect_size.x = $Label.rect_size.x
+	$Label.autowrap = auto_original
+	
+	
 func _process(_delta):
 	self.rect_min_size = $Label.rect_size
 	
