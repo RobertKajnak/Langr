@@ -56,20 +56,6 @@ func go_back():
 		add_child(popup)
 		popup.display(tr('lessonAlreadyExitsTitle'),tr('lessonAlreadyExitsMessage'))
 
-func populate_with_questions(questions):
-	for child in $VBoxContainer/ScrollContainer/VBoxContainer.get_children():
-		$VBoxContainer/ScrollContainer/VBoxContainer.remove_child(child)
-	for question in questions:
-		var questionButton = preload("res://Interface/Buttons/SelectLessonButton.tscn").instance()
-		$VBoxContainer/ScrollContainer/VBoxContainer.add_child(questionButton)
-		if not ('good_answer_date' in question) and not('bad_answer_date' in question):
-			questionButton.add_color_override("font_color",global.skill_color_dict[null])
-		else:
-			questionButton.add_color_override("font_color",global.skill_color_dict[int(question['skill'])])
-		questionButton.set_label(question['question'])
-		questionButton.auto_ellipse(get_viewport_rect().size.x*0.85)
-		questionButton.connect("pressed",self,'_on_question_prerssed',[questionButton.original_text])
-
 #%% Interface handling
 func _on_question_prerssed(question_text):
 	#var root = get_tree().get_root() #--This variant makes the app get stuck in that scene
@@ -134,7 +120,9 @@ func _on_TextEditSearch_text_changed(tes):
 	if tes != tr(to_translate['TextEditSearch']) and tes != '':
 		sorted_questions = qm.fitler_quesiton_list(sorted_questions,tes)
 	
-	populate_with_questions(sorted_questions)
+	var links = global.populate_with_links(sorted_questions,$VBoxContainer/ScrollContainer/VBoxContainer,true,get_viewport_rect().size.x*0.85)
+	for link in links:
+		link.connect("pressed",self,'_on_question_prerssed',[link.original_text])
 
 func _on_OptionButtonSort_item_selected(ID):
 	sorted_questions = qm.get_questions().duplicate()
@@ -144,7 +132,11 @@ func _on_OptionButtonSort_item_selected(ID):
 		_: pass
 	if ID%2==1:
 		sorted_questions.invert()
-	populate_with_questions(sorted_questions)
+	
+	var links = global.populate_with_links(sorted_questions,$VBoxContainer/ScrollContainer/VBoxContainer,true,get_viewport_rect().size.x*0.85)
+	for link in links:
+		link.connect("pressed",self,'_on_question_prerssed',[link.original_text])
+	
 	if 	global.question_sort_mode != ID:
 		global.question_sort_mode = ID
 		global.save_settings()

@@ -5,7 +5,7 @@ var config
 
 #CONSTANTS
 var currentLang = 0; #currently used languge index from langs
-var langs = ['en','hu']
+var langs = ['en','hu','ja']
 
 #Render Constants
 var POSSIBLE_SCALES = [8,12,14,16,24,32,48,56,64,72] setget ,get_possible_scales
@@ -98,7 +98,7 @@ func _ready():
 	if err == OK: # if not, something went wrong with the file loading
 		# Look for the display/width pair, and default to 1024 if missing
 		currentLang = config.get_value("general", "lang", 0)
-		langs = config.get_value("general","allLangs",langs)#Allows external modification of available languages
+		#langs = config.get_value("general","allLangs",langs)#Allows external modification of available languages
 		
 		#Render options, such as font size
 		var ui_scale_default = 32 if OS.get_name() in ["iOS", "HTML5", "Server", "Windows","UWP", "X11"] else 48
@@ -140,8 +140,6 @@ func get_date_difference(date_later,date_earlier):
 func retranslate(node,to_translate_list):
 	if node.name in to_translate_list:
 		node.text = tr(to_translate_list[node.name])
-		if TranslationServer.get_locale() == 'jp':
-			node.set('custom_fonts/font',load('res://fonts/jp2.tres'))
 	for child in node.get_children():
 		retranslate(child,to_translate_list)
 
@@ -368,6 +366,28 @@ func create_file_dialog(viewport_rect : Rect2, parent: Node, access_mode):
 	fd.invalidate()#AKA Refresh
 	return fd
 	
+func populate_with_links(links,container,use_question_highlighting=false,auto_ellipse_size = 0):
+	"""Populates the specified container with linkButtons. The link buttons are returned as a list to allow signal connections"""
+	for child in container.get_children():
+		container.remove_child(child)
+		
+	var link_buttons = []
+	for link in links:
+		var linkButton = preload("res://Interface/Buttons/SelectLessonButton.tscn").instance()
+		container.add_child(linkButton)
+		if use_question_highlighting:
+			if not ('good_answer_date' in link) and not('bad_answer_date' in link):
+				linkButton.add_color_override("font_color",self.skill_color_dict[null])
+			else:
+				linkButton.add_color_override("font_color",self.skill_color_dict[int(link['skill'])])
+		if use_question_highlighting:
+			linkButton.set_label(link['question'])
+		else:
+			linkButton.set_label(link)
+		if auto_ellipse_size>0:
+			linkButton.auto_ellipse(auto_ellipse_size)
+		link_buttons.append(linkButton)
+	return link_buttons
 #Returns -1 if the lesson could not be changed. If there is no '.les' ending, it will be implied
 func change_lesson_name(old_name,new_name):
 	old_name = strip_les_ending(old_name)

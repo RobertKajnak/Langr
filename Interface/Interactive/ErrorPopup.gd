@@ -30,6 +30,8 @@ func display(title,description):
 	$PopupDialog.popup_centered_ratio(ratio)
 	
 	
+func get_container():
+	return $PopupDialog/VBoxContainer/ScrollContainer/VBoxContainer
 
 func set_title(text):
 	$PopupDialog/VBoxContainer/Title.text = text

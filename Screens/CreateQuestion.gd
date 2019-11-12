@@ -13,6 +13,9 @@ var qm
 var original_question
 var modifying_mode
 
+var error_popup_class = preload("res://Interface/Interactive/ErrorPopup.tscn")
+var link_button_class = preload("res://Interface/Buttons/SelectLessonButton.tscn")
+
 func _ready():
 	global = $"/root/GlobalVars"
 	global.retranslate($VBoxContainer,to_translate)
@@ -123,7 +126,7 @@ func _on_Button_pressed():
 			to_save['question'] = original_question['question'] #This must happen before the 'AnswerDraw'='placeholder' draw,
 			# so a 'questionNotSet' Error is not thrown
 		elif to_save['question'] != original_question['question'] and to_save['question'] in qm.get_question_titles():
-			var popup = preload("res://Interface/Interactive/ErrorPopup.tscn").instance()
+			var popup = error_popup_class.instance()
 			add_child(popup)
 			popup.display(tr('couldNotModifyQuestion'),tr('questionAlreadyExists'))
 			return
@@ -153,17 +156,26 @@ func _on_Button_pressed():
 			popup_title='couldNotModifyQuestion'
 	if err!=null:
 		print(popup_title + ': ' + err)
-		var popup = preload("res://Interface/Interactive/ErrorPopup.tscn").instance()
+		var popup = error_popup_class.instance()
 		add_child(popup)
 		popup.display(tr(popup_title),tr(err))
 	else:
 		go_back()
 
+func add_lesson_requirement(question):
+	var lb = link_button_class.instance()
+	$VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerRequires.add_child(lb)
+	lb.set_label(question)
 
 func _on_LabelRequires_pressed():
-	var epu = preload("res://Interface/Interactive/ErrorPopup.tscn").instance()
+	var epu = .instance()
 	add_child(epu)
-	epu.add_extra(load('res://Interface/Buttons/SelectLessonButton.tscn').instance())
+	var sb = preload('res://Interface/Interactive/SearchBar.tscn').instance()
+	epu.add_extra(sb)
+	sb.set_mode('small')
+	
+	global.populate_with_links(qm.get_questions(),epu.get_container(),true,get_viewport_rect().size.x*0.85)
+	#epu.add_extra(load('res://Interface/Buttons/SelectLessonButton.tscn').instance())
 	epu.display(tr('selectLesson'),'')
 
 func _on_ButtonCancel_pressed():
