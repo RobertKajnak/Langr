@@ -1,14 +1,15 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Screens/CreateQuestion.gd" type="Script" id=1]
 [ext_resource path="res://res/Wood15.jpg" type="Texture" id=2]
 [ext_resource path="res://Interface/Interactive/ScrollContainerDraggable.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Interface/Input/TextEditFreeForm.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Interface/Input/DrawBox.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Interface/TextDisplay/LabelAdaptive.tscn" type="PackedScene" id=6]
-[ext_resource path="res://fonts/SubMenuFont.tres" type="DynamicFont" id=7]
-[ext_resource path="res://Interface/Buttons/SelectLessonButton.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Interface/Buttons/MenuButton.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Interface/Interactive/HeaderContainer.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Interface/Input/TextEditFreeForm.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Interface/Input/DrawBox.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Interface/TextDisplay/LabelAdaptive.tscn" type="PackedScene" id=7]
+[ext_resource path="res://fonts/SubMenuFont.tres" type="DynamicFont" id=8]
+[ext_resource path="res://Interface/Buttons/SelectLessonButton.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Interface/Buttons/MenuButton.tscn" type="PackedScene" id=10]
 
 [node name="CreateQuestionRoot" type="Control"]
 anchor_right = 1.0
@@ -38,34 +39,39 @@ margin_bottom = 714.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
 margin_right = 600.0
-margin_bottom = 1042.0
+margin_bottom = 1112.0
 rect_min_size = Vector2( 600, 0 )
 custom_constants/separation = 20
 alignment = 1
 
-[node name="TextEditQuestion" parent="VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource( 4 )]
+[node name="HeaderContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource( 4 )]
+margin_right = 600.0
 
-[node name="AnswerTextEdit" parent="VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource( 4 )]
-margin_top = 170.0
-margin_bottom = 320.0
+[node name="TextEditQuestion" parent="VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource( 5 )]
+margin_top = 70.0
+margin_bottom = 220.0
+
+[node name="AnswerTextEdit" parent="VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource( 5 )]
+margin_top = 240.0
+margin_bottom = 390.0
 
 [node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
-margin_top = 340.0
+margin_top = 410.0
 margin_right = 600.0
-margin_bottom = 854.0
+margin_bottom = 924.0
 
-[node name="VBoxContainerDraw" parent="VBoxContainer/ScrollContainer/VBoxContainer/CenterContainer" instance=ExtResource( 5 )]
+[node name="VBoxContainerDraw" parent="VBoxContainer/ScrollContainer/VBoxContainer/CenterContainer" instance=ExtResource( 6 )]
 margin_left = 84.0
 margin_top = 0.0
 margin_right = 516.0
 margin_bottom = 514.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
-margin_top = 874.0
+margin_top = 944.0
 margin_right = 600.0
-margin_bottom = 919.0
+margin_bottom = 989.0
 
-[node name="LabelSkill" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer" instance=ExtResource( 6 )]
+[node name="LabelSkill" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer" instance=ExtResource( 7 )]
 margin_right = 200.0
 margin_bottom = 45.0
 rect_min_size = Vector2( 200, 0 )
@@ -74,42 +80,42 @@ rect_min_size = Vector2( 200, 0 )
 margin_left = 204.0
 margin_right = 245.0
 margin_bottom = 45.0
-custom_fonts/font = ExtResource( 7 )
+custom_fonts/font = ExtResource( 8 )
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
-margin_top = 939.0
+margin_top = 1009.0
 margin_right = 600.0
-margin_bottom = 978.0
+margin_bottom = 1048.0
 
-[node name="LabelRequires" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer2" instance=ExtResource( 6 )]
+[node name="LabelRequires" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer2" instance=ExtResource( 7 )]
 margin_right = 0.0
 margin_bottom = 39.0
 
-[node name="LinkRequires" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer2" instance=ExtResource( 8 )]
+[node name="LinkRequires" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer2" instance=ExtResource( 9 )]
 margin_left = 4.0
 margin_right = 117.0
 
 [node name="VBoxContainerRequires" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
-margin_top = 998.0
+margin_top = 1068.0
 margin_right = 600.0
-margin_bottom = 998.0
+margin_bottom = 1068.0
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
-margin_top = 1018.0
+margin_top = 1088.0
 margin_right = 600.0
-margin_bottom = 1022.0
+margin_bottom = 1092.0
 
-[node name="LableStats" parent="VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource( 6 )]
-margin_top = 1042.0
+[node name="LableStats" parent="VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource( 7 )]
+margin_top = 1112.0
 margin_right = 600.0
-margin_bottom = 1042.0
+margin_bottom = 1112.0
 
 [node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
 margin_top = 729.0
 margin_right = 660.0
 margin_bottom = 805.455
 
-[node name="ButtonCreateQuestion" parent="VBoxContainer/CenterContainer" instance=ExtResource( 9 )]
+[node name="ButtonCreateQuestion" parent="VBoxContainer/CenterContainer" instance=ExtResource( 10 )]
 margin_left = 280.0
 margin_right = 380.0
 text_loc = "createQuestion"
@@ -119,10 +125,11 @@ margin_top = 820.0
 margin_right = 660.0
 margin_bottom = 896.455
 
-[node name="ButtonCancel" parent="VBoxContainer/CenterContainer2" instance=ExtResource( 9 )]
+[node name="ButtonCancel" parent="VBoxContainer/CenterContainer2" instance=ExtResource( 10 )]
 margin_left = 280.0
 margin_right = 380.0
 text_loc = "cancel"
+[connection signal="back_pressed" from="VBoxContainer/ScrollContainer/VBoxContainer/HeaderContainer" to="." method="go_back"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer2/LinkRequires" to="." method="_on_LabelRequires_pressed"]
 [connection signal="pressed" from="VBoxContainer/CenterContainer/ButtonCreateQuestion" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="VBoxContainer/CenterContainer2/ButtonCancel" to="." method="_on_ButtonCancel_pressed"]

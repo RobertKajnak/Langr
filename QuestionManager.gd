@@ -352,9 +352,7 @@ func _get_question_for_rotation(questions_to_ignore):
 				completed[_quiz_map[q['id']]].append(q['question'])
 			else:
 				completed[_quiz_map[q['id']]] = [q['question']]
-	print(completed)
-	
-	
+		
 	for q in _all_questions:
 		#Basically, the skip conditions are:
 		#1: it is in the ignore list (e.g. the current rotation, so no duplicates)
@@ -455,7 +453,7 @@ func get_next_question_to_ask():
 	if quiz_rotation.empty():
 		return null
 		
-	_print_question_list(quiz_rotation)
+	#_print_question_list(quiz_rotation)
 	return quiz_rotation[0]
 	
 func move_question_to_rotation_end(question):

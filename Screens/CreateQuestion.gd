@@ -41,9 +41,20 @@ func _ready():
 	
 	$VBoxContainer/ScrollContainer/VBoxContainer/LableStats.visible = false
 	$VBoxContainer/ScrollContainer/VBoxContainer/HSeparator.visible = false
+	$VBoxContainer/ScrollContainer/VBoxContainer/HeaderContainer.visible = false
 #%% Helper functions
 func load_data(file_name,question_title,dev_mode = false):
 	var question_data = qm.get_question(question_title)
+	
+	var hc = $VBoxContainer/ScrollContainer/VBoxContainer/HeaderContainer
+	var q_title = question_title
+	if q_title.length()>17:
+		q_title = q_title.substr(0,12) + '[...]'
+	hc.text = tr('currentlyEditing') + ': ' + q_title
+	#global.auto_ellipse(get_viewport_rect().size.x*0.85,hc.find_node("LabelTitle"))
+	
+	
+	hc.visible = true
 
 	var inv_dict = $"/root/GlobalVars".adict_inv()
 	for key in question_data.keys():
@@ -102,6 +113,10 @@ func load_data(file_name,question_title,dev_mode = false):
 			stx +=  tr(s) + ': '+ smod + '\n'
 		$VBoxContainer/ScrollContainer/VBoxContainer/LableStats.set_text(stx)
 		$VBoxContainer/ScrollContainer/VBoxContainer/LableStats.set_mode('small')
+		
+		
+		$VBoxContainer/ScrollContainer/VBoxContainer/LableStats.visible = true
+		$VBoxContainer/ScrollContainer/VBoxContainer/HSeparator.visible = true
 		
 		set_require_label_auto()
 	else:

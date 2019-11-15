@@ -12,6 +12,8 @@ var global
 func _ready():
 	global = $"/root/GlobalVars"
 	
+	global.retranslate($VBoxContainer,buttonTexts)
+	
 	$VBoxContainer/LabelTitle.set_mode('title')
 	$VBoxContainer/LabelTitle.set_width(get_viewport_rect().size.x)
 	
@@ -21,7 +23,6 @@ func _ready():
 		ButtonLang.add_item(lang);
 	ButtonLang.select(global.currentLang);
 	ButtonLang.adapt()
-	global.retranslate($VBoxContainer,buttonTexts)
 	global.adapt_font(ButtonLang,global.FONT_SIZE_MEDIUM,null,true)
 	
 	
@@ -37,12 +38,13 @@ func _ready():
 	
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerRotation/HSliderRotationSize.value = global.rotation_size
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerRotation/LableRotationSizeValue.text = str(global.rotation_size)
-	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerRotation/LabelRotationSize.set_width(get_viewport_rect().size.x*0.45)
+	#$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerRotation/LabelRotationSize.set_width(get_viewport_rect().size.x*0.45)
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerRotation/LableRotationSizeValue.set_width_auto(10)
+	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerRotation/LabelRotationSize.set_width_auto(10)
 	
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerDebug/LabelDebug.set_width_auto(10)
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerDebug/CheckBoxDebug.pressed = global.DEBUG
-
+	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerDebug/CheckBoxDebug.rect_min_size = Vector2(60,60)
 #%% returns the index of, or closest index to the left of the searched value.
 func find_closest(array,value):
 	for i in array.size():
@@ -55,22 +57,22 @@ func go_back():
 	global.save_settings()
 	var _err = get_tree().change_scene('res://Screens/MainMenu.tscn')
 
+func refresh():
+	go_back()
+	get_tree().change_scene("res://Screens/Settings.tscn")
+	return
 
 #%%Interface Handling
 func _on_ButtonLanguage_item_selected(ID):
 	global.currentLang = ID;
 	TranslationServer.set_locale(global.langs[global.currentLang])
-	print(ID,global.currentLang,global.langs[global.currentLang])
-	global.retranslate($VBoxContainer,buttonTexts);
+	refresh()
+	#print(ID,global.currentLang,global.langs[global.currentLang])
+	#global.retranslate($VBoxContainer,buttonTexts);
 
 func _on_ButtonScale_item_selected(ID):
 	global.UI_SCALE = global.POSSIBLE_SCALES[ID]
-	$VBoxContainer/LabelTitle._ready()
-	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerLang/LabelLanguage._ready()
-	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerScale/LabelScale._ready()
-	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerRotation/LabelRotationSize._ready()
-	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerRotation/LableRotationSizeValue._ready()
-	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerDebug/LabelDebug._ready()
+	refresh()
 
 func _on_HSliderRotationSize_value_changed(value):
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerRotation/LableRotationSizeValue.text = str(value)

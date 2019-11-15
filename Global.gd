@@ -8,7 +8,7 @@ var currentLang = 0; #currently used languge index from langs
 var langs = ['en','hu','ja']
 
 #Render Constants
-var POSSIBLE_SCALES = [8,12,14,16,24,32,48,56,64,72] setget ,get_possible_scales
+var POSSIBLE_SCALES = [14,16,24,32,48,56] setget ,get_possible_scales
 func get_possible_scales():
 	return POSSIBLE_SCALES
 var UI_SCALE = 32 setget set_ui_scale

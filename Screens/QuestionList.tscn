@@ -35,13 +35,13 @@ custom_constants/separation = 30
 
 [node name="BackButton" parent="VBoxContainer/HeaderContainer" instance=ExtResource( 3 )]
 margin_left = 0.0
-margin_top = 10.0
-margin_right = 30.0
-margin_bottom = 50.0
+margin_top = 5.0
+margin_right = 35.0
+margin_bottom = 55.0
 
 [node name="LabelTitle" parent="VBoxContainer/HeaderContainer" instance=ExtResource( 4 )]
-margin_left = 60.0
-margin_right = 510.0
+margin_left = 65.0
+margin_right = 515.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 450, 60 )
 

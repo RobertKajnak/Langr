@@ -1,7 +1,7 @@
 extends Control
 
 var checkBoxes = []
-var to_translate = {'LabelLesson':'lessonList',
+var to_translate = {'HeaderContainer':'lessonList',
 					'LabelCheckActiveLessons':'checkActiveLessons',
 					}
 var global 
@@ -12,9 +12,6 @@ func _ready():
 	global = $"/root/GlobalVars"
 	global.retranslate($VBoxContainer,to_translate)
 	
-	#$VBoxContainer/HeaderContainer/LabelLesson/Label.rect_size = Vector2($VBoxContainer.rect_size.x,60)
-	#$VBoxContainer/LabelCheckActiveLessons/Label.rect_size = Vector2($VBoxContainer.rect_size.x,60)
-	$VBoxContainer/HeaderContainer/LabelLesson.set_width(get_viewport_rect().size.x*0.75)
 	$VBoxContainer/LabelCheckActiveLessons.set_width(get_viewport_rect().size.x*0.75)
 	$VBoxContainer/LabelCheckActiveLessons.rect_size.y=0
 	$VBoxContainer/LabelCheckActiveLessons/Label.rect_size.y=0
@@ -41,6 +38,8 @@ func populate_with_lessons(node):
 		checkBox.rect_size.y = 5
 		checkBox.grow_horizontal = false
 		checkBox.grow_vertical = false
+		checkBox.rect_min_size= Vector2(60,60)
+		checkBox.align = Button.ALIGN_CENTER
 		
 		if f in global.active_lessons:
 			checkBox.pressed = true
@@ -70,6 +69,7 @@ func change_active_lessons():
 
 #%% Interface Handling
 func _on_lesson_pressed(lesson_name):
+	change_active_lessons()
 	print('Opening lesson: ' + lesson_name)
 	#change_active_lessons()
 	global.current_lesson = lesson_name
