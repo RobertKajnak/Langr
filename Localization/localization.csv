@@ -72,3 +72,4 @@ none,None,Semmi,なし
 add,Add,Hozzáadás,付ける
 requires,Requires:,Igényli:,必要は：
 selectLesson,Please select a lesson,Válasszon egy leckét,授業を選べてください
+selectQuestions,Please select the questions:,Kérem válassza ki a leckéket,質問を選べてください：

@@ -59,6 +59,10 @@ func set_mode(mode=LABEL_MODE_NORMAL):
 	$OptionButtonSort.grab_focus()
 	
 	$LabelSort.set_width_auto()
+
+func disable_label():
+	$LabelSort.visible = false
+	
 #EVENTS
 func _on_TextEditSearch_text_changed():
 	emit_signal("filter_changed",$TextEditSearch.text)

@@ -8,6 +8,7 @@ func adapt(font_size = 'medium'):
 	var global = $"/root/GlobalVars"
 	match font_size.to_upper():
 		'SMALL':font_size = global.FONT_SIZE_SMALL
+		'NORMAL':continue
 		'MEDIUM':font_size = global.FONT_SIZE_MEDIUM
 		'TITLE': font_size = global.FONT_SIZE_LARGE
 		

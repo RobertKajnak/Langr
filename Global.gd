@@ -373,10 +373,11 @@ func create_file_dialog(viewport_rect : Rect2, parent: Node, access_mode):
 	fd.invalidate()#AKA Refresh
 	return fd
 	
-func populate_with_links(links,container,use_question_highlighting=false,auto_ellipse_size = 0):
+func populate_with_links(links,container,use_question_highlighting=false,auto_ellipse_size = 0,clear_children:bool = true):
 	"""Populates the specified container with linkButtons. The link buttons are returned as a list to allow signal connections"""
-	for child in container.get_children():
-		container.remove_child(child)
+	if clear_children:
+		for child in container.get_children():
+			container.remove_child(child)
 		
 	var link_buttons = []
 	for link in links:

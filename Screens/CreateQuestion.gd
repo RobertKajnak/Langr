@@ -13,6 +13,9 @@ var qm
 var original_question
 var modifying_mode
 
+var req_candidates
+var current_sort_order = 0
+
 var error_popup_class = preload("res://Interface/Interactive/ErrorPopup.tscn")
 var link_button_class = preload("res://Interface/Buttons/SelectLessonButton.tscn")
 
@@ -122,7 +125,7 @@ func generate_to_require_candidates():
 		
 func remove_link(container:Container, text:String):
 	for child in container.get_children():
-		if child.original_text == text:
+		if "original_text" in child and child.original_text == text:
 			container.remove_child(child)
 		
 func go_back():
@@ -228,16 +231,33 @@ func remove_lesson_requirement(question_text):
 func _on_LabelRequires_pressed():
 	var epu = error_popup_class.instance()
 	add_child(epu)
-	var sb = preload('res://Interface/Interactive/SearchBar.tscn').instance()
-	epu.add_extra(sb)
-	sb.set_mode('small')
 	
-	var links = global.populate_with_links(generate_to_require_candidates(),epu.get_container(),true,get_viewport_rect().size.x*0.85*0.8)
+	for child in epu.get_container().get_children():
+		epu.get_container().remove_child(child)
+		
+	req_candidates = generate_to_require_candidates()
+	
+	if req_candidates:
+		var sb = preload('res://Interface/Interactive/SearchBar.tscn').instance()
+		print(epu.find_node("Description",true,false))
+		epu.find_node("VBoxContainer").add_child_below_node(epu.find_node("Description",true,false),sb)
+		sb.disable_label()
+		sb.add_options(qm.SORT_MODES)
+		sb.select(global.question_sort_mode)
+		sb.set_mode('small')
+		sb.select(0)
+		sb.connect("filter_changed",self,"_on_epu_search_changed",[epu])
+		sb.connect("order_changed",self,"on_epu_order_changed",[epu])
+		
+	var links = global.populate_with_links(req_candidates,epu.get_container(),\
+											true,get_viewport_rect().size.x*0.85*0.8)
 	for link in links:
 		link.connect("pressed",self,'add_lesson_requirement',[link.original_text])
 		link.connect("pressed",self,"remove_link",[epu.get_container(),link.original_text])
 	#epu.add_extra(load('res://Interface/Buttons/SelectLessonButton.tscn').instance())
-	epu.display(tr('selectLesson'),'')
+	
+	epu.display(tr('selectQuestions'),'')
+	
 
 
 func _on_ButtonCancel_pressed():
@@ -245,6 +265,33 @@ func _on_ButtonCancel_pressed():
 		qm.remove_question(original_question['question'])
 	go_back()
 		
+
+func _on_epu_search_changed(tes,epu):	
+	req_candidates = generate_to_require_candidates()
+	req_candidates = qm.fitler_quesiton_list(req_candidates,tes)
+	var links = global.populate_with_links(req_candidates,epu.get_container(),\
+											true,get_viewport_rect().size.x*0.85*0.8)
+	for link in links:
+		link.connect("pressed",self,'add_lesson_requirement',[link.original_text])
+		link.connect("pressed",self,"remove_link",[epu.get_container(),link.original_text])
+	on_epu_order_changed(current_sort_order,epu)
+
+func on_epu_order_changed(ID,epu):
+	current_sort_order = ID
+	var sorted_candidates = req_candidates.duplicate()
+	match ID/2:
+		1: sorted_candidates.sort_custom(qm,'sort_alphabetical')
+		2: sorted_candidates.sort_custom(qm,'sort_skill')
+		_: pass
+	if ID%2==1:
+		sorted_candidates.invert()
+	
+	var links = global.populate_with_links(sorted_candidates,epu.get_container(),\
+											true,get_viewport_rect().size.x*0.85*0.8)
+	for link in links:
+		link.connect("pressed",self,'add_lesson_requirement',[link.original_text])
+		link.connect("pressed",self,"remove_link",[epu.get_container(),link.original_text])
+
 
 
 #%% Input handling
