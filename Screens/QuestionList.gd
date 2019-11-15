@@ -1,6 +1,5 @@
 extends Control
 
-var current_lesson
 var title_original
 
 var qm
@@ -19,11 +18,10 @@ func _ready():
 	
 	qm = $"/root/QuestionManager"
 	
-	current_lesson = global.current_lesson
-	title_original = current_lesson
-	$VBoxContainer/HeaderContainer/LabelTitle.text = current_lesson
+	title_original = global.current_lesson
+	$VBoxContainer/HeaderContainer/LabelTitle.text = global.current_lesson
 	$VBoxContainer/HeaderContainer/LabelTitle.set_text_size(global.FONT_SIZE_MEDIUM)
-	print('Opened ' + current_lesson)
+	print('Opened ' + global.current_lesson)
 	
 	$VBoxContainer/SearchBar.add_options(qm.SORT_MODES)
 	#var lesson_file = File.new()
@@ -38,23 +36,36 @@ func _ready():
 	cd = preload('res://Interface/Interactive/ConfirmationDialog.tscn').instance()
 	$VBoxContainer.add_child(cd)
 		
-	cd.set_contents(tr('confirmDeleteLessonTitle'),tr('confirmDeleteLessonMessage').format({'lesson':current_lesson}))
+	cd.set_contents(tr('confirmDeleteLessonTitle'),tr('confirmDeleteLessonMessage').format({'lesson':global.current_lesson}))
 	cd.connect("OK",self,"_delete_current_lesson")
 
 #%% Helper functions
+func save_lesson_title():
+	"""Returns true on success"""
+	var new_title = $VBoxContainer/HeaderContainer/LabelTitle.text
+	if global.current_lesson =='' or new_title == '' or new_title == title_original or \
+			global.change_lesson_name(global.current_lesson,new_title) == 0:
+		print("Attempting to change lesson title to: ",new_title," successfully completed")
+		title_original = new_title
+		global.current_lesson = new_title
+		
+		#Refreshes the lessons names, etc. in the question manager
+		qm.load_questions() 
+		return true
+	else:
+		print("Attempting to change lesson title to: ",new_title," failed")
+		var popup = preload("res://Interface/Interactive/ErrorPopup.tscn").instance()
+		add_child(popup)
+		popup.display(tr('lessonAlreadyExitsTitle'),tr('lessonAlreadyExitsMessage'))
+		return false
+
 func go_back():
 	if get_node("VBoxContainer/HeaderContainer/LabelTitle") == null:
 		push_warning('Title was null')
 		var _err = get_tree().change_scene('res://Screens/Manage.tscn')
 		return
-	var new_title = $VBoxContainer/HeaderContainer/LabelTitle.text
-	if current_lesson =='' or new_title == '' or new_title == title_original or \
-			global.change_lesson_name(current_lesson,new_title) == 0:
+	if save_lesson_title():
 		var _err = get_tree().change_scene('res://Screens/Manage.tscn')
-	else:
-		var popup = preload("res://Interface/Interactive/ErrorPopup.tscn").instance()
-		add_child(popup)
-		popup.display(tr('lessonAlreadyExitsTitle'),tr('lessonAlreadyExitsMessage'))
 
 #%% Interface handling
 func _on_question_prerssed(question_text):
@@ -63,23 +74,27 @@ func _on_question_prerssed(question_text):
 	#current_scene.queue_free()
 	
 	#root.add_child(q)
-	var q = load('res://Screens/CreateQuestion.tscn').instance()
-	
-	for node in [$VBoxContainer,$Sprite]:
-		remove_child(node)
-		node.call_deferred("free")
-	
-	add_child(q)
-	q.load_data('user://lessons/' + current_lesson +'.les', question_text,global.DEBUG)
+	if save_lesson_title():
+		var q = load('res://Screens/CreateQuestion.tscn').instance()
+
+		for node in [$VBoxContainer,$Sprite]:
+			remove_child(node)
+			node.call_deferred("free")
+		
+		add_child(q)
+		q.load_data('user://lessons/' + global.current_lesson +'.les', question_text,global.DEBUG)
+		
+
 	
 func _on_ButtonAddWord_pressed():
-	var _err = get_tree().change_scene('res://Screens/CreateQuestion.tscn')
-
+	if save_lesson_title():
+		var _err = get_tree().change_scene('res://Screens/CreateQuestion.tscn')
+	
 func export_lesson_to_file(filename):
 	var popup = preload("res://Interface/Interactive/ErrorPopup.tscn").instance()
 	add_child(popup)
-	if global.export_lesson(filename,current_lesson):
-		popup.display(tr('fileSaveSuccessTitle'),tr('fileSaveSuccessMessage').format({'filename':current_lesson}))
+	if global.export_lesson(filename,global.current_lesson):
+		popup.display(tr('fileSaveSuccessTitle'),tr('fileSaveSuccessMessage').format({'filename':global.current_lesson}))
 	else:
 		popup.display(tr('fileSaveFailTitle'),tr('fileSaveFailMessage'))
 		
@@ -107,9 +122,9 @@ func _on_ButtonDeleteLesson_pressed():
 	cd.popup()
 
 func _delete_current_lesson():
-	print('Deleting lesson: ' + current_lesson)
-	global.delete_lesson(current_lesson)
-	current_lesson = ''
+	print('Deleting lesson: ' + global.current_lesson)
+	global.delete_lesson(global.current_lesson)
+	global.current_lesson = ''
 	go_back()
 	
 
@@ -156,3 +171,7 @@ func _notification(what):
 
 
 
+
+
+func _on_LabelTitle_focus_exited():
+	save_lesson_title()

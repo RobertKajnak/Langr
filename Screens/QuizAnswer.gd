@@ -28,10 +28,7 @@ func _ready():
 	
 	$VBoxContainer/LabelQuestion.set_mode('small')
 	$VBoxContainer/LabelQuestion.text = current_question['question']
-	var q_color = global.skill_color_dict[int(current_question['skill'])] \
-		if 'good_answer_date' in current_question or 'bad_answer_date' in current_question \
-		else global.skill_color_dict[null]
-	$VBoxContainer/LabelQuestion/Label.add_color_override("font_color",q_color)
+	global.set_question_color($VBoxContainer/LabelQuestion/Label,current_question)
 	
 	temp_answer = qm.get_temp_answer()
 	var answer_color
@@ -77,8 +74,53 @@ func _ready():
 		dr_answer.set_color_on_clear(Color(0.4,0.1,0.6),4)
 	else:
 		$VBoxContainer/CenterContainer/ButtonOnlyCorrect.visible = false
+		
+	if 'required_questions' in current_question:
+		$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(HSeparator.new())
+		var rqlabel = preload("res://Interface/TextDisplay/LabelAdaptive.tscn").instance()
+		$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(rqlabel)
+		rqlabel.set_text(tr('requires'))
+		rqlabel.set_mode('normal')
+		rqlabel.set_width_auto()
+		
+		var SLB = preload("res://Interface/Buttons/SelectLessonButton.tscn")
+		for rq in current_question['required_questions']:
+			var lb = SLB.instance()
+			$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(lb)
+			lb.set_label(rq)
+			lb.auto_ellipse(get_viewport_rect().size.x*0.85)
+			lb.connect("pressed",self,"show_required_quesiton",[lb.original_text])
 
 	$VBoxContainer/LabelQuestion.set_width($VBoxContainer.rect_size.x)
+	
+func show_required_quesiton(question_text):
+	var epu = preload("res://Interface/Interactive/ErrorPopup.tscn").instance()
+	add_child(epu)
+	var question_data = qm.get_question(question_text)
+	var answer_text = ''
+	if 'answer_free' in question_data:
+		answer_text = question_data['answer_free']
+	if 'answer_draw' in question_data:
+		var cc = CenterContainer.new()
+		cc.size_flags_horizontal = cc.SIZE_EXPAND_FILL
+		dr_answer = load('res://Interface/Input/DrawBox.tscn').instance()
+		cc.add_child(dr_answer)
+		epu.add_extra(cc)
+		
+		var fns = current_question['answer_draw']
+		if fns is String:
+			fns = [fns]
+			
+		for fn in fns:
+			dr_answer.load_drawing('user://lessons/' + qm.get_lesson_for_question(current_question,true) + '/' + fn)
+			dr_answer.load_next_image()
+		dr_answer.load_image(0)
+		dr_answer.disable_add_drawing()
+		dr_answer.disable_erase()
+		#dr_answer.change_size(Vector2(109*2,109*2))
+		
+	epu.display(question_text,answer_text)
+	
 	
 func set_color_to_retry(dr_internal):
 	dr_internal.change_line_color_to(Color(0.4,0.1,0.6),4)

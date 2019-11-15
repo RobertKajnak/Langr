@@ -35,7 +35,10 @@ func _ready():
 
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer2/LabelRequires.set_mode('medium')
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer2/LabelRequires.set_width_auto(5)
-
+	
+	$VBoxContainer/ScrollContainer/VBoxContainer/LableStats.visible = false
+	$VBoxContainer/ScrollContainer/VBoxContainer/HSeparator.visible = false
+#%% Helper functions
 func load_data(file_name,question_title,dev_mode = false):
 	var question_data = qm.get_question(question_title)
 
@@ -62,6 +65,9 @@ func load_data(file_name,question_title,dev_mode = false):
 			'question':
 				node.text = question_data[key]
 				node.adapt()
+			'required_questions':
+				for q in question_data[key]:
+					add_lesson_requirement(q)
 			'id': pass
 			'good_answer_date':pass
 			'bad_answer_date':pass
@@ -91,14 +97,37 @@ func load_data(file_name,question_title,dev_mode = false):
 					smod = smod.insert(4,'/')
 					smod = smod.insert(7,'/')
 			stx +=  tr(s) + ': '+ smod + '\n'
-		$VBoxContainer/ScrollContainer/VBoxContainer/LableStats.text = stx
+		$VBoxContainer/ScrollContainer/VBoxContainer/LableStats.set_text(stx)
 		$VBoxContainer/ScrollContainer/VBoxContainer/LableStats.set_mode('small')
+		
+		set_require_label_auto()
 	else:
 		$VBoxContainer/ScrollContainer/VBoxContainer/LableStats.visible = false
 		$VBoxContainer/ScrollContainer/VBoxContainer/HSeparator.visible = false
-#%% Helper functions
+		
+		
+func generate_to_require_candidates():
+	var cand = []
+	var to_ignore = []
+	if original_question:
+		to_ignore += [original_question['question']]
+		for q in  qm.required_by_questions(original_question['question']):
+			to_ignore.append(q['question'])
+	for child in $VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerRequires.get_children():
+		to_ignore.append(child.original_text)
+	for q in qm.get_questions():
+		if not q['question'] in to_ignore:
+			cand.append(q)
+	return cand
+		
+func remove_link(container:Container, text:String):
+	for child in container.get_children():
+		if child.original_text == text:
+			container.remove_child(child)
+		
 func go_back():
 	var _err = get_tree().change_scene('res://Screens/QuestionList.tscn')
+
 
 #%% Interface handling
 func _tapped_to_edit(control):
@@ -143,6 +172,12 @@ func _on_Button_pressed():
 			to_save['good_answer_date'] = original_question['good_answer_date']
 		if 'bad_answer_date' in original_question:
 			to_save['bad_answer_date'] = original_question['bad_answer_date']
+	
+	var reqs = []
+	for child in $VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerRequires.get_children():
+		reqs.append(child.original_text)
+	if reqs:
+		to_save['required_questions'] = reqs
 		
 	var err = null
 	var popup_title = null
@@ -163,20 +198,47 @@ func _on_Button_pressed():
 		go_back()
 
 func add_lesson_requirement(question):
+	#Check if question already added:
+	for added_link in $VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerRequires.get_children():
+		if added_link.original_text == question:
+			return
 	var lb = link_button_class.instance()
 	$VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerRequires.add_child(lb)
 	lb.set_label(question)
+	lb.auto_ellipse(get_viewport_rect().size.x*0.85)
+	lb.connect("pressed",self,"remove_lesson_requirement",[lb.original_text])
+	
+	global.set_question_color(lb,qm.get_question(question))
+	
+	set_require_label_auto()
+	
+func set_require_label_auto():
+	if $VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerRequires.get_child_count() == 0:
+		$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer2/LinkRequires.set_label(tr('none'))
+	else:
+		$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer2/LinkRequires.set_label(tr('add'))
+	
+func remove_lesson_requirement(question_text):
+	for child in $VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerRequires.get_children():
+		if child.original_text == question_text:
+			$VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerRequires.remove_child(child)
+			set_require_label_auto()
+			return
 
 func _on_LabelRequires_pressed():
-	var epu = .instance()
+	var epu = error_popup_class.instance()
 	add_child(epu)
 	var sb = preload('res://Interface/Interactive/SearchBar.tscn').instance()
 	epu.add_extra(sb)
 	sb.set_mode('small')
 	
-	global.populate_with_links(qm.get_questions(),epu.get_container(),true,get_viewport_rect().size.x*0.85)
+	var links = global.populate_with_links(generate_to_require_candidates(),epu.get_container(),true,get_viewport_rect().size.x*0.85*0.8)
+	for link in links:
+		link.connect("pressed",self,'add_lesson_requirement',[link.original_text])
+		link.connect("pressed",self,"remove_link",[epu.get_container(),link.original_text])
 	#epu.add_extra(load('res://Interface/Buttons/SelectLessonButton.tscn').instance())
 	epu.display(tr('selectLesson'),'')
+
 
 func _on_ButtonCancel_pressed():
 	if $VBoxContainer/CenterContainer2/ButtonCancel.text_loc == 'deleteQuestion':

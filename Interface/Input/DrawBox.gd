@@ -22,6 +22,9 @@ func _ready():
 	$LabelDraw.set_width(430)
 	
 	
+func change_size(new_size:Vector2):
+	$AnswerDraw.change_size(new_size)
+	
 func _on_ButtonClearDrawing_pressed():
 	clear_drawing()
 
@@ -84,16 +87,31 @@ func enable_add_drawing():
 	can_add_drawing = true
 	set_cache_status_label()
 
+func disable_erase():
+	$HBoxContainer/ButtonClearDrawing.visible = false
+	$HBoxContainer/ButtonUndoDrawing.visible = false
+	
+func enable_erase():
+	$HBoxContainer/ButtonClearDrawing.visible = true
+	$HBoxContainer/ButtonUndoDrawing.visible = true
+
 func _on_PreviousButton_pressed():
-	var _cp = $AnswerDraw.load_prev_cached()
-	set_cache_status_label()
+	load_prev_image()
 	
 func _on_NextButton_pressed():
-	var cst = $AnswerDraw.get_cache_status()
-	if can_add_drawing or cst[0]<cst[1]:
-		var _cp = $AnswerDraw.load_next_cached()
-		set_cache_status_label()
+	load_next_image()
 
 func load_image(indx : int):
 	$AnswerDraw.load_cached(indx)
 	set_cache_status_label()
+	
+func load_next_image():
+	var cst = $AnswerDraw.get_cache_status()
+	if can_add_drawing or cst[0]<cst[1]:
+		var _cp = $AnswerDraw.load_next_cached()
+		set_cache_status_label()
+	
+func load_prev_image():
+	var _cp = $AnswerDraw.load_prev_cached()
+	set_cache_status_label()
+	

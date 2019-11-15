@@ -21,6 +21,12 @@ func _ready():
 	self.rect_size.y = 109*4
 	_init_colors_and_widths()
 
+func change_size(new_size:Vector2):
+	"""Changing size after lines are already added is not supported"""
+	self.rect_min_size = new_size
+	self.rect_size = new_size
+	_init_colors_and_widths()
+
 func _process(delta):
 	var _delta = delta #silences the error
 	update()

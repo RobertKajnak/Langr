@@ -85,7 +85,8 @@ var adict = {'TextEditQuestion':'question',
 			'LabelID':'id',
 			'LabelGoodDate':'good_answer_date',
 			'LabelBadDate':'bad_answer_date',
-			'LabelSkipDays':'skip_days'} setget ,get_adict#TODO: Ez még mindig elég hándi
+			'LabelSkipDays':'skip_days',
+			'LabelRequiredQuestion':'required_questions'} setget ,get_adict#TODO: Ez még mindig elég hándi
 func get_adict():
 	return adict
 func adict_inv():
@@ -236,6 +237,12 @@ func adapt_font(node,size=FONT_SIZE_SMALL,text = null,apply_theme=false):
 		node.theme = Theme.new()
 		node.theme.default_font = font
 
+func  set_question_color(control:Control,question:Dictionary):
+	if not ('good_answer_date' in question) and not('bad_answer_date' in question):
+		control.add_color_override("font_color",self.skill_color_dict[null])
+	else:
+		control.add_color_override("font_color",self.skill_color_dict[int(question['skill'])])
+
 func get_actual_width(text_node):
 	text_node.set_size(Vector2(8, 8))
 	return text_node.rect_size.x
@@ -376,11 +383,7 @@ func populate_with_links(links,container,use_question_highlighting=false,auto_el
 		var linkButton = preload("res://Interface/Buttons/SelectLessonButton.tscn").instance()
 		container.add_child(linkButton)
 		if use_question_highlighting:
-			if not ('good_answer_date' in link) and not('bad_answer_date' in link):
-				linkButton.add_color_override("font_color",self.skill_color_dict[null])
-			else:
-				linkButton.add_color_override("font_color",self.skill_color_dict[int(link['skill'])])
-		if use_question_highlighting:
+			set_question_color(linkButton,link)
 			linkButton.set_label(link['question'])
 		else:
 			linkButton.set_label(link)
@@ -388,8 +391,9 @@ func populate_with_links(links,container,use_question_highlighting=false,auto_el
 			linkButton.auto_ellipse(auto_ellipse_size)
 		link_buttons.append(linkButton)
 	return link_buttons
-#Returns -1 if the lesson could not be changed. If there is no '.les' ending, it will be implied
+
 func change_lesson_name(old_name,new_name):
+	"""Returns -1 if the lesson could not be changed. If there is no '.les' ending, it will be implied"""
 	old_name = strip_les_ending(old_name)
 	new_name = strip_les_ending(new_name)
 		

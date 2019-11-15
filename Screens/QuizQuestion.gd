@@ -34,10 +34,7 @@ func _ready():
 	
 	$VBoxContainer/LabelQuestion.set_mode('small')
 	$VBoxContainer/LabelQuestion.text = current_question['question']
-	var q_color = global.skill_color_dict[int(current_question['skill'])] \
-		if 'good_answer_date' in current_question or 'bad_answer_date' in current_question \
-		else global.skill_color_dict[null]
-	$VBoxContainer/LabelQuestion/Label.add_color_override("font_color",q_color)
+	global.set_question_color($VBoxContainer/LabelQuestion/Label,current_question)
 	
 	if 'answer_free' in current_question:
 		te_answer = load('res://Interface/Input/TextEditFreeForm.tscn').instance()

@@ -43,6 +43,20 @@ static func fitler_quesiton_list(question_list,regex):
 			good.append(q)
 	return good
 
+func have_common_elements(arr1,arr2):
+	"""CHecks if there are any common elements between the two arrays"""
+	for item in arr1:
+		if item in arr2:
+			return true
+	return false
+
+func has_all_elements(array_small,array_large):
+	"""Checks if array_large has all of the elements of array_small"""
+	for item in array_small:
+		if not item in array_large:
+			return false
+	return true
+
 #Loads the questions associated to the currently open lesson. Can be overriden by specifiying the parameter
 func load_questions(lesson_path=null, replace_current_questions = true):
 	if replace_current_questions:
@@ -206,15 +220,25 @@ func update_question_skill(question,delta, force_update_skill=false):
 	_save_current_questions(lesson)
 
 
-func remove_question(question_title):
-	"""removes a single question from the lsit with the specified question name"""
+func remove_question(question_title : String, ignore_dependencies :bool = false):
+	"""removes a single question from the lsit with the specified question name.
+	If ignore dependencies is set to true, other questions that require this questions will not be modified"""
 	
+	if not ignore_dependencies:
+		var to_mod = required_by_questions(get_question(question_title))
+		for q in to_mod:
+			#Here it is already assumed that all quesitons here have the relevant field in them
+			q['required_questions'].erase(question_title)
+			if q['required_questions'].empty():
+				q.erase('required_questions')
+	
+	#On later review of this code, this looks pretty aqward. Oh, well...
 	var index = self.get_question_titles().find(question_title)
-	
 	if index == -1:
 		return
 	else:
 		_all_questions.remove(index)
+
 	_save_current_questions()
 
 func _save_current_questions(lesson=null):
@@ -285,28 +309,76 @@ func find_question_in_list(question,list_of_questions):
 			return idx
 	return -1
 
+func required_by_questions(question):
+	"""Returns a list of the questions that require this question. Otherwise empty list is returned.
+	params:
+		question: if a quiz is in progress, a dict has to be specified. Otherwise either a dict or string can be specified"""
+	var reqs = []
+	for q in _all_questions:
+		if (_quiz_map and (_quiz_map[question['id']] == _quiz_map[q['id']])) or not _quiz_map:
+			if 'required_questions' in q \
+					and ((question is Dictionary and question['question'] in q['required_questions']) \
+						or (question is String and question in q['required_questions']) \
+					):
+				reqs.append(q)
+				
+	return reqs
+
+
 func _get_question_for_rotation(questions_to_ignore):
+	"""Returns a single question for the quiz rotation.
+	A question is not considered for the rotation if it is:
+		#1: it is in the ignore list (e.g. the current rotation, so no duplicates)
+		#2: already answered correctly today
+		#3: It was answered correctly on first try and earned skip-days which have not yet expired
+		#4: The required questions have not yet been asked:
+			If the required question is neither in the questions_to_ignore parameter, nor encountered one of the earlier conditions
+	"""
 	var roulette = []
 	var S = 0
-	var roulette_candidates_without_new = []
-	var roulette_candidates_with_new = []
+	var roulette_candidates_without_new = [] #Only one of these two are selected after they have been filled.
+	var roulette_candidates_only_new = [] #With new is only used if the non-new list is empty
 	var today = global.get_date_compact()
+	
+	#Prepare the required question skipping (#4)
+	var completed = {}
+	var req_compl_know = true
+	for q in _all_questions:
+		if (not req_compl_know and question_in_list(q, questions_to_ignore)) \
+				or ('good_answer_date' in q and q['good_answer_date']==today) \
+				or ('skip_days' in q and 'good_answer_date' in q \
+					and global.get_date_difference(today,global.get_date_from_date_compact(q['good_answer_date']))<=q['skip_days']):
+			if _quiz_map[q['id']] in completed:
+				completed[_quiz_map[q['id']]].append(q['question'])
+			else:
+				completed[_quiz_map[q['id']]] = [q['question']]
+	print(completed)
+	
+	
 	for q in _all_questions:
 		#Basically, the skip conditions are:
 		#1: it is in the ignore list (e.g. the current rotation, so no duplicates)
 		#2: already answered correctly today
 		#3: It was answered correctly on first try and earned skip-days which have not yet expired
+		#4: The required questions have not yet been asked
+		
+		#	print(q['question'],has_all_elements(q['required_questions'],completed[_quiz_map[q['id']]]))
 		if question_in_list(q, questions_to_ignore) \
 				or ('good_answer_date' in q and q['good_answer_date']==today) \
 				or ('skip_days' in q and 'good_answer_date' in q \
-					and global.get_date_difference(today,global.get_date_from_date_compact(q['good_answer_date']))<=q['skip_days']):
+					and global.get_date_difference(today,global.get_date_from_date_compact(q['good_answer_date']))<=q['skip_days'])\
+				or ('required_questions' in q \
+					and ((_quiz_map[q['id']] in completed \
+							and not has_all_elements(q['required_questions'],completed[_quiz_map[q['id']]]))\
+						or (not _quiz_map[q['id']] in completed))):
 			continue
 			
-		roulette_candidates_with_new.append(q)
 		if 'bad_answer_date' in q or 'good_answer_date' in q:
 			roulette_candidates_without_new.append(q)
+		else:
+			roulette_candidates_only_new.append(q)
 	
-	var roulette_candidates = roulette_candidates_without_new if roulette_candidates_without_new.size()>0 else roulette_candidates_with_new
+	var roulette_candidates = roulette_candidates_without_new if roulette_candidates_without_new.size()>0 else roulette_candidates_only_new
 	if roulette_candidates.size()<1:
 		return null
 	
@@ -383,6 +455,7 @@ func get_next_question_to_ask():
 	if quiz_rotation.empty():
 		return null
 		
+	_print_question_list(quiz_rotation)
 	return quiz_rotation[0]
 	
 func move_question_to_rotation_end(question):

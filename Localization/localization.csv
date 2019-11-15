@@ -69,5 +69,6 @@ skip_days,Hide for (days),Rejtés hossza (nap),隠すの長さ（日）
 id,ID,Azonosító,ID
 N/A,N/A,N/A,いない
 none,None,Semmi,なし
+add,Add,Hozzáadás,付ける
 requires,Requires:,Igényli:,必要は：
 selectLesson,Please select a lesson,Válasszon egy leckét,授業を選べてください
