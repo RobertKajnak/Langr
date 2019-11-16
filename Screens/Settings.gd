@@ -67,7 +67,7 @@ func _on_ButtonLanguage_item_selected(ID):
 	global.currentLang = ID;
 	TranslationServer.set_locale(global.langs[global.currentLang])
 	refresh()
-	#print(ID,global.currentLang,global.langs[global.currentLang])
+	print(ID,global.currentLang,global.langs[global.currentLang],';',TranslationServer.get_locale())
 	#global.retranslate($VBoxContainer,buttonTexts);
 
 func _on_ButtonScale_item_selected(ID):

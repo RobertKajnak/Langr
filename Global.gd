@@ -114,6 +114,7 @@ func _ready():
 		DEBUG = config.get_value("debug","debug_enabled",false)
 	TranslationServer.set_locale(langs[currentLang])
 
+
 func get_date_compact():
 	var dd = OS.get_date()
 	return dd['year']*10000+dd['month']*100+dd['day']
@@ -198,7 +199,7 @@ func get_active_lessons_string(auto_ellipse=-1):
 func save_settings():
 	# Save the changes by overwriting the previous file
 	config.set_value("general", "lang", currentLang)
-	config.set_value("general","allLangs",langs)
+	#config.set_value("general","allLangs",langs)
 	config.set_value("render","ui_scale",UI_SCALE)
 	config.set_value("quiz","active_lessons",active_lessons)
 	config.set_value("quiz","rotation_size",rotation_size)

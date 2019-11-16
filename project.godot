@@ -45,7 +45,7 @@ pointing/emulate_touch_from_mouse=true
 [locale]
 
 test="en"
-translations=PoolStringArray( "res://Localization/localization.en.translation", "res://Localization/localization.hu.translation" )
+translations=PoolStringArray( "res://Localization/localization.en.translation", "res://Localization/localization.hu.translation", "res://Localization/localization.ja.translation", "res://Localization/localization.ro.translation" )
 
 [rendering]
 

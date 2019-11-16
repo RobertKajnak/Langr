@@ -7,7 +7,7 @@
 [ext_resource path="res://res/CopyBook_separator.tres" type="StyleBox" id=5]
 [ext_resource path="res://fonts/SubMenuFont.tres" type="DynamicFont" id=6]
 
-[sub_resource type="StyleBoxTexture" id=3]
+[sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 3 )
 region_rect = Rect2( 0, 0, 592, 114 )
 axis_stretch_horizontal = 1
@@ -40,7 +40,7 @@ PopupMenu/icons/radio_checked = null
 PopupMenu/icons/radio_unchecked = null
 PopupMenu/icons/submenu = null
 PopupMenu/icons/unchecked = null
-PopupMenu/styles/hover = SubResource( 3 )
+PopupMenu/styles/hover = SubResource( 1 )
 PopupMenu/styles/labeled_separator_left = null
 PopupMenu/styles/labeled_separator_right = null
 PopupMenu/styles/panel = ExtResource( 4 )
