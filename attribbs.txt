@@ -1,0 +1,12 @@
+Wood, cloth textures:
+	https://cc0textures.com/
+Fonts:
+	https://en.fontke.com
+Icons:
+	myself
+Blackboard:
+	https://www.deviantart.com/mattiamc/art/ChalkBoard-Texture-MC2015-506107812
+	(reserve): lines: https://pxhere.com/en/photo/916800
+		normal: https://openchurch.com/free-download/photo-of-blackboard-1009649/
+Eraser:
+	https://www.kissclipart.com/eraser-png-clipart-eraser-clip-art-c1vgv3/

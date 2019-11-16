@@ -21,6 +21,9 @@ func _ready():
 	$LabelDraw.set_mode($LabelDraw.LABEL_MODE_SMALL)
 	$LabelDraw.set_width(430)
 	
+	$HBoxContainer/ButtonClearDrawing.rect_min_size = Vector2(95,20)
+	$HBoxContainer/ButtonUndoDrawing.rect_min_size = Vector2(90,20)
+	
 	
 func change_size(new_size:Vector2):
 	$AnswerDraw.change_size(new_size)

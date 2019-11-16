@@ -39,39 +39,41 @@ custom_constants/separation = 30
 
 [node name="HBoxContainerLang" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
 margin_right = 720.0
-margin_bottom = 64.0
+margin_bottom = 39.0
 alignment = 1
 
 [node name="LabelLanguage" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerLang" instance=ExtResource( 3 )]
-margin_left = 187.0
-margin_right = 487.0
-margin_bottom = 64.0
+margin_left = 201.0
+margin_right = 501.0
+margin_bottom = 39.0
 rect_min_size = Vector2( 300, 0 )
 
 [node name="ButtonLanguage" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerLang" instance=ExtResource( 5 )]
-margin_left = 491.0
-margin_right = 532.0
+margin_left = 505.0
+margin_right = 519.0
+margin_bottom = 39.0
 
 [node name="HBoxContainerScale" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
-margin_top = 94.0
+margin_top = 69.0
 margin_right = 720.0
-margin_bottom = 158.0
+margin_bottom = 108.0
 alignment = 1
 
 [node name="LabelScale" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerScale" instance=ExtResource( 3 )]
-margin_left = 237.0
-margin_right = 437.0
-margin_bottom = 64.0
+margin_left = 251.0
+margin_right = 451.0
+margin_bottom = 39.0
 rect_min_size = Vector2( 200, 0 )
 
 [node name="ButtonScale" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerScale" instance=ExtResource( 5 )]
-margin_left = 441.0
-margin_right = 482.0
+margin_left = 455.0
+margin_right = 469.0
+margin_bottom = 39.0
 
 [node name="HBoxContainerRotation" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
-margin_top = 188.0
+margin_top = 138.0
 margin_right = 720.0
-margin_bottom = 208.0
+margin_bottom = 158.0
 alignment = 1
 
 [node name="LabelRotationSize" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerRotation" instance=ExtResource( 3 )]
@@ -98,9 +100,9 @@ tick_count = 25
 ticks_on_borders = true
 
 [node name="HBoxContainerDebug" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
-margin_top = 238.0
+margin_top = 188.0
 margin_right = 720.0
-margin_bottom = 304.0
+margin_bottom = 254.0
 alignment = 1
 
 [node name="LabelDebug" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerDebug" instance=ExtResource( 3 )]

@@ -59,7 +59,7 @@ func go_back():
 
 func refresh():
 	go_back()
-	get_tree().change_scene("res://Screens/Settings.tscn")
+	var _err = get_tree().change_scene("res://Screens/Settings.tscn")
 	return
 
 #%%Interface Handling

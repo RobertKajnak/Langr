@@ -1,7 +1,18 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://fonts/SubMenuFont.tres" type="DynamicFont" id=1]
-[ext_resource path="res://Interface/Input/TextEditFreeForm.gd" type="Script" id=2]
+[ext_resource path="res://res/chalkboard.jpg" type="Texture" id=1]
+[ext_resource path="res://fonts/SubMenuFont.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Interface/Input/TextEditFreeForm.gd" type="Script" id=3]
+
+[sub_resource type="StyleBoxTexture" id=1]
+texture = ExtResource( 1 )
+region_rect = Rect2( 0, 0, 1600, 900 )
+expand_margin_left = 200.0
+expand_margin_right = 275.0
+expand_margin_top = 200.0
+expand_margin_bottom = 25.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
 
 [node name="TextEditFreeform" type="TextEdit" groups=[
 "noScroll",
@@ -9,7 +20,8 @@
 margin_right = 600.0
 margin_bottom = 150.0
 rect_min_size = Vector2( 600, 150 )
-custom_fonts/font = ExtResource( 1 )
+custom_styles/normal = SubResource( 1 )
+custom_fonts/font = ExtResource( 2 )
 wrap_enabled = true
-script = ExtResource( 2 )
+script = ExtResource( 3 )
 [connection signal="text_changed" from="." to="." method="_on_TextEditQuestion_text_changed"]

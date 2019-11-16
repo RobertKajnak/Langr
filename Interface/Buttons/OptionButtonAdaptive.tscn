@@ -1,9 +1,17 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Interface/Buttons/OptionButtonAdaptive.gd" type="Script" id=1]
+[ext_resource path="res://res/DefaultTheme.tres" type="Theme" id=1]
+[ext_resource path="res://res/PaperList_underlined.tres" type="StyleBox" id=2]
+[ext_resource path="res://res/PaperList.tres" type="StyleBox" id=3]
+[ext_resource path="res://Interface/Buttons/OptionButtonAdaptive.gd" type="Script" id=4]
 
 [node name="OptionButtonAdaptive" type="OptionButton"]
 margin_left = 208.0
 margin_right = 249.0
 margin_bottom = 64.0
-script = ExtResource( 1 )
+theme = ExtResource( 1 )
+custom_styles/hover = ExtResource( 2 )
+custom_styles/pressed = ExtResource( 2 )
+custom_styles/focus = ExtResource( 2 )
+custom_styles/normal = ExtResource( 3 )
+script = ExtResource( 4 )

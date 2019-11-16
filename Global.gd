@@ -208,7 +208,7 @@ func save_settings():
 	
 #If text is left as null, node.text is used.
 #Size should be one of the FONT_SIZE constants
-func adapt_font(node,size=FONT_SIZE_SMALL,text = null,apply_theme=false):
+func adapt_font(node,size=FONT_SIZE_SMALL,text = null,theme:Theme=null):
 	var latin_only = true
 	if not text:
 		text = node.text
@@ -233,8 +233,8 @@ func adapt_font(node,size=FONT_SIZE_SMALL,text = null,apply_theme=false):
 		
 	node.set('custom_fonts/font',font)
 	
-	if apply_theme:
-		node.theme = Theme.new()
+	if theme:
+		node.theme = theme.duplicate(false)
 		node.theme.default_font = font
 
 func  set_question_color(control:Control,question:Dictionary):
