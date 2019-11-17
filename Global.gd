@@ -9,7 +9,7 @@ var langs = ['en','hu','ja']
 const ANDROID_PATH = "/storage/emulated/0/Langr"
 
 #Render Constants
-var POSSIBLE_SCALES = [14,16,24,32,48,56] setget ,get_possible_scales
+var POSSIBLE_SCALES = [18,24,28,32,36,40,44,48] setget ,get_possible_scales
 func get_possible_scales():
 	return POSSIBLE_SCALES
 var UI_SCALE = 32 setget set_ui_scale
