@@ -46,14 +46,15 @@ margin_bottom = 60.0
 rect_min_size = Vector2( 450, 60 )
 
 [node name="SearchBar" parent="VBoxContainer" instance=ExtResource( 5 )]
+margin_bottom = 135.0
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
-margin_top = 154.0
+margin_top = 150.0
 margin_right = 664.0
-margin_bottom = 158.0
+margin_bottom = 154.0
 
 [node name="ScrollContainer" parent="VBoxContainer" instance=ExtResource( 6 )]
-margin_top = 173.0
+margin_top = 169.0
 margin_right = 664.0
 margin_bottom = 614.0
 

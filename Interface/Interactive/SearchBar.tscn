@@ -23,5 +23,6 @@ margin_bottom = 64.0
 text = "sortBy"
 
 [node name="OptionButtonSort" parent="." instance=ExtResource( 4 )]
+margin_right = 222.0
 [connection signal="text_changed" from="TextEditSearch" to="." method="_on_TextEditSearch_text_changed"]
 [connection signal="item_selected" from="OptionButtonSort" to="." method="_on_OptionButtonSort_item_selected"]

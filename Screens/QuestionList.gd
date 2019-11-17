@@ -8,8 +8,7 @@ var cd
 
 var sorted_questions = []
 
-var to_translate = {'LabelSort':'sortBy',
-					'TextEditSearch':'search'}
+var to_translate = {'LabelSort':'sortBy'}
 
 
 func _ready():
@@ -144,7 +143,7 @@ func _delete_current_lesson():
 #%% Input handling	
 func _on_TextEditSearch_text_changed(tes):
 	sorted_questions = qm.get_questions()
-	if tes != tr(to_translate['TextEditSearch']) and tes != '':
+	if tes != tr('search') and tes != '':
 		sorted_questions = qm.fitler_quesiton_list(sorted_questions,tes)
 	
 	var links = global.populate_with_links(sorted_questions,$VBoxContainer/ScrollContainer/VBoxContainer,true,get_viewport_rect().size.x*0.85)

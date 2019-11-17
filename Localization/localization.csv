@@ -58,7 +58,7 @@ importFailTitle,Import Failed,Importálás sikertelen,輸入は失敗した
 importFailMessage,Could not import lesson,Nem sikerül importálni a leckét,授業の輸入
 quizRotationSize,Quiz Pool Size,Kvíz Kérdéshalom mérete,質問の数
 enableDebug,Developer Mode,Fejlesztői Mód,開発者モード
-sortBy,Sort By:,Rendezés:,並び替える
+sortBy,Sort By:,Rendezés:,並べる：
 search,Search,Keresés,探す
 alphabetical,Alphabetical,ABC Sorrend,ABC順
 dateAdded,Added,Dátum,付けた年月日
@@ -67,13 +67,13 @@ good_answer_date,Last time correctly answered,Utolsó helyes válasz,最後の�
 bad_answer_date,Last incorrect answer,Utolsó helytelen válasz,最後の不正解の質問の年月日
 skip_days,Hide for (days),Rejtés hossza (nap),隠すの長さ（日）
 id,ID,Azonosító,ID
-N/A,N/A,N/A,いない
+"N/A","N/A","N/A",いない
 none,None,Semmi,なし
 add,Add,Hozzáadás,付ける
 requires,Requires:,Igényli:,必要は：
 selectLesson,Please select a lesson,Válasszon egy leckét,授業を選べてください
 selectQuestions,Please select the questions:,Kérem válassza ki a leckéket,質問を選べてください：
-currentlyEditing,Currently Editing,Módosítás alatt,変化中
+currentlyEditing,Editing,Módosítva,変化中
 select,Select,Kiválaszt,選ぶ
 save,Save,Mentés,保存
 chooseFilename,Please choose a filename,Kérem Válasszon fájl nevet,ファイル名を選んでください

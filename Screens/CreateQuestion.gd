@@ -42,14 +42,17 @@ func _ready():
 	$VBoxContainer/ScrollContainer/VBoxContainer/LableStats.visible = false
 	$VBoxContainer/ScrollContainer/VBoxContainer/HSeparator.visible = false
 	$VBoxContainer/ScrollContainer/VBoxContainer/HeaderContainer.visible = false
+	
+	set_require_label_auto()
 #%% Helper functions
 func load_data(file_name,question_title,dev_mode = false):
 	var question_data = qm.get_question(question_title)
 	
 	var hc = $VBoxContainer/ScrollContainer/VBoxContainer/HeaderContainer
 	var q_title = question_title
-	if q_title.length()>17:
-		q_title = q_title.substr(0,12) + '[...]'
+	var txt_lim = 25 - tr('currentlyEditing').length()
+	if q_title.length()>txt_lim:
+		q_title = q_title.substr(0,txt_lim-5) + '[...]'
 	hc.text = tr('currentlyEditing') + ': ' + q_title
 	#global.auto_ellipse(get_viewport_rect().size.x*0.85,hc.find_node("LabelTitle"))
 	
@@ -118,12 +121,13 @@ func load_data(file_name,question_title,dev_mode = false):
 		$VBoxContainer/ScrollContainer/VBoxContainer/LableStats.visible = true
 		$VBoxContainer/ScrollContainer/VBoxContainer/HSeparator.visible = true
 		
-		set_require_label_auto()
 	else:
 		$VBoxContainer/ScrollContainer/VBoxContainer/LableStats.visible = false
 		$VBoxContainer/ScrollContainer/VBoxContainer/HSeparator.visible = false
 		
 		
+	set_require_label_auto()
+	
 func generate_to_require_candidates():
 	var cand = []
 	var to_ignore = []
@@ -232,6 +236,7 @@ func add_lesson_requirement(question):
 	
 func set_require_label_auto():
 	if $VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerRequires.get_child_count() == 0:
+		#TODO: Workaround!
 		$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer2/LinkRequires.set_label(tr('none'))
 	else:
 		$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer2/LinkRequires.set_label(tr('add'))

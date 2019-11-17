@@ -11,12 +11,19 @@ var global
 
 func _ready():
 	global = $"/root/GlobalVars"
+	$LabelSort.set_text(tr('sortBy'))
+	$TextEditSearch.text = tr('search')
+	global.adapt_font($TextEditSearch)
 	$LabelSort.set_width_auto()
+	
 
 	var _err = $TextEditSearch.connect("focus_entered",self,"_tapped_to_edit")
 	_err = $TextEditSearch.connect("focus_exited",self,"_tapped_away")
 	
 	$OptionButtonSort.grab_focus()
+	
+	$LabelSort.rect_size.y = self.rect_size.y
+	$LabelSort.set_valign(VALIGN_CENTER)
 
 func add_options(options,auto_translate=true,directional_arrows=['↓','↑']):
 	""" Specify null or empty list to skip arrows. They will be appended in front of the options list's elements
@@ -59,6 +66,7 @@ func set_mode(mode=LABEL_MODE_NORMAL):
 	$OptionButtonSort.grab_focus()
 	
 	$LabelSort.set_width_auto()
+	$LabelSort.rect_size.y = self.rect_size.y
 
 func disable_label():
 	$LabelSort.visible = false
