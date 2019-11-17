@@ -30,7 +30,6 @@ rect_min_size = Vector2( 0, 300 )
 
 [node name="LabelTitle" parent="VBoxContainer/VBoxContainerText" instance=ExtResource( 3 )]
 margin_right = 519.0
-margin_bottom = 0.0
 mode = "normal"
 text = "Are you sure?"
 
@@ -52,14 +51,12 @@ alignment = 1
 [node name="ButtonOK" parent="VBoxContainer/HBoxContainer" instance=ExtResource( 4 )]
 margin_left = 127.0
 margin_right = 257.0
-margin_bottom = 76.4549
 rect_min_size = Vector2( 130, 50 )
 text_loc = "OK"
 
 [node name="ButtonCancel" parent="VBoxContainer/HBoxContainer" instance=ExtResource( 4 )]
 margin_left = 261.0
 margin_right = 391.0
-margin_bottom = 76.4549
 rect_min_size = Vector2( 130, 50 )
 text_loc = "cancel"
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/ButtonOK" to="." method="_on_ButtonOK_pressed"]

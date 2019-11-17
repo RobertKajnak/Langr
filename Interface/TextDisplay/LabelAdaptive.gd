@@ -20,7 +20,7 @@ func set_text(text):
 func get_valign():
 	return $Label.valign
 func set_valign(val):
-	$label.valign = val
+	$Label.valign = val
 
 func set_width(w):
 	$Label.rect_size.x = w

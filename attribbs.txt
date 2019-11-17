@@ -1,4 +1,4 @@
-Wood, cloth textures:
+Wood, cloth, paper textures:
 	https://cc0textures.com/
 Fonts:
 	https://en.fontke.com
@@ -10,3 +10,8 @@ Blackboard:
 		normal: https://openchurch.com/free-download/photo-of-blackboard-1009649/
 Eraser:
 	https://www.kissclipart.com/eraser-png-clipart-eraser-clip-art-c1vgv3/
+
+Folder Icon:
+	Wiki commons
+File Icon:
+	https://www.iconfinder.com/icons/311156/delete_document_file_page_paper_icon

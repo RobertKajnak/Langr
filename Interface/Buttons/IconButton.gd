@@ -6,6 +6,9 @@ const RIGHT_CARET = preload('res://res/CaretRight.png')
 const MENU_ICON = preload('res://res/MenuNavigation.png')
 const PLUS_SIGN = preload('res://res/Plus.png')
 
+const FILE = preload("res://res/FileIcon.png")
+const FOLDER = preload("res://res/FolderIcon.png")
+
 
 func _ready():
 	pass
@@ -22,6 +25,8 @@ func set_icon(icon='plus'):
 			'RIGHT': ic = RIGHT_CARET
 			'MENU': ic = MENU_ICON
 			'PLUS': ic = PLUS_SIGN
+			'FILE': ic = FILE
+			'FOLDER': ic = FOLDER
 			'EMPTY': ic = null
 	else:
 		ic = icon

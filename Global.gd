@@ -6,6 +6,7 @@ var config
 #CONSTANTS
 var currentLang = 0; #currently used languge index from langs
 var langs = ['en','hu','ja']
+const ANDROID_PATH = "/storage/emulated/0/Langr"
 
 #Render Constants
 var POSSIBLE_SCALES = [14,16,24,32,48,56] setget ,get_possible_scales
@@ -412,6 +413,19 @@ func change_lesson_name(old_name,new_name):
 		dir.rename(dir_name_old+'.les',dir_name_new+'.les')
 		return 0
 
+func check_if_folder_ok_android():
+	var dir = Directory.new()
+	if dir.dir_exists(ANDROID_PATH):
+		var tfn = random_string(12)
+		var err = dir.make_dir(ANDROID_PATH +'/' +tfn)
+		err += dir.remove(ANDROID_PATH +'/' +tfn)
+		if err == 0:
+			return true
+	else:
+		var err = dir.make_dir(ANDROID_PATH)
+		return err==0
+		
+
 func import_lesson(file_name:String):
 	file_name = strip_les_ending(file_name)
 		
@@ -447,13 +461,14 @@ func export_lesson(file_name, lesson=null):
 	var success = true
 	if dir.file_exists(dir_name+'.les'):
 		var err = dir.copy(dir_name+'.les',file_name+'.les')
+		print('Dir copy Error: ',err,' for file: ',dir_name+'.les',' -> ',file_name+'.les')
 		success = success and (err == OK)
 	if dir.dir_exists(dir_name):
 		var err = dir.make_dir(file_name)
 		for f in list_files_in_directory(dir_name):
 			var err2 = dir.copy(dir_name+'/'+f,file_name +'/' + f)
 			err = err and err2
-			print('File copy Error: ',err2)
+			print('File copy Error: ',err2,' for file: ',dir_name+'/'+f,' -> ',file_name +'/' + f)
 		#success = success and (err == OK if err is bool else false)
 	return success
 

@@ -1,76 +1,82 @@
-id,en,hu,ja,ro
-OK,Ok,Jó,はい,Da
-cancel,Cancel,Mégse,いや,Anulare
-comingSoon,Coming Soon,Fejlesztés Alatt,開発中,-
-start,Start Lesson,Lecke Elkezdés,授業を始めよう,-
-manage,Manage Lessons,Leckék Kezelése,授業を取り締まる,-
-settings,Settings,Beállítások,設定,-
-donate,Donate,Adományozás,拠出金,-
-language,Language,Nyelv,言語,Limbă
-scale,UI Scale,FF Méret,UIの大きさ,Mărime UI
-question,Question,Kérdés,質問,-
-answer,Answer,Válasz,答え,-
-next,Next,Következő,次,-
-back,Back,Vissza,戻る,-
-lessonList,List of Lessons,Elérhető leckék,授業の列挙,-
-createLesson,Create Lesson, Lecke Létrehozása,授業を作る,-
-deleteLesson,Delete Lesson,Lecke törlése,授業を消す,-
-createQuestion,Create Question,Új kérdés Létrehozása,質問を作る,-
-modifyQuestion,Modify Question,Kérdés megváltoztatása,質問を変更する,-
-deleteQuestion,Delete Question,Kérdés törlése,質問を消す,-
-questionPlaceholder,Modify Question text here,Kérdés szövegének módosítása itt,質問の文書をここで変化する,-
-answerTextPlaceholder,Modify Answer Here (free text),Válasz szövegének módosítása itt (korlátlan bevitel),答えの文書をここで変化する,-
-drawLabel,Draw Answer here:,Rajzolja ide a választ:,答えをここに画いて：,-
-drawClear,Clear,Törlés,消す,-
-drawUndo,Undo,Vissza,一線先,-
-createQuestionDict,Add Word from Dictionary,Szó hozzáadása a szótárból,辞書から言葉を付ける,-
-appendDictionary,Append Dictionary,Szótár hozzáadása,辞書を付ける,-
-multiChoiceTooltip,Multi Choice-Answer,Több helyes válasz,択一,-
-multiChoiceCheckbox,Add new multi-choice answer,Új többválasz hozzáadása,択一答えを付ける,-
-currentSkill,Current Proficiency,Megjegyzés szintje,記憶力,-
-questionNotSet,Question is not specified,Kérdés mező nincs kitöltve,質問欄は空っぽ,-
-answerNotSet,None of the answer fields were specified,Egyetlen Válasz mező sincs kitöltve,答え欄は空っぽ,-
-questionAlreadyExists,Question Already in database. There Cannot be two identical questions (with different answers. And having two questions with the same answer is pointless),A Kérdés már szerepel az leckében. Két azonos kérdés különböző válaszokkal nem megengedett"," azonos válaszokkal pedig értelmetlen,この授業にこの質問はもう付けている。別の答えがある質問は禁止です、そして同じ答えがある質問は無意味です,-
-couldNotModifyQuestion,Could not modify Question,Kérdés módosítása sikertelen,質問の変化は失敗です,-
-couldNotCreateQuestion,Could not create question,Nem lehetett létrehozni a kérdést,質問を作るは失敗です,-
-checkAnswer,Check Answer,Válasz Ellenőrzése,答えを確認する,-
-forceCorrect,Correct!,Helyes!,正解！,-
-forceIncorrect,Incorrect!,Helytelen!,(ノ_<。),-
-showOnlyCorrect,Show Correct Only,Csak helyes mutatása,正しいだけを見せる,-
-checkActiveLessons,The training session will be based on:,A kérdések a kiválaszott leckékből lesznek:,質問はこっちから出てくる,-
-noActiveLessons,No active lessons are selected,Egyetlen lecke sem aktív,一つの授業でも選べていない,-
-noLessonsRedirect,Tap or click to be redirected to the lessons management scene,Kattintson vagy tappintson és át lesz vezényelve a lecke rendezés részre,授業を選びたいならポチしてね,-
-noActiveQuestions,There no questions to ask,Nincs több kérdés,聞かれる質問はもうない,-
-noQuestionsRedirect,There no questions available that have not been already asked and answered correctly today. Please add new questions"," change lesson or come back tomorrow,Nincs több kérdés amit ma lehetne még kérdezni. Kérem adjon hozzá új kérdéseket"," váltson leckét vagy jöjjön vissza holnap,すべての質問は正解に答えられたからもう聞かれる質問はない。別の授業をえらんでか、または明日戻ってください,-
-exportLesson,Export,Exportálás,授業を輸出する,-
-importLesson,Import Lesson,Lecke Importálása,授業を輸入する,-
-confirmDeleteLessonTitle,Confirm Deletion,Biztos Törölni Szertné?,本当に消す気ですか？,-
-confirmDeleteLessonMessage,You are about to delete lesson {lesson}. This action cannot be undone. Consider exporting it first,A '{lesson}' lecke törlésre kerül. Ezt a műveletet nem lehet visszafordítani. Esetleg exportálja előszőr a leckét,「」の授業を消す。戻りはできない。輸出の可能性を忘れないで,-
-lessonAlreadyExitsTitle,Lesson already exists,A lecke már létezik,この授業はもう存在する,-
-lessonAlreadyExitsMessage,Try entering a different name of leave the field blank to revert to the original name,Próbáljon beírni egy másik nevet vagy üresen hagyni a mezőt"," ha nem szeretné megváltoztatni,別の名前を試して、それとも名欄を空白において、元の名に戻る,-
-fileSaveSuccessTitle,Success!,Siker!,成功,-
-fileSaveSuccessMessage,Lesson saved successfully under '{filename}',Lecke sikeresen elmentve '{filename}' néven,「」の授業を無事に保管した,-
-fileSaveFailTitle,Saving Failed,Mentés sikertelen,保管失敗,-
-fileSaveFailMessage,Could not save file. Please try again,Fájl mentése kudarcba fulladt. Kérem próbálja újra,保管は失敗した。改めて試してください,-
-importSuccessTitle,Import Successful,Importálás sikeres,輸入正解,-
-importSuccessMessage,Importing '{lesson}' successful,'{lesson}' sikeresen importálva,「{lesson}」の授業を無事に輸入した,-
-importFailTitle,Import Failed,Importálás sikertelen,輸入は失敗した,-
-importFailMessage,Could not import lesson,Nem sikerül importálni a leckét,授業の輸入,-
-quizRotationSize,Quiz Pool Size,Kvíz Kérdéshalom mérete,質問の数,-
-enableDebug,Developer Mode,Fejlesztői Mód,開発者モード,-
-sortBy,Sort By:,Rendezés:,並び替える,-
-search,Search,Keresés,探す,-
-alphabetical,Alphabetical,ABC Sorrend,ABC順,-
-dateAdded,Added,Dátum,付けた年月日,-
-skill,Skill,Megjegyzés,記憶力,-
-good_answer_date,Last time correctly answered,Utolsó helyes válasz,最後の正解の質問の年月日,-
-bad_answer_date,Last incorrect answer,Utolsó helytelen válasz,最後の不正解の質問の年月日,-
-skip_days,Hide for (days),Rejtés hossza (nap),隠すの長さ（日）,-
-id,ID,Azonosító,ID,-
-N/A,N/A,N/A,いない,-
-none,None,Semmi,なし,-
-add,Add,Hozzáadás,付ける,-
-requires,Requires:,Igényli:,必要は：,-
-selectLesson,Please select a lesson,Válasszon egy leckét,授業を選べてください,-
-selectQuestions,Please select the questions:,Kérem válassza ki a leckéket,質問を選べてください：,-
-currentlyEditing,Currently Editing,Módosítás alatt,変化中,-
+id,en,hu,ja
+OK,Ok,Jó,はい
+cancel,Cancel,Mégse,いや
+comingSoon,Coming Soon,Fejlesztés Alatt,開発中
+start,Start Lesson,Lecke Elkezdés,授業を始めよう
+manage,Manage Lessons,Leckék Kezelése,授業を取り締まる
+settings,Settings,Beállítások,設定
+donate,Donate,Adományozás,拠出金
+language,Language,Nyelv,言語
+scale,UI Scale,FF Méret,UIの大きさ
+question,Question,Kérdés,質問
+answer,Answer,Válasz,答え
+next,Next,Következő,次
+back,Back,Vissza,戻る
+lessonList,List of Lessons,Elérhető leckék,授業の列挙
+createLesson,Create Lesson, Lecke Létrehozása,授業を作る
+deleteLesson,Delete Lesson,Lecke törlése,授業を消す
+createQuestion,Create Question,Új kérdés Létrehozása,質問を作る
+modifyQuestion,Modify Question,Kérdés megváltoztatása,質問を変更する
+deleteQuestion,Delete Question,Kérdés törlése,質問を消す
+questionPlaceholder,Modify Question text here,Kérdés szövegének módosítása itt,質問の文書をここで変化する
+answerTextPlaceholder,Modify Answer Here (free text),Válasz szövegének módosítása itt (korlátlan bevitel),答えの文書をここで変化する
+drawLabel,Draw Answer here:,Rajzolja ide a választ:,答えをここに画いて：
+drawClear,Clear,Törlés,消す
+drawUndo,Undo,Vissza,一線先
+createQuestionDict,Add Word from Dictionary,Szó hozzáadása a szótárból,辞書から言葉を付ける
+appendDictionary,Append Dictionary,Szótár hozzáadása,辞書を付ける
+multiChoiceTooltip,Multi Choice-Answer,Több helyes válasz,択一
+multiChoiceCheckbox,Add new multi-choice answer,Új többválasz hozzáadása,択一答えを付ける
+currentSkill,Current Proficiency,Megjegyzés szintje,記憶力
+questionNotSet,Question is not specified,Kérdés mező nincs kitöltve,質問欄は空っぽ
+answerNotSet,None of the answer fields were specified,Egyetlen Válasz mező sincs kitöltve,答え欄は空っぽ
+questionAlreadyExists,Question Already in database. There Cannot be two identical questions (with different answers. And having two questions with the same answer is pointless),A Kérdés már szerepel az leckében. Két azonos kérdés különböző válaszokkal nem megengedett"," azonos válaszokkal pedig értelmetlen,この授業にこの質問はもう付けている。別の答えがある質問は禁止です、そして同じ答えがある質問は無意味です
+couldNotModifyQuestion,Could not modify Question,Kérdés módosítása sikertelen,質問の変化は失敗です
+couldNotCreateQuestion,Could not create question,Nem lehetett létrehozni a kérdést,質問を作るは失敗です
+checkAnswer,Check Answer,Válasz Ellenőrzése,答えを確認する
+forceCorrect,Correct!,Helyes!,正解！
+forceIncorrect,Incorrect!,Helytelen!,(ノ_<。)
+showOnlyCorrect,Show Correct Only,Csak helyes mutatása,正しいだけを見せる
+checkActiveLessons,The training session will be based on:,A kérdések a kiválaszott leckékből lesznek:,質問はこっちから出てくる
+noActiveLessons,No active lessons are selected,Egyetlen lecke sem aktív,一つの授業でも選べていない
+noLessonsRedirect,Tap or click to be redirected to the lessons management scene,Kattintson vagy tappintson és át lesz vezényelve a lecke rendezés részre,授業を選びたいならポチしてね
+noActiveQuestions,There no questions to ask,Nincs több kérdés,聞かれる質問はもうない
+noQuestionsRedirect,There no questions available that have not been already asked and answered correctly today. Please add new questions"," change lesson or come back tomorrow,Nincs több kérdés amit ma lehetne még kérdezni. Kérem adjon hozzá új kérdéseket"," váltson leckét vagy jöjjön vissza holnap,すべての質問は正解に答えられたからもう聞かれる質問はない。別の授業をえらんでか、または明日戻ってください
+exportLesson,Export,Exportálás,授業を輸出する
+importLesson,Import Lesson,Lecke Importálása,授業を輸入する
+confirmDeleteLessonTitle,Confirm Deletion,Biztos Törölni Szertné?,本当に消す気ですか？
+confirmDeleteLessonMessage,You are about to delete lesson {lesson}. This action cannot be undone. Consider exporting it first,A '{lesson}' lecke törlésre kerül. Ezt a műveletet nem lehet visszafordítani. Esetleg exportálja előszőr a leckét,「」の授業を消す。戻りはできない。輸出の可能性を忘れないで
+lessonAlreadyExitsTitle,Lesson already exists,A lecke már létezik,この授業はもう存在する
+lessonAlreadyExitsMessage,Try entering a different name of leave the field blank to revert to the original name,Próbáljon beírni egy másik nevet vagy üresen hagyni a mezőt"," ha nem szeretné megváltoztatni,別の名前を試して、それとも名欄を空白において、元の名に戻る
+fileSaveSuccessTitle,Success!,Siker!,成功
+fileSaveSuccessMessage,Lesson saved successfully under '{filename}',Lecke sikeresen elmentve '{filename}' néven,「」の授業を無事に保管した
+fileSaveFailTitle,Saving Failed,Mentés sikertelen,保管失敗
+fileSaveFailMessage,Could not save file. Please try again,Fájl mentése kudarcba fulladt. Kérem próbálja újra,保管は失敗した。改めて試してください
+importSuccessTitle,Import Successful,Importálás sikeres,輸入正解
+importSuccessMessage,Importing '{lesson}' successful,'{lesson}' sikeresen importálva,「{lesson}」の授業を無事に輸入した
+importFailTitle,Import Failed,Importálás sikertelen,輸入は失敗した
+importFailMessage,Could not import lesson,Nem sikerül importálni a leckét,授業の輸入
+quizRotationSize,Quiz Pool Size,Kvíz Kérdéshalom mérete,質問の数
+enableDebug,Developer Mode,Fejlesztői Mód,開発者モード
+sortBy,Sort By:,Rendezés:,並び替える
+search,Search,Keresés,探す
+alphabetical,Alphabetical,ABC Sorrend,ABC順
+dateAdded,Added,Dátum,付けた年月日
+skill,Skill,Megjegyzés,記憶力
+good_answer_date,Last time correctly answered,Utolsó helyes válasz,最後の正解の質問の年月日
+bad_answer_date,Last incorrect answer,Utolsó helytelen válasz,最後の不正解の質問の年月日
+skip_days,Hide for (days),Rejtés hossza (nap),隠すの長さ（日）
+id,ID,Azonosító,ID
+N/A,N/A,N/A,いない
+none,None,Semmi,なし
+add,Add,Hozzáadás,付ける
+requires,Requires:,Igényli:,必要は：
+selectLesson,Please select a lesson,Válasszon egy leckét,授業を選べてください
+selectQuestions,Please select the questions:,Kérem válassza ki a leckéket,質問を選べてください：
+currentlyEditing,Currently Editing,Módosítás alatt,変化中
+select,Select,Kiválaszt,選ぶ
+save,Save,Mentés,保存
+chooseFilename,Please choose a filename,Kérem Válasszon fájl nevet,ファイル名を選んでください
+saveProgress,Save Progress (skill),Állapot Mentése (hozzáértés),実力（記憶力）を保存する
+androidReadErrorTitle,Could not read directory,Mappa olvasása sikertelen,フォルダを開けるのは不可能
+androidReadErrorMessage,On Android 6.0 Permission needs to be granted manually for read/write operations. Please go to System Settings->Apps->Langr->Permissions and enable "Storage",Android 6.0 feletti verziónál az irás/olvasás engedélyét manuálisan meg kell adni. Kérem engedélyezze ezt meg a Rendeszer Beállítások->Alkalmazások->Langr->Engedély (System Settings->Apps->Langr->Permissions) alatt,Android6.0以上の場合でユーザーはアプリに手動で権限を付与する必要です。これを「System Settings->Apps->Langr->Permissions」にお願いします

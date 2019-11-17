@@ -45,6 +45,7 @@ func _ready():
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerDebug/LabelDebug.set_width_auto(10)
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerDebug/CheckBoxDebug.pressed = global.DEBUG
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerDebug/CheckBoxDebug.rect_min_size = Vector2(60,60)
+
 #%% returns the index of, or closest index to the left of the searched value.
 func find_closest(array,value):
 	for i in array.size():

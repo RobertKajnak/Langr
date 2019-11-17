@@ -80,18 +80,34 @@ func import_lesson(filename):
 	var popup = preload("res://Interface/Interactive/ErrorPopup.tscn").instance()
 	add_child(popup)
 	if global.import_lesson(filename):
-		popup.display(tr('importSuccessTitle'),tr('importSuccessMessage').format({'filename':filename}))
+		#popup.display(tr('importSuccessTitle'),tr('importSuccessMessage').format({'filename':filename}))
 		#for child in lesson_container.get_children():
 		#	lesson_container.remove_child(child)
 		#	child.queue_free()
 		#populate_with_lessons(lesson_container)
-		go_back()
+		#go_back()
+		
+		change_active_lessons()
+		global.to_transition_scene(get_tree(),'res://Screens/MainMenu.tscn',\
+				tr('importSuccessTitle'),tr('importSuccessMessage').format({'lesson':filename.replace('/','/ ')}))
+		
 	else:
 		popup.display(tr('importFailTitle'),tr('importFailMessage'))
 		
 
 func _on_ButtonImport_pressed():
-	var fd = global.create_file_dialog(get_viewport_rect(),get_node('.'),FileDialog.MODE_OPEN_FILE)
+	var fd
+	if OS.get_name() in ["Android"]:
+		if not global.check_if_folder_ok_android():
+			var popup = preload("res://Interface/Interactive/ErrorPopup.tscn").instance()
+			add_child(popup)
+			popup.display(tr('fileSaveFailTitle'),tr('fileSaveFailMessage'))
+		else:
+			fd = preload("res://Interface/Interactive/FileDialogRestricted.tscn").instance()
+			get_node('.').add_child(fd)
+			fd.load_folder(global.ANDROID_PATH,false,tr("chooseFilename"),"",true)
+	else:
+		fd = global.create_file_dialog(get_viewport_rect(),get_node('.'),FileDialog.MODE_OPEN_FILE)
 	fd.connect("file_selected",self,"import_lesson")
 	
 

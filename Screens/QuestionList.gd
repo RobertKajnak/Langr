@@ -94,25 +94,37 @@ func export_lesson_to_file(filename):
 	var popup = preload("res://Interface/Interactive/ErrorPopup.tscn").instance()
 	add_child(popup)
 	if global.export_lesson(filename,global.current_lesson):
-		popup.display(tr('fileSaveSuccessTitle'),tr('fileSaveSuccessMessage').format({'filename':global.current_lesson}))
+		popup.display(tr('fileSaveSuccessTitle'),tr('fileSaveSuccessMessage').format({'filename':filename.replace('/','/ ')}))
 	else:
 		popup.display(tr('fileSaveFailTitle'),tr('fileSaveFailMessage'))
 		
 
 func _on_Export_pressed():
-	var fd = global.create_file_dialog(get_viewport_rect(),get_node('.'),FileDialog.MODE_SAVE_FILE)
+	var fd
+	if OS.get_name() in ["Android"]:
+		if not global.check_if_folder_ok_android():
+			var popup = preload("res://Interface/Interactive/ErrorPopup.tscn").instance()
+			add_child(popup)
+			popup.display(tr('fileSaveFailTitle'),tr('fileSaveFailMessage'))
+		else:
+			fd = preload("res://Interface/Interactive/FileDialogRestricted.tscn").instance()
+			get_node('.').add_child(fd)
+			fd.load_folder(global.ANDROID_PATH,true,tr("chooseFilename"),'',true)#tr("saveProgress")
+	else:
+		disable_scroll()
+		fd = global.create_file_dialog(get_viewport_rect(),get_node('.'),FileDialog.MODE_SAVE_FILE)
+	
 	fd.connect("file_selected",self,"export_lesson_to_file")
-	disable_scroll()
 	#fd.connect("mouse_entered",self,"disable_scroll")
 	#fd.connect("confirmed",self,"enable_scroll")
 	#fd.connect("mouse_exited",self,"enable_scroll")
 
 func disable_scroll():
-	print('disabled')
+	print('Scroll disabled')
 	$VBoxContainer/ScrollContainer.scroll_vertical_enabled = false
 
 func enable_scroll():
-	print("enabled")
+	print("Scroll enabled")
 	$VBoxContainer/ScrollContainer.scroll_vertical_enabled = true
 
 func _on_ButtonDeleteLesson_pressed():
