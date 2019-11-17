@@ -194,14 +194,14 @@ func _on_Button_pressed():
 			to_save['good_answer_date'] = original_question['good_answer_date']
 		if 'bad_answer_date' in original_question:
 			to_save['bad_answer_date'] = original_question['bad_answer_date']
-	
+		if to_save['question'] != original_question['question']:
+			qm.update_req_dependencies(original_question['question'],to_save['question'])
+			
 	var reqs = []
 	for child in $VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainerRequires.get_children():
 		reqs.append(child.original_text)
 	if reqs:
 		to_save['required_questions'] = reqs
-	if to_save['question'] != original_question['question']:
-		qm.update_req_dependencies(original_question['question'],to_save['question'])
 		
 	var err = null
 	var popup_title = null
