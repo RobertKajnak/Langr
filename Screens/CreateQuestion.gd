@@ -200,6 +200,8 @@ func _on_Button_pressed():
 		reqs.append(child.original_text)
 	if reqs:
 		to_save['required_questions'] = reqs
+	if to_save['question'] != original_question['question']:
+		qm.update_req_dependencies(original_question['question'],to_save['question'])
 		
 	var err = null
 	var popup_title = null

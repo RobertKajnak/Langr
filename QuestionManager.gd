@@ -219,6 +219,13 @@ func update_question_skill(question,delta, force_update_skill=false):
 		_all_questions[find_question_in_list(cc,_all_questions)] = cc
 	_save_current_questions(lesson)
 
+func update_req_dependencies(old_question_text,new_question_text):
+	var to_mod = required_by_questions(get_question(old_question_text))
+	for q in to_mod:
+		#Here it is already assumed that all quesitons here have the relevant field in them
+		q['required_questions'].erase(old_question_text)
+		q['required_questions'].append(new_question_text)
+	_save_current_questions()
 
 func remove_question(question_title : String, ignore_dependencies :bool = false):
 	"""removes a single question from the lsit with the specified question name.
