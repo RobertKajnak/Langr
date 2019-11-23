@@ -98,6 +98,12 @@ func enable_erase():
 	$HBoxContainer/ButtonClearDrawing.visible = true
 	$HBoxContainer/ButtonUndoDrawing.visible = true
 
+func disable_mouse_interaction():
+	$AnswerDraw.disable_mouse_interaction = true
+	
+func enable_mouse_interaction():
+	$AnswerDraw.disable_mouse_interaction = false
+
 func _on_PreviousButton_pressed():
 	load_prev_image()
 	
@@ -117,4 +123,6 @@ func load_next_image():
 func load_prev_image():
 	var _cp = $AnswerDraw.load_prev_cached()
 	set_cache_status_label()
+	
+
 	

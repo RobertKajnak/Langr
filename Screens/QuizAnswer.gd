@@ -117,6 +117,7 @@ func show_required_quesiton(question_text):
 		dr_answer.load_image(0)
 		dr_answer.disable_add_drawing()
 		dr_answer.disable_erase()
+		dr_answer.disable_mouse_interaction()
 		#dr_answer.change_size(Vector2(109*2,109*2))
 		
 	epu.display(question_text,answer_text)

@@ -16,6 +16,8 @@ var texts = []
 var cache = []
 var currently_loaded = 0
 
+var disable_mouse_interaction = false
+
 func _ready():
 	self.rect_size.x = 109*4
 	self.rect_size.y = 109*4
@@ -299,6 +301,8 @@ func _draw():
 var button_down = false
 func _on_AnswerDraw_gui_input(event):
 	#print(event is InputEventMouseMotion)
+	if disable_mouse_interaction:
+		return
 	if event is InputEventMouseButton:
 		if button_down:
 			include_line()
