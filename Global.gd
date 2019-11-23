@@ -103,7 +103,7 @@ func _ready():
 		#langs = config.get_value("general","allLangs",langs)#Allows external modification of available languages
 		
 		#Render options, such as font size
-		var ui_scale_default = 32 if OS.get_name() in ["iOS", "HTML5", "Server", "Windows","UWP", "X11"] else 48
+		var ui_scale_default = 32 if OS.get_name() in ["OSX", "HTML5", "Server", "Windows","UWP", "X11"] else 40
 		var ui_scale_temp = config.get_value("render", "ui_scale", ui_scale_default)
 		set_ui_scale(ui_scale_temp)
 		

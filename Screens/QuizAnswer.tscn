@@ -30,37 +30,38 @@ __meta__ = {
 
 [node name="HeaderContainer" type="HBoxContainer" parent="VBoxContainer"]
 margin_right = 664.0
-margin_bottom = 40.0
+margin_bottom = 50.0
 custom_constants/separation = 30
 
 [node name="BackButton" parent="VBoxContainer/HeaderContainer" instance=ExtResource( 3 )]
 margin_left = 0.0
-margin_right = 30.0
+margin_right = 35.0
+margin_bottom = 50.0
 
 [node name="LabelLessonTitle" parent="VBoxContainer/HeaderContainer" instance=ExtResource( 4 )]
-margin_left = 60.0
-margin_right = 60.0
-margin_bottom = 40.0
+margin_left = 65.0
+margin_right = 65.0
+margin_bottom = 50.0
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
-margin_top = 44.0
+margin_top = 54.0
 margin_right = 664.0
-margin_bottom = 48.0
+margin_bottom = 58.0
 
 [node name="LabelQuestion" parent="VBoxContainer" instance=ExtResource( 4 )]
-margin_top = 52.0
+margin_top = 62.0
 margin_right = 664.0
-margin_bottom = 52.0
+margin_bottom = 62.0
 rect_min_size = Vector2( 550, 0 )
 
 [node name="ScrollContainerAnswers" parent="VBoxContainer" instance=ExtResource( 5 )]
-margin_top = 56.0
+margin_top = 66.0
 margin_right = 664.0
 margin_bottom = 713.0
 
 [node name="VBoxContainerAnswers" type="VBoxContainer" parent="VBoxContainer/ScrollContainerAnswers"]
 margin_right = 664.0
-margin_bottom = 657.0
+margin_bottom = 647.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 

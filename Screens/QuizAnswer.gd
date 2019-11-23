@@ -107,12 +107,12 @@ func show_required_quesiton(question_text):
 		cc.add_child(dr_answer)
 		epu.add_extra(cc)
 		
-		var fns = current_question['answer_draw']
+		var fns = question_data['answer_draw']
 		if fns is String:
 			fns = [fns]
 			
 		for fn in fns:
-			dr_answer.load_drawing('user://lessons/' + qm.get_lesson_for_question(current_question,true) + '/' + fn)
+			dr_answer.load_drawing('user://lessons/' + qm.get_lesson_for_question(question_data,true) + '/' + fn)
 			dr_answer.load_next_image()
 		dr_answer.load_image(0)
 		dr_answer.disable_add_drawing()
