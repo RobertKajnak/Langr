@@ -52,6 +52,8 @@ fileSaveSuccessTitle,Success!,Siker!,成功
 fileSaveSuccessMessage,Lesson saved successfully under '{filename}',Lecke sikeresen elmentve '{filename}' néven,「」の授業を無事に保管した
 fileSaveFailTitle,Saving Failed,Mentés sikertelen,保管失敗
 fileSaveFailMessage,Could not save file. Please try again,Fájl mentése kudarcba fulladt. Kérem próbálja újra,保管は失敗した。改めて試してください
+import,Import,Importálás,輸入
+delete,Delete,Törlés,消す
 importSuccessTitle,Import Successful,Importálás sikeres,輸入正解
 importSuccessMessage,Importing '{lesson}' successful,'{lesson}' sikeresen importálva,「{lesson}」の授業を無事に輸入した
 importFailTitle,Import Failed,Importálás sikertelen,輸入は失敗した
@@ -80,3 +82,6 @@ chooseFilename,Please choose a filename,Kérem Válasszon fájl nevet,ファイ�
 saveProgress,Save Progress (skill),Állapot Mentése (hozzáértés),実力（記憶力）を保存する
 androidReadErrorTitle,Could not read directory,Mappa olvasása sikertelen,フォルダを開けるのは不可能
 androidReadErrorMessage,On Android 6.0 Permission needs to be granted manually for read/write operations. Please go to System Settings->Apps->Langr->Permissions and enable "Storage",Android 6.0 feletti verziónál az irás/olvasás engedélyét manuálisan meg kell adni. Kérem engedélyezze ezt meg a Rendeszer Beállítások->Alkalmazások->Langr->Engedély (System Settings->Apps->Langr->Permissions) alatt,Android6.0以上の場合でユーザーはアプリに手動で権限を付与する必要です。これを「System Settings->Apps->Langr->Permissions」にお願いします
+manageDictionaries,Dictionaries,Szótárak,辞書
+addWordFromDictionary,Add word from dictionary,Szótárból keresés,辞書で調べる
+dictionaries,Dictionaries,Szótárak,辞書

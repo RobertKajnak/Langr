@@ -19,6 +19,9 @@ func _ready():
 	
 	lesson_container = $VBoxContainer/ScrollContainer/VBoxContainer
 	populate_with_lessons(lesson_container)
+	
+	if global.active_dict.empty():
+		global.load_dictionary_contents()
 
 #%% Helper functions
 func populate_with_lessons(node):
@@ -107,7 +110,7 @@ func _on_ButtonImport_pressed():
 			get_node('.').add_child(fd)
 			fd.load_folder(global.ANDROID_PATH,false,tr("chooseFilename"),"",true)
 	else:
-		fd = global.create_file_dialog(get_viewport_rect(),get_node('.'),FileDialog.MODE_OPEN_FILE)
+		fd = global.create_file_dialog(get_viewport_rect(),get_node('.'),FileDialog.MODE_OPEN_FILE,["*.les ; Lesson File"])
 	fd.connect("file_selected",self,"import_lesson")
 	
 
@@ -116,10 +119,10 @@ func _on_ButtonAddLesson_pressed():
 	print('Creating lesson')
 	var lesson_file = File.new()
 	var i =0;
-	var fn = 'user://lessons/lesson'+ str(i) +'.les'
+	var fn = 'user://lessons/lesson'+ str(i) + global.LES_EXT
 	while lesson_file.file_exists(fn):
 		i += 1
-		fn = 'user://lessons/lesson'+ str(i) +'.les'
+		fn = 'user://lessons/lesson'+ str(i) + global.LES_EXT
 	
 	lesson_file.open(fn, File.WRITE)
 	lesson_file.close()

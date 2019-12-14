@@ -7,7 +7,8 @@ var to_translate = {'TextEditQuestion':'questionPlaceholder',
 					'ButtonClearDrawing':'drawClear',
 					'ButtonUndoDrawing':'drawUndo',
 					'LabelRequires':'requires',
-					'LinkRequires':'none'}
+					'LinkRequires':'none',
+					'ButtonDictionaryAdd':'addWordFromDictionary'}
 var global
 var qm
 var original_question
@@ -42,6 +43,9 @@ func _ready():
 	$VBoxContainer/ScrollContainer/VBoxContainer/LableStats.visible = false
 	$VBoxContainer/ScrollContainer/VBoxContainer/HSeparator.visible = false
 	$VBoxContainer/ScrollContainer/VBoxContainer/HeaderContainer.visible = false
+	
+	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer3/ButtonFromDicitonary.set_icon('plus')
+	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer3/TextEditFromDictionary.set_text_size(global.FONT_SIZE_LARGE)
 	
 	set_require_label_auto()
 #%% Helper functions
@@ -164,6 +168,42 @@ func _count_boxes():
 	pass
 
 
+func _on_ButtonDictionaryAdd_pressed():
+	pass # Replace with function body.
+
+
+func _on_ButtonFromDicitonary_pressed():
+	var d_word = $VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer3/TextEditFromDictionary.text
+	var drawing = $VBoxContainer/ScrollContainer/VBoxContainer/CenterContainer/VBoxContainerDraw
+	var dpath = 'user://dictionaries/kanji/' + d_word + '.svg'
+	
+	var fc = File.new()
+	if fc.file_exists(dpath):
+		drawing.load_drawing(dpath)
+	else:
+		var first_addition := true
+		for c in d_word:
+			if c in global.active_dict:
+				dpath = 'user://dictionaries/kanji/0' + global.active_dict[c] + '.svg'
+				print(dpath)
+				if fc.file_exists(dpath):
+					if not first_addition:
+						drawing.load_next_image()
+					drawing.load_drawing(dpath)
+					first_addition = false
+			
+		#var xml = XMLParser.new()
+		#xml.open('user://dictionaries/kanjidic2.xml')
+		#while xml.read() == OK:
+		#	var nn = xml.get_node_name()
+		#	if ' Entry for Kanji:' in nn and nn[18] == dpath:
+		#		xml.read()
+		#		xml.read()
+		#		print(xml.get_node_name())
+		#		#var path = xml.get_named_attribute_value('d')
+		#		return
+		print("File doesn't exist")
+
 func _on_Button_pressed():
 	var to_save = {}
 	var adict = $"/root/GlobalVars".adict;
@@ -258,6 +298,7 @@ func _on_LabelRequires_pressed():
 		epu.get_container().remove_child(child)
 		
 	req_candidates = generate_to_require_candidates()
+	req_candidates.invert()
 	
 	if req_candidates:
 		var sb = preload('res://Interface/Interactive/SearchBar.tscn').instance()
@@ -267,7 +308,7 @@ func _on_LabelRequires_pressed():
 		sb.add_options(qm.SORT_MODES)
 		sb.select(global.question_sort_mode)
 		sb.set_mode('small')
-		sb.select(0)
+		sb.select(1)
 		sb.connect("filter_changed",self,"_on_epu_search_changed",[epu])
 		sb.connect("order_changed",self,"on_epu_order_changed",[epu])
 		
@@ -331,4 +372,6 @@ func _notification(what):
 		go_back()
 
 		
+
+
 

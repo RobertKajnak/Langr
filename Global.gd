@@ -7,6 +7,11 @@ var config
 var currentLang = 0; #currently used languge index from langs
 var langs = ['en','hu','ja']
 const ANDROID_PATH = "/storage/emulated/0/Langr"
+const LES_EXT = '.les'
+const DICT_EXT = '.dict'
+
+#Active dictionary
+var active_dict = {}
 
 #Render Constants
 var POSSIBLE_SCALES = [18,24,28,32,36,40,44,48] setget ,get_possible_scales
@@ -191,7 +196,7 @@ func set_active_lessons(active_lessons):
 func get_active_lessons_string(auto_ellipse=-1):
 	var s = ''
 	for lesson in active_lessons:
-		s += lesson.substr(0,lesson.find('.les')) + ', '
+		s += lesson.substr(0,lesson.find(LES_EXT)) + ', '
 	s = s.substr(0,s.length()-2)
 	if auto_ellipse>0 and s.length()>auto_ellipse:
 		s = s.substr(0,auto_ellipse-3) + '...'
@@ -348,10 +353,11 @@ func save_svg_path(file_name,svg_path_array):
 #func _process(delta):
 #	pass
 
-func strip_les_ending(string):
-	if string.substr(string.length()-4,string.length()) == '.les':
-		string = string.substr(0,string.length()-4)
+func strip_ending(string:String,ending:String):
+	if string.substr(string.length()-ending.length(),string.length()) == ending:
+		string = string.substr(0,string.length()-ending.length())
 	return string
+	
 
 func to_transition_scene(current_tree,next_scene_name,title,message):
 	_transition_goal = next_scene_name
@@ -359,7 +365,7 @@ func to_transition_scene(current_tree,next_scene_name,title,message):
 	_transition_message = message
 	var _err = current_tree.change_scene("res://Screens/TransitionScene.tscn")
 	
-func create_file_dialog(viewport_rect : Rect2, parent: Node, access_mode):
+func create_file_dialog(viewport_rect : Rect2, parent: Node, access_mode,filters):
 	var fd = FileDialog.new()
 	fd.set_theme( preload('res://res/DefaultJPTheme.tres'))
 	var vps = viewport_rect.size 
@@ -368,7 +374,7 @@ func create_file_dialog(viewport_rect : Rect2, parent: Node, access_mode):
 	fd.set_mode_overrides_title(true)
 	fd.access = FileDialog.ACCESS_FILESYSTEM
 	fd.mode = access_mode
-	fd.set_filters(PoolStringArray(["*.les ; Lesson File"]))
+	fd.set_filters(PoolStringArray(filters))
 	var _err = fd.set_current_dir(OS.get_system_dir(2))
 	parent.add_child(fd)
 	fd.show()
@@ -396,9 +402,9 @@ func populate_with_links(links,container,use_question_highlighting=false,auto_el
 	return link_buttons
 
 func change_lesson_name(old_name,new_name):
-	"""Returns -1 if the lesson could not be changed. If there is no '.les' ending, it will be implied"""
-	old_name = strip_les_ending(old_name)
-	new_name = strip_les_ending(new_name)
+	"""Returns -1 if the lesson couldLES_EXTe changed. If there is no LES_EXT ending, it will be implied"""
+	old_name = strip_ending(old_name,LES_EXT)
+	new_name = strip_ending(new_name,LES_EXT)
 		
 	var dir = Directory.new()
 	var dir_name_old = 'user://lessons/' + old_name
@@ -406,11 +412,11 @@ func change_lesson_name(old_name,new_name):
 
 	#While the two individual rename functions do return errors themselves, 
 	#it would be bad if only one was renamed, while the other failed
-	if dir.file_exists(dir_name_new+'.les') or dir.dir_exists(dir_name_new):
+	if dir.file_exists(dir_name_new+LES_EXT) or dir.dir_exists(dir_name_new):
 		return -1
 	else:
 		dir.rename(dir_name_old,dir_name_new)
-		dir.rename(dir_name_old+'.les',dir_name_new+'.les')
+		dir.rename(dir_name_old+LES_EXT,dir_name_new+LES_EXT)
 		return 0
 
 func check_if_folder_ok_android():
@@ -426,18 +432,42 @@ func check_if_folder_ok_android():
 		return err==0
 		
 
+func import_dictionary(file_name:String):
+	return import_file_and_folder(file_name,DICT_EXT,'user://dictionaries/')
+
+func load_dictionary_contents():
+	var dicts = list_files_in_directory('user://dictionaries/')
+	var f = File.new()
+	for d in dicts:
+		if d.substr(d.length()-5,d.length())== '.dict' :
+			f.open('user://dictionaries/' + d,1)
+			var code = 0
+			var s = ''
+			while not f.eof_reached():
+				s = f.get_line()
+				code = f.get_line()
+				active_dict[s] = code
+			f.close()
+			print("Successfully loaded " + str(d) + " with length: " + str(active_dict.size()))
+
+func delete_dictionary(name:String):
+	delete_file_and_folder(name,DICT_EXT,'user://dictionaries/')
+
 func import_lesson(file_name:String):
-	file_name = strip_les_ending(file_name)
+	return import_file_and_folder(file_name,LES_EXT,'user://lessons/')
+	
+func import_file_and_folder(file_name:String,extension:String,parent_folder:String):
+	file_name = strip_ending(file_name,extension)
 		
 	var dir = Directory.new()
-	var dest_dir = 'user://lessons/' + file_name.substr(file_name.rfind("/")+1,file_name.length()-1)
+	var dest_dir = parent_folder + file_name.substr(file_name.rfind("/")+1,file_name.length()-1)
 
-	if dir.file_exists(dest_dir+'.les') or dir.dir_exists(dest_dir):
+	if dir.file_exists(dest_dir+extension) or dir.dir_exists(dest_dir):
 		return false
 	else:
 		var success = true
-		if dir.file_exists(file_name+'.les'):
-			var err = dir.copy(file_name+'.les',dest_dir+'.les')
+		if dir.file_exists(file_name+extension):
+			var err = dir.copy(file_name+extension,dest_dir+extension)
 			success = success and (err == OK)
 		if dir.dir_exists(file_name):
 			var err = dir.make_dir(dest_dir)
@@ -449,19 +479,32 @@ func import_lesson(file_name:String):
 				print('File copy Error: ',err2)
 		return success
 
+func delete_file_and_folder(file_name:String,extension:String,parent_folder:String):
+	var dir = Directory.new()
+	var dir_name = parent_folder + file_name
+	dir_name = strip_ending(dir_name,extension)
+	#remove all files from the directory first, otherwise the request will fail
+	for f in self.list_files_in_directory(dir_name):
+		dir.remove(dir_name + '/' + f)
+	dir.remove(dir_name + extension)
+	dir.remove(dir_name)
+	
+	if file_name == current_lesson:
+		current_lesson = ''
+
 func export_lesson(file_name, lesson=null):
 	if lesson == null:
 		lesson = current_lesson
 	
-	lesson = strip_les_ending(lesson)
-	file_name = strip_les_ending(file_name)
+	lesson = strip_ending(lesson,LES_EXT)
+	file_name = strip_ending(file_name,LES_EXT)
 	var dir = Directory.new()
 	var dir_name = 'user://lessons/' + lesson
 	
 	var success = true
-	if dir.file_exists(dir_name+'.les'):
-		var err = dir.copy(dir_name+'.les',file_name+'.les')
-		print('Dir copy Error: ',err,' for file: ',dir_name+'.les',' -> ',file_name+'.les')
+	if dir.file_exists(dir_name+LES_EXT):
+		var err = dir.copy(dir_name+LES_EXT,file_name+LES_EXT)
+		print('Dir copy Error: ',err,' for file: ',dir_name+LES_EXT,' -> ',file_name+LES_EXT)
 		success = success and (err == OK)
 	if dir.dir_exists(dir_name):
 		var err = dir.make_dir(file_name)
@@ -473,14 +516,4 @@ func export_lesson(file_name, lesson=null):
 	return success
 
 func delete_lesson(lesson):
-	var dir = Directory.new()
-	var dir_name = 'user://lessons/' + lesson
-	dir_name = strip_les_ending(dir_name)
-	#remove all files from the directory first, otherwise the request will fail
-	for f in self.list_files_in_directory(dir_name):
-		dir.remove(dir_name + '/' + f)
-	dir.remove(dir_name + '.les')
-	dir.remove(dir_name)
-	
-	if lesson == current_lesson:
-		current_lesson = ''
+	delete_file_and_folder(lesson,LES_EXT,'user://lessons/')

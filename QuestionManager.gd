@@ -63,7 +63,7 @@ func load_questions(lesson_path=null, replace_current_questions = true):
 		_all_questions = []
 		
 	if lesson_path == null:
-		self.lesson_path = 'user://lessons/' + global.current_lesson +'.les'
+		self.lesson_path = 'user://lessons/' + global.current_lesson + global.LES_EXT
 	else:
 		self.lesson_path = lesson_path
 		

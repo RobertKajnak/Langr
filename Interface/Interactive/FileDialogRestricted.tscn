@@ -25,40 +25,40 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="LableAdaptive" parent="VBoxContainer" instance=ExtResource( 3 )]
-margin_right = 720.0
+margin_right = 650.0
 mode = "title"
 
 [node name="ScrollContainer" parent="VBoxContainer" instance=ExtResource( 4 )]
 margin_top = 4.0
-margin_right = 720.0
+margin_right = 650.0
 margin_bottom = 736.0
 
 [node name="VBoxContainerFiles" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
 
 [node name="CheckBox" type="CheckBox" parent="VBoxContainer"]
 margin_top = 740.0
-margin_right = 720.0
+margin_right = 650.0
 margin_bottom = 806.0
 
 [node name="TextEditFreeform" parent="VBoxContainer" instance=ExtResource( 5 )]
 margin_top = 810.0
-margin_right = 720.0
+margin_right = 650.0
 margin_bottom = 870.0
 rect_min_size = Vector2( 600, 60 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 874.0
-margin_right = 720.0
+margin_right = 650.0
 margin_bottom = 950.0
 alignment = 1
 
 [node name="ButtonSelect" parent="VBoxContainer/HBoxContainer" instance=ExtResource( 6 )]
-margin_left = 258.0
-margin_right = 358.0
+margin_left = 223.0
+margin_right = 323.0
 
 [node name="ButtonCancel" parent="VBoxContainer/HBoxContainer" instance=ExtResource( 6 )]
-margin_left = 362.0
-margin_right = 462.0
+margin_left = 327.0
+margin_right = 427.0
 text_loc = "cancel"
 [connection signal="toggled" from="VBoxContainer/CheckBox" to="." method="_on_CheckBox_toggled"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/ButtonSelect" to="." method="_on_ButtonSelect_pressed"]

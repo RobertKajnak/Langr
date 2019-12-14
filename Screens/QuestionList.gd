@@ -24,7 +24,7 @@ func _ready():
 	
 	$VBoxContainer/SearchBar.add_options(qm.SORT_MODES)
 	#var lesson_file = File.new()
-	#if not lesson_file.file_exists('user://lessons/' + current_lesson +'.les'):
+	#if not lesson_file.file_exists('user://lessons/' + current_lesson +global.LES_EXT):
 	#	_err = get_tree().change_scene('res://Screens/MainMenu.tscn')
 	#lesson_file.close()
 	
@@ -81,7 +81,7 @@ func _on_question_prerssed(question_text):
 			node.call_deferred("free")
 		
 		add_child(q)
-		q.load_data('user://lessons/' + global.current_lesson +'.les', question_text,global.DEBUG)
+		q.load_data('user://lessons/' + global.current_lesson + global.LES_EXT, question_text,global.DEBUG)
 		
 
 	

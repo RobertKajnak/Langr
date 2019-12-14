@@ -29,7 +29,7 @@ custom_constants/separation = 15
 alignment = 1
 
 [node name="HeaderContainer" type="HBoxContainer" parent="VBoxContainer"]
-margin_right = 664.0
+margin_right = 594.0
 margin_bottom = 60.0
 custom_constants/separation = 30
 
@@ -46,16 +46,17 @@ margin_bottom = 60.0
 rect_min_size = Vector2( 450, 60 )
 
 [node name="SearchBar" parent="VBoxContainer" instance=ExtResource( 5 )]
+margin_right = 594.0
 margin_bottom = 135.0
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 margin_top = 150.0
-margin_right = 664.0
+margin_right = 594.0
 margin_bottom = 154.0
 
 [node name="ScrollContainer" parent="VBoxContainer" instance=ExtResource( 6 )]
 margin_top = 169.0
-margin_right = 664.0
+margin_right = 594.0
 margin_bottom = 614.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
@@ -64,32 +65,32 @@ rect_min_size = Vector2( 0, 300 )
 
 [node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
 margin_top = 629.0
-margin_right = 664.0
+margin_right = 594.0
 margin_bottom = 705.455
 
 [node name="ButtonAddWord" parent="VBoxContainer/CenterContainer" instance=ExtResource( 7 )]
-margin_left = 282.0
-margin_right = 382.0
+margin_left = 247.0
+margin_right = 347.0
 text_loc = "createQuestion"
 
 [node name="CenterContainer2" type="CenterContainer" parent="VBoxContainer"]
 margin_top = 720.0
-margin_right = 664.0
+margin_right = 594.0
 margin_bottom = 796.455
 
 [node name="ButtonExport" parent="VBoxContainer/CenterContainer2" instance=ExtResource( 7 )]
-margin_left = 282.0
-margin_right = 382.0
+margin_left = 247.0
+margin_right = 347.0
 text_loc = "exportLesson"
 
 [node name="CenterContainer3" type="CenterContainer" parent="VBoxContainer"]
 margin_top = 811.0
-margin_right = 664.0
+margin_right = 594.0
 margin_bottom = 887.455
 
 [node name="ButtonDeleteLesson" parent="VBoxContainer/CenterContainer3" instance=ExtResource( 7 )]
-margin_left = 282.0
-margin_right = 382.0
+margin_left = 247.0
+margin_right = 347.0
 scene_to_load = "res://Manage.tscn"
 text_loc = "deleteLesson"
 [connection signal="pressed" from="VBoxContainer/HeaderContainer/BackButton" to="." method="go_back"]

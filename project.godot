@@ -27,7 +27,7 @@ QuestionManager="*res://QuestionManager.gd"
 
 [display]
 
-window/size/width=720
+window/size/width=650
 window/size/height=950
 window/size/test_height=500
 window/handheld/orientation="portrait"

@@ -122,7 +122,4 @@ func load_next_image():
 	
 func load_prev_image():
 	var _cp = $AnswerDraw.load_prev_cached()
-	set_cache_status_label()
-	
-
-	
+	set_cache_status_label()	

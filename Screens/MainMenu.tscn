@@ -20,13 +20,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="CenterContainer"]
-margin_left = 162.0
-margin_top = 71.0
-margin_right = 557.0
-margin_bottom = 878.0
+margin_left = 127.0
+margin_top = 33.0
+margin_right = 522.0
+margin_bottom = 916.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-custom_constants/separation = 100
+custom_constants/separation = 50
 
 [node name="TextureRect" type="TextureRect" parent="CenterContainer/VBoxContainer2"]
 margin_right = 395.0
@@ -35,9 +35,9 @@ texture = ExtResource( 3 )
 stretch_mode = 4
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer2"]
-margin_top = 354.0
+margin_top = 304.0
 margin_right = 395.0
-margin_bottom = 807.0
+margin_bottom = 883.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 custom_constants/separation = 50
@@ -57,17 +57,25 @@ margin_bottom = 202.455
 scene_to_load = "res://Screens/Manage.tscn"
 text_loc = "manage"
 
-[node name="TextureRect" type="TextureRect" parent="CenterContainer/VBoxContainer2/VBoxContainer"]
+[node name="ButtonDictionaries" parent="CenterContainer/VBoxContainer2/VBoxContainer" instance=ExtResource( 4 )]
+margin_left = 0.0
 margin_top = 252.0
 margin_right = 395.0
-margin_bottom = 327.0
+margin_bottom = 328.455
+scene_to_load = "res://Screens/ManageDictionaries.tscn"
+text_loc = "manageDictionaries"
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer/VBoxContainer2/VBoxContainer"]
+margin_top = 378.0
+margin_right = 395.0
+margin_bottom = 453.0
 texture = ExtResource( 5 )
 stretch_mode = 4
 
 [node name="ButtonSettings" parent="CenterContainer/VBoxContainer2/VBoxContainer" instance=ExtResource( 4 )]
 margin_left = 0.0
-margin_top = 377.0
+margin_top = 503.0
 margin_right = 395.0
-margin_bottom = 453.455
+margin_bottom = 579.455
 scene_to_load = "res://Screens/Settings.tscn"
 text_loc = "settings"

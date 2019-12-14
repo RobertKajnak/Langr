@@ -37,11 +37,12 @@ func _ready():
 			answer_color = Color(0.1,0.9,0.2) 
 	else:
 		 answer_color = Color(1,0.5,0.3)
+		
 	if 'answer_free' in current_question:
 		for txt in ['Expected Answer:',
-					'      ' + current_question['answer_free'],
+					'     ' + current_question['answer_free'].replace('\n','\n     '),
 					'Given Answer:',
-					'      ' + temp_answer['answer_free']]:
+					'     ' + temp_answer['answer_free'].replace('\n','\n     ')]:
 			var label = load('res://Interface/TextDisplay/LabelAdaptive.tscn').instance()
 			$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(label)
 			label.text = txt
