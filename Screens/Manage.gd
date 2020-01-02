@@ -24,11 +24,7 @@ func _ready():
 		global.load_dictionary_contents()
 
 #%% Helper functions
-func populate_with_lessons(node):
-	var lesson_directory = Directory.new()
-	if not lesson_directory.dir_exists('user://lessons/'):
-		lesson_directory.make_dir('user://lessons')
-	
+func populate_with_lessons(node):	
 	var files = global.list_files_in_directory('user://lessons')
 	for f in files:
 		var box = HBoxContainer.new()

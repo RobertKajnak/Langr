@@ -3,6 +3,9 @@ extends Control
 func _ready():
 	randomize() #Randomizes the seed for the RNG. One line of code shall be sacrificed to the RNG Gods
 	
+	#Check and create the lesson, dictionaries etc. folders exits
+	$"/root/GlobalVars".create_folder_tree()
+	
 	#get_tree().set("display/window/stretch/aspect","Keep")
 	for control in $CenterContainer/VBoxContainer2/VBoxContainer.get_children():
 		if "Button" in control.name:

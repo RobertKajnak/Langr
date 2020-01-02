@@ -183,8 +183,12 @@ func _on_ButtonFromDicitonary_pressed():
 	else:
 		var first_addition := true
 		for c in d_word:
+			print(global.active_dict.keys()[0])
 			if c in global.active_dict:
-				dpath = 'user://dictionaries/kanji/0' + global.active_dict[c] + '.svg'
+				var padded_code = global.active_dict[c]
+				while padded_code.length()<5:
+					padded_code = '0' + padded_code
+				dpath = 'user://dictionaries/kanji/' + padded_code + '.svg'
 				print(dpath)
 				if fc.file_exists(dpath):
 					if not first_addition:
@@ -202,7 +206,7 @@ func _on_ButtonFromDicitonary_pressed():
 		#		print(xml.get_node_name())
 		#		#var path = xml.get_named_attribute_value('d')
 		#		return
-		print("File doesn't exist")
+		print("File doesn't exist: "+ dpath)
 
 func _on_Button_pressed():
 	var to_save = {}

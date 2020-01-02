@@ -11,7 +11,7 @@ const LES_EXT = '.les'
 const DICT_EXT = '.dict'
 
 #Active dictionary
-var active_dict = {}
+var active_dict := {}
 
 #Render Constants
 var POSSIBLE_SCALES = [18,24,28,32,36,40,44,48] setget ,get_possible_scales
@@ -65,6 +65,13 @@ func set_ui_scale(val):
 
 		FONTS[font].font_data = font_data
 
+func create_folder_tree():
+	var lesson_directory = Directory.new()
+	if not lesson_directory.dir_exists('user://lessons/'):
+		lesson_directory.make_dir('user://lessons')
+		
+	if not lesson_directory.dir_exists('user://dictionaries/'):
+		lesson_directory.make_dir('user://dictionaries')
 
 #Question list editing
 var current_lesson = ''
@@ -471,12 +478,26 @@ func import_file_and_folder(file_name:String,extension:String,parent_folder:Stri
 			success = success and (err == OK)
 		if dir.dir_exists(file_name):
 			var err = dir.make_dir(dest_dir)
-			for f in list_files_in_directory(file_name):
-				print(file_name+'/'+f)
-				print(dest_dir +'/' + f)
+			var flist = list_files_in_directory(file_name)
+			
+			var fS = flist.size()
+			var fi := 0
+			if fS > 100:
+				print('Long File list detected')
+			
+			for f in flist:
+				if fS<100:
+					print(file_name+'/'+f)
+					print(dest_dir +'/' + f)
+#				else: # Console is also only updated on frame refresh
+#					fi += 1
+#					if fi%100 == 0:
+#						print(str(100 * fi/fS) + '% processed')
+				
 				var err2 = dir.copy(file_name+'/'+f,dest_dir +'/' + f)
 				err = err and err2
 				print('File copy Error: ',err2)
+				
 		return success
 
 func delete_file_and_folder(file_name:String,extension:String,parent_folder:String):

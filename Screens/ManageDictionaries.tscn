@@ -52,5 +52,6 @@ margin_bottom = 890.455
 margin_left = 242.0
 margin_right = 342.0
 text_loc = "delete"
+[connection signal="back_pressed" from="VBoxContainer/HeaderContainer" to="." method="go_back"]
 [connection signal="pressed" from="VBoxContainer/CenterContainerImport/ButtonImport" to="." method="_on_ButtonImport_pressed"]
 [connection signal="pressed" from="VBoxContainer/CenterContainerDelte/ButtonDelete" to="." method="_on_ButtonDelete_pressed"]
