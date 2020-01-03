@@ -9,14 +9,19 @@ const selected_color = Color(0.2,0,0.6)
 
 var currently_selected = null
 var path = ''
+var filter = null
 
 func _ready():
 	self.visible = false
 	pass
 
-func load_folder(path, save_dialog = false, message = null, option_text:String = '', return_full_path = false):
+func load_folder(path, filter=null, save_dialog = false, message = null, option_text:String = '', return_full_path = false):
 	"""Displays the file prompt at the specified path. 
 	Params:
+		path:
+			path of the folder
+		filter:
+			only includes the specified extensions. Null value shows all
 		save_dialog: 
 			true: save button
 			false: select button
@@ -27,6 +32,8 @@ func load_folder(path, save_dialog = false, message = null, option_text:String =
 		return_full_path:
 			attaches the path to the filename selected 
 	"""
+	
+	self.filter = filter
 	
 	if return_full_path:
 		self.path = path
@@ -57,6 +64,19 @@ func load_folder(path, save_dialog = false, message = null, option_text:String =
 	
 	populate_with_files(path)
 	
+func has_valid_extension(file_name,filter):
+	if filter == null:
+		return true
+	else:
+		if filter is String:
+			filter = [filter]
+		for ft in filter:
+			if ft[0] != '.':
+				ft = '.' + ft
+			if file_name.substr(file_name.length()-ft.length(),ft.length()) == ft:
+				return true
+	return false
+			
 func list_files_in_directory(path):
 	var file_list = []
 	var dir = Directory.new()
@@ -64,7 +84,7 @@ func list_files_in_directory(path):
 		dir.list_dir_begin()
 		var file_name = dir.get_next()
 		while (file_name != ""):
-			if not file_name in ['.','..']:
+			if not file_name in ['.','..'] and has_valid_extension(file_name,self.filter):
 				file_list.append([file_name,dir.current_is_dir()])
 			file_name = dir.get_next()
 	else:

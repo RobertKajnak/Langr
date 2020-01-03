@@ -4,8 +4,6 @@ var to_translate = {'TextEditQuestion':'questionPlaceholder',
 					'AnswerTextEdit':'answerTextPlaceholder',
 					'LabelSkill':'currentSkill',
 					'LabelMultiChoice':'multiChoiceTooltip',
-					'ButtonClearDrawing':'drawClear',
-					'ButtonUndoDrawing':'drawUndo',
 					'LabelRequires':'requires',
 					'LinkRequires':'none',
 					'ButtonDictionaryAdd':'addWordFromDictionary'}

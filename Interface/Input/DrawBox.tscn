@@ -1,17 +1,10 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Interface/Input/DrawBox.gd" type="Script" id=1]
 [ext_resource path="res://Interface/TextDisplay/LabelAdaptive.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Interface/Input/AnswerDraw.gd" type="Script" id=3]
-[ext_resource path="res://res/Fabric19.jpg" type="Texture" id=4]
-[ext_resource path="res://res/TextureEraserPink_Hover.tres" type="StyleBox" id=5]
-[ext_resource path="res://res/TextureEraserPink_pressed.tres" type="StyleBox" id=6]
-[ext_resource path="res://res/TextureEraserPink.tres" type="StyleBox" id=7]
-[ext_resource path="res://fonts/SubMenuFont.tres" type="DynamicFont" id=8]
-[ext_resource path="res://res/TextureEraserPurple_Hover.tres" type="StyleBox" id=9]
-[ext_resource path="res://res/TextureEraserPurple_pressed.tres" type="StyleBox" id=10]
-[ext_resource path="res://res/TextureEraserPurple.tres" type="StyleBox" id=11]
-[ext_resource path="res://Interface/Buttons/IconButton.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Interface/Buttons/IconButton.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Interface/Input/AnswerDraw.gd" type="Script" id=4]
+[ext_resource path="res://res/Fabric19.jpg" type="Texture" id=5]
 
 [node name="VBoxContainerDraw" type="VBoxContainer"]
 margin_top = 170.0
@@ -25,67 +18,95 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="LabelDraw" parent="." instance=ExtResource( 2 )]
-margin_right = 437.0
+[node name="HBoxContainerMinimap" type="HBoxContainer" parent="."]
+margin_right = 530.0
+alignment = 1
 
-[node name="AnswerDraw" type="Control" parent="." groups=[
+[node name="LabelDraw" parent="HBoxContainerMinimap" instance=ExtResource( 2 )]
+margin_left = 263.0
+margin_right = 263.0
+
+[node name="LabelProgress" parent="HBoxContainerMinimap" instance=ExtResource( 2 )]
+margin_left = 267.0
+margin_right = 267.0
+
+[node name="HBoxContainerMain" type="HBoxContainer" parent="."]
+margin_top = 4.0
+margin_right = 530.0
+margin_bottom = 436.0
+alignment = 1
+
+[node name="VBoxContainerLeft" type="VBoxContainer" parent="HBoxContainerMain"]
+margin_right = 45.0
+margin_bottom = 432.0
+custom_constants/separation = 15
+alignment = 1
+
+[node name="VBoxContainerPrevious" type="VBoxContainer" parent="HBoxContainerMain/VBoxContainerLeft"]
+margin_right = 45.0
+margin_bottom = 343.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="PreviousButton" parent="HBoxContainerMain/VBoxContainerLeft/VBoxContainerPrevious" instance=ExtResource( 3 )]
+margin_left = 0.0
+margin_top = 134.0
+margin_right = 45.0
+margin_bottom = 208.0
+
+[node name="ButtonUndoDrawing" parent="HBoxContainerMain/VBoxContainerLeft" instance=ExtResource( 3 )]
+margin_left = 0.0
+margin_top = 358.0
+margin_right = 45.0
+margin_bottom = 432.0
+
+[node name="AnswerDraw" type="Control" parent="HBoxContainerMain" groups=[
 "noScroll",
 ]]
-margin_top = 4.0
-margin_right = 432.0
-margin_bottom = 436.0
+margin_left = 49.0
+margin_right = 481.0
+margin_bottom = 432.0
 rect_min_size = Vector2( 432, 432 )
 rect_clip_content = true
 size_flags_horizontal = 0
 size_flags_vertical = 0
-script = ExtResource( 3 )
+script = ExtResource( 4 )
 
-[node name="Sprite" type="Sprite" parent="AnswerDraw"]
+[node name="Sprite" type="Sprite" parent="HBoxContainerMain/AnswerDraw"]
 show_behind_parent = true
 position = Vector2( 306.957, 208.703 )
 scale = Vector2( 0.373909, 0.321247 )
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-margin_top = 440.0
-margin_right = 150.0
-margin_bottom = 514.0
-size_flags_horizontal = 0
-size_flags_vertical = 0
+[node name="VBoxContainerRight" type="VBoxContainer" parent="HBoxContainerMain"]
+margin_left = 485.0
+margin_right = 530.0
+margin_bottom = 432.0
 custom_constants/separation = 15
+alignment = 1
 
-[node name="ButtonClearDrawing" type="Button" parent="HBoxContainer"]
-margin_bottom = 74.0
-custom_styles/hover = ExtResource( 5 )
-custom_styles/pressed = ExtResource( 6 )
-custom_styles/focus = ExtResource( 5 )
-custom_styles/normal = ExtResource( 7 )
-custom_fonts/font = ExtResource( 8 )
+[node name="VBoxContainerNext" type="VBoxContainer" parent="HBoxContainerMain/VBoxContainerRight"]
+margin_right = 45.0
+margin_bottom = 343.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 15
+alignment = 1
 
-[node name="ButtonUndoDrawing" type="Button" parent="HBoxContainer"]
-margin_left = 15.0
-margin_right = 15.0
-margin_bottom = 74.0
-custom_styles/hover = ExtResource( 9 )
-custom_styles/pressed = ExtResource( 10 )
-custom_styles/focus = ExtResource( 9 )
-custom_styles/normal = ExtResource( 11 )
-custom_fonts/font = ExtResource( 8 )
+[node name="NextButton" parent="HBoxContainerMain/VBoxContainerRight/VBoxContainerNext" instance=ExtResource( 3 )]
+margin_left = 0.0
+margin_top = 134.0
+margin_right = 45.0
+margin_bottom = 208.0
 
-[node name="LabelProgress" parent="HBoxContainer" instance=ExtResource( 2 )]
-margin_left = 30.0
-margin_right = 30.0
-margin_bottom = 74.0
-
-[node name="PreviousButton" parent="HBoxContainer" instance=ExtResource( 12 )]
-margin_left = 45.0
-margin_right = 90.0
-
-[node name="NextButton" parent="HBoxContainer" instance=ExtResource( 12 )]
-margin_left = 105.0
-margin_right = 150.0
-[connection signal="gui_input" from="AnswerDraw" to="AnswerDraw" method="_on_AnswerDraw_gui_input"]
-[connection signal="pressed" from="HBoxContainer/ButtonClearDrawing" to="." method="_on_ButtonClearDrawing_pressed"]
-[connection signal="pressed" from="HBoxContainer/ButtonUndoDrawing" to="." method="_on_ButtonUndoDrawing_pressed"]
-[connection signal="pressed" from="HBoxContainer/PreviousButton" to="." method="_on_PreviousButton_pressed"]
-[connection signal="pressed" from="HBoxContainer/NextButton" to="." method="_on_NextButton_pressed"]
+[node name="ButtonClearDrawing" parent="HBoxContainerMain/VBoxContainerRight" instance=ExtResource( 3 )]
+margin_left = 0.0
+margin_top = 358.0
+margin_right = 45.0
+margin_bottom = 432.0
+[connection signal="pressed" from="HBoxContainerMain/VBoxContainerLeft/VBoxContainerPrevious/PreviousButton" to="." method="_on_PreviousButton_pressed"]
+[connection signal="pressed" from="HBoxContainerMain/VBoxContainerLeft/ButtonUndoDrawing" to="." method="_on_ButtonUndoDrawing_pressed"]
+[connection signal="gui_input" from="HBoxContainerMain/AnswerDraw" to="HBoxContainerMain/AnswerDraw" method="_on_AnswerDraw_gui_input"]
+[connection signal="pressed" from="HBoxContainerMain/VBoxContainerRight/VBoxContainerNext/NextButton" to="." method="_on_NextButton_pressed"]
+[connection signal="pressed" from="HBoxContainerMain/VBoxContainerRight/ButtonClearDrawing" to="." method="_on_ButtonClearDrawing_pressed"]

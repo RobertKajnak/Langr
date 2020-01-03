@@ -5,6 +5,8 @@ const LEFT_CARET_DISABLED = preload('res://res/CaretLeft_disabled.png')
 const RIGHT_CARET = preload('res://res/CaretRight.png')
 const MENU_ICON = preload('res://res/MenuNavigation.png')
 const PLUS_SIGN = preload('res://res/Plus.png')
+const UNDO_SIGN = preload('res://res/Undo_brush.png')
+const X_SIGN = preload('res://res/X_brush.png')
 
 const FILE = preload("res://res/FileIcon.png")
 const FOLDER = preload("res://res/FolderIcon.png")
@@ -27,6 +29,8 @@ func set_icon(icon='plus'):
 			'PLUS': ic = PLUS_SIGN
 			'FILE': ic = FILE
 			'FOLDER': ic = FOLDER
+			'UNDO': ic = UNDO_SIGN
+			'X': ic = X_SIGN
 			'EMPTY': ic = null
 	else:
 		ic = icon

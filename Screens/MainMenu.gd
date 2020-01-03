@@ -11,6 +11,18 @@ func _ready():
 		if "Button" in control.name:
 			control.connect("pressed",self,"_on_ButtonStart_pressed",[control.scene_to_load])
 			
+func has_valid_extension(file_name,filter):
+	if filter == null:
+		return true
+	else:
+		if filter is String:
+			filter = [filter]
+		for ft in filter:
+			if ft[0] != '.':
+				ft = '.' + ft
+			if file_name.substr(file_name.length()-ft.length(),ft.length()) == ft:
+				return true
+	return false
 #%% Interface handling
 func _on_ButtonStart_pressed(to_load):
 	if to_load == 'res://Screens/QuizQuestion.tscn':
