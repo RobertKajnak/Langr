@@ -3,6 +3,7 @@ extends TextureButton
 const LEFT_CARET = preload('res://res/CaretLeft.png')
 const LEFT_CARET_DISABLED = preload('res://res/CaretLeft_disabled.png')
 const RIGHT_CARET = preload('res://res/CaretRight.png')
+const RIGHT_CARET_DISABLED = preload('res://res/CaretRight_disabled_brush.png')
 const MENU_ICON = preload('res://res/MenuNavigation.png')
 const PLUS_SIGN = preload('res://res/Plus.png')
 const UNDO_SIGN = preload('res://res/Undo_brush.png')
@@ -24,7 +25,9 @@ func set_icon(icon='plus'):
 			'LEFT': 
 				ic = LEFT_CARET
 				icd = LEFT_CARET_DISABLED
-			'RIGHT': ic = RIGHT_CARET
+			'RIGHT': 
+				ic = RIGHT_CARET
+				icd = RIGHT_CARET_DISABLED
 			'MENU': ic = MENU_ICON
 			'PLUS': ic = PLUS_SIGN
 			'FILE': ic = FILE

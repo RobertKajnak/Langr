@@ -12,8 +12,13 @@ onready var labelProgress = $HBoxContainerMinimap/LabelProgress
 onready var answerDraw = $HBoxContainerMain/AnswerDraw
 onready var nextButton = $HBoxContainerMain/VBoxContainerRight/VBoxContainerNext/HBoxContainerNext/NextButton
 onready var prevButton = $HBoxContainerMain/VBoxContainerLeft/VBoxContainerPrevious/HBoxContainerPrevious/PreviousButton
-onready var clearButton = $HBoxContainerMain/VBoxContainerRight/ButtonClearDrawing
-onready var undoButton = $HBoxContainerMain/VBoxContainerLeft/ButtonUndoDrawing
+onready var clearButton = $HBoxContainerMain/VBoxContainerRight/HBoxContainerClear/ButtonClearDrawing
+onready var undoButton = $HBoxContainerMain/VBoxContainerLeft/HBoxContainerUndo/ButtonUndoDrawing
+
+onready var containerNext = $HBoxContainerMain/VBoxContainerRight/VBoxContainerNext
+onready var containerPrevious = $HBoxContainerMain/VBoxContainerLeft/VBoxContainerPrevious
+onready var containerUndo = $HBoxContainerMain/VBoxContainerLeft/HBoxContainerUndo
+onready var containerClear = $HBoxContainerMain/VBoxContainerRight/HBoxContainerClear
 
 func _ready():
 	var global = $"/root/GlobalVars"
@@ -66,7 +71,9 @@ func load_drawing(filename):
 	set_cache_status_label()
 	
 func set_cache_status_label():
-	if answerDraw.get_cache_status()[1]==1:
+	var cst = answerDraw.get_cache_status()
+	
+	if cst[1]==1:
 		labelDraw.visible = true
 		labelProgress.visible = false
 	else:
@@ -75,12 +82,13 @@ func set_cache_status_label():
 		labelProgress.text = answerDraw.cache_status_string()
 	prevButton.set_icon("left")
 	
-	var cst = answerDraw.get_cache_status()
+	nextButton.disabled = false
 	if cst[0] == cst[1]:
 		if can_add_drawing:
 			nextButton.set_icon("plus")
 		else:
-			nextButton.set_icon("empty")
+			nextButton.disabled = true
+			#nextButton.set_icon("empty")
 	else:
 		nextButton.set_icon("right")
 	if cst[0] == 1:
@@ -137,3 +145,22 @@ func load_next_image():
 func load_prev_image():
 	var _cp = answerDraw.load_prev_cached()
 	set_cache_status_label()	
+
+func on_pressed(event,control,function):
+	if event is InputEventMouseButton:
+		if not event.pressed:
+			if Rect2(Vector2(0,0),control.rect_size).has_point(event.position):
+				self.call(function)
+
+
+func _on_VBoxContainerPrevious_gui_input(event):
+	on_pressed(event,containerPrevious,'_on_PreviousButton_pressed')
+
+func _on_VBoxContainerNext_gui_input(event):
+	on_pressed(event,containerNext,'_on_NextButton_pressed')
+
+func _on_HBoxContainerUndo_gui_input(event):
+	on_pressed(event,containerUndo,'_on_UndoButton_pressed')
+
+func _on_HBoxContainerClear_gui_input(event):
+	on_pressed(event,containerClear,'_on_ClearButton_pressed')
