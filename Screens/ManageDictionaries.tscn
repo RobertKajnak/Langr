@@ -24,33 +24,33 @@ margin_right = -40.0
 margin_bottom = -30.0
 
 [node name="HeaderContainer" parent="VBoxContainer" instance=ExtResource( 3 )]
-margin_right = 584.0
+margin_right = 614.0
 
 [node name="ScrollContainerDicts" parent="VBoxContainer" instance=ExtResource( 4 )]
 margin_top = 54.0
-margin_right = 584.0
-margin_bottom = 730.0
+margin_right = 614.0
+margin_bottom = 740.0
 
 [node name="VBoxContainerDicts" type="VBoxContainer" parent="VBoxContainer/ScrollContainerDicts"]
 
 [node name="CenterContainerImport" type="CenterContainer" parent="VBoxContainer"]
-margin_top = 734.0
-margin_right = 584.0
-margin_bottom = 810.455
+margin_top = 744.0
+margin_right = 614.0
+margin_bottom = 820.455
 
 [node name="ButtonImport" parent="VBoxContainer/CenterContainerImport" instance=ExtResource( 5 )]
-margin_left = 242.0
-margin_right = 342.0
+margin_left = 257.0
+margin_right = 357.0
 text_loc = "import"
 
 [node name="CenterContainerDelte" type="CenterContainer" parent="VBoxContainer"]
-margin_top = 814.0
-margin_right = 584.0
-margin_bottom = 890.455
+margin_top = 824.0
+margin_right = 614.0
+margin_bottom = 900.455
 
 [node name="ButtonDelete" parent="VBoxContainer/CenterContainerDelte" instance=ExtResource( 5 )]
-margin_left = 242.0
-margin_right = 342.0
+margin_left = 257.0
+margin_right = 357.0
 text_loc = "delete"
 [connection signal="back_pressed" from="VBoxContainer/HeaderContainer" to="." method="go_back"]
 [connection signal="pressed" from="VBoxContainer/CenterContainerImport/ButtonImport" to="." method="_on_ButtonImport_pressed"]

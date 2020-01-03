@@ -21,6 +21,8 @@ var disable_mouse_interaction = false
 func _ready():
 	self.rect_size.x = 109*4
 	self.rect_size.y = 109*4
+	self.rect_min_size.x = 109*4
+	self.rect_min_size.y = 109*4
 	_init_colors_and_widths()
 
 func change_size(new_size:Vector2):

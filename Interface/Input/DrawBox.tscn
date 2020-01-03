@@ -8,11 +8,11 @@
 
 [node name="VBoxContainerDraw" type="VBoxContainer"]
 margin_top = 170.0
-margin_right = 437.0
-margin_bottom = 694.0
+margin_right = 530.0
+margin_bottom = 606.0
 mouse_filter = 0
-size_flags_horizontal = 0
-size_flags_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
@@ -33,41 +33,46 @@ margin_right = 267.0
 [node name="HBoxContainerMain" type="HBoxContainer" parent="."]
 margin_top = 4.0
 margin_right = 530.0
-margin_bottom = 436.0
+margin_bottom = 167.0
+custom_constants/separation = 15
 alignment = 1
 
 [node name="VBoxContainerLeft" type="VBoxContainer" parent="HBoxContainerMain"]
-margin_right = 45.0
-margin_bottom = 432.0
+margin_left = 150.0
+margin_right = 195.0
+margin_bottom = 163.0
 custom_constants/separation = 15
 alignment = 1
 
 [node name="VBoxContainerPrevious" type="VBoxContainer" parent="HBoxContainerMain/VBoxContainerLeft"]
 margin_right = 45.0
-margin_bottom = 343.0
+margin_bottom = 74.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 1
 
-[node name="PreviousButton" parent="HBoxContainerMain/VBoxContainerLeft/VBoxContainerPrevious" instance=ExtResource( 3 )]
-margin_left = 0.0
-margin_top = 134.0
+[node name="HBoxContainerPrevious" type="HBoxContainer" parent="HBoxContainerMain/VBoxContainerLeft/VBoxContainerPrevious"]
 margin_right = 45.0
-margin_bottom = 208.0
+margin_bottom = 74.0
+alignment = 1
+
+[node name="PreviousButton" parent="HBoxContainerMain/VBoxContainerLeft/VBoxContainerPrevious/HBoxContainerPrevious" instance=ExtResource( 3 )]
+margin_left = 0.0
+margin_right = 45.0
 
 [node name="ButtonUndoDrawing" parent="HBoxContainerMain/VBoxContainerLeft" instance=ExtResource( 3 )]
 margin_left = 0.0
-margin_top = 358.0
+margin_top = 89.0
 margin_right = 45.0
-margin_bottom = 432.0
+margin_bottom = 163.0
 
 [node name="AnswerDraw" type="Control" parent="HBoxContainerMain" groups=[
 "noScroll",
 ]]
-margin_left = 49.0
-margin_right = 481.0
-margin_bottom = 432.0
-rect_min_size = Vector2( 432, 432 )
+margin_left = 210.0
+margin_right = 319.0
+margin_bottom = 109.0
+rect_min_size = Vector2( 109, 109 )
 rect_clip_content = true
 size_flags_horizontal = 0
 size_flags_vertical = 0
@@ -80,33 +85,36 @@ scale = Vector2( 0.373909, 0.321247 )
 texture = ExtResource( 5 )
 
 [node name="VBoxContainerRight" type="VBoxContainer" parent="HBoxContainerMain"]
-margin_left = 485.0
-margin_right = 530.0
-margin_bottom = 432.0
+margin_left = 334.0
+margin_right = 379.0
+margin_bottom = 163.0
 custom_constants/separation = 15
-alignment = 1
+alignment = 2
 
 [node name="VBoxContainerNext" type="VBoxContainer" parent="HBoxContainerMain/VBoxContainerRight"]
 margin_right = 45.0
-margin_bottom = 343.0
+margin_bottom = 74.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 15
 alignment = 1
 
-[node name="NextButton" parent="HBoxContainerMain/VBoxContainerRight/VBoxContainerNext" instance=ExtResource( 3 )]
-margin_left = 0.0
-margin_top = 134.0
+[node name="HBoxContainerNext" type="HBoxContainer" parent="HBoxContainerMain/VBoxContainerRight/VBoxContainerNext"]
 margin_right = 45.0
-margin_bottom = 208.0
+margin_bottom = 74.0
+alignment = 1
+
+[node name="NextButton" parent="HBoxContainerMain/VBoxContainerRight/VBoxContainerNext/HBoxContainerNext" instance=ExtResource( 3 )]
+margin_left = 0.0
+margin_right = 45.0
 
 [node name="ButtonClearDrawing" parent="HBoxContainerMain/VBoxContainerRight" instance=ExtResource( 3 )]
 margin_left = 0.0
-margin_top = 358.0
+margin_top = 89.0
 margin_right = 45.0
-margin_bottom = 432.0
-[connection signal="pressed" from="HBoxContainerMain/VBoxContainerLeft/VBoxContainerPrevious/PreviousButton" to="." method="_on_PreviousButton_pressed"]
+margin_bottom = 163.0
+[connection signal="pressed" from="HBoxContainerMain/VBoxContainerLeft/VBoxContainerPrevious/HBoxContainerPrevious/PreviousButton" to="." method="_on_PreviousButton_pressed"]
 [connection signal="pressed" from="HBoxContainerMain/VBoxContainerLeft/ButtonUndoDrawing" to="." method="_on_ButtonUndoDrawing_pressed"]
 [connection signal="gui_input" from="HBoxContainerMain/AnswerDraw" to="HBoxContainerMain/AnswerDraw" method="_on_AnswerDraw_gui_input"]
-[connection signal="pressed" from="HBoxContainerMain/VBoxContainerRight/VBoxContainerNext/NextButton" to="." method="_on_NextButton_pressed"]
+[connection signal="pressed" from="HBoxContainerMain/VBoxContainerRight/VBoxContainerNext/HBoxContainerNext/NextButton" to="." method="_on_NextButton_pressed"]
 [connection signal="pressed" from="HBoxContainerMain/VBoxContainerRight/ButtonClearDrawing" to="." method="_on_ButtonClearDrawing_pressed"]

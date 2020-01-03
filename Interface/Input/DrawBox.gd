@@ -10,8 +10,8 @@ var width_on_clear = 0
 onready var labelDraw = $HBoxContainerMinimap/LabelDraw
 onready var labelProgress = $HBoxContainerMinimap/LabelProgress
 onready var answerDraw = $HBoxContainerMain/AnswerDraw
-onready var nextButton = $HBoxContainerMain/VBoxContainerRight/VBoxContainerNext/NextButton
-onready var prevButton = $HBoxContainerMain/VBoxContainerLeft/VBoxContainerPrevious/PreviousButton
+onready var nextButton = $HBoxContainerMain/VBoxContainerRight/VBoxContainerNext/HBoxContainerNext/NextButton
+onready var prevButton = $HBoxContainerMain/VBoxContainerLeft/VBoxContainerPrevious/HBoxContainerPrevious/PreviousButton
 onready var clearButton = $HBoxContainerMain/VBoxContainerRight/ButtonClearDrawing
 onready var undoButton = $HBoxContainerMain/VBoxContainerLeft/ButtonUndoDrawing
 
@@ -87,7 +87,7 @@ func set_cache_status_label():
 		prevButton.disabled = true
 	else:
 		prevButton.disabled = false
-	
+		
 		
 func create_empty_drawings(count,reset_position_to_0=true):
 	for _i in range(count):

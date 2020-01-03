@@ -29,7 +29,7 @@ __meta__ = {
 }
 
 [node name="HeaderContainer" type="HBoxContainer" parent="VBoxContainer"]
-margin_right = 664.0
+margin_right = 624.0
 margin_bottom = 50.0
 custom_constants/separation = 30
 
@@ -45,52 +45,49 @@ margin_bottom = 50.0
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 margin_top = 54.0
-margin_right = 664.0
+margin_right = 624.0
 margin_bottom = 58.0
 
 [node name="LabelQuestion" parent="VBoxContainer" instance=ExtResource( 4 )]
 margin_top = 62.0
-margin_right = 664.0
+margin_right = 624.0
 margin_bottom = 62.0
-rect_min_size = Vector2( 550, 0 )
 
 [node name="ScrollContainerAnswers" parent="VBoxContainer" instance=ExtResource( 5 )]
 margin_top = 66.0
-margin_right = 664.0
-margin_bottom = 713.0
+margin_right = 624.0
+margin_bottom = 723.0
 
 [node name="VBoxContainerAnswers" type="VBoxContainer" parent="VBoxContainer/ScrollContainerAnswers"]
-margin_right = 664.0
-margin_bottom = 647.0
+margin_right = 624.0
+margin_bottom = 657.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 717.0
-margin_right = 664.0
-margin_bottom = 793.0
+margin_top = 727.0
+margin_right = 624.0
+margin_bottom = 803.0
 alignment = 1
 
 [node name="ButtonForceIncorrect" parent="VBoxContainer/HBoxContainer2" instance=ExtResource( 6 )]
-margin_left = 30.0
-margin_right = 330.0
-rect_min_size = Vector2( 300, 60 )
+margin_left = 210.0
+margin_right = 310.0
 text_loc = "forceIncorrect"
 
 [node name="ButtonForceCorrect" parent="VBoxContainer/HBoxContainer2" instance=ExtResource( 6 )]
-margin_left = 334.0
-margin_right = 634.0
-rect_min_size = Vector2( 300, 60 )
+margin_left = 314.0
+margin_right = 414.0
 text_loc = "forceCorrect"
 
 [node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
-margin_top = 797.0
-margin_right = 664.0
-margin_bottom = 873.455
+margin_top = 807.0
+margin_right = 624.0
+margin_bottom = 883.455
 
 [node name="ButtonOnlyCorrect" parent="VBoxContainer/CenterContainer" instance=ExtResource( 6 )]
-margin_left = 282.0
-margin_right = 382.0
+margin_left = 262.0
+margin_right = 362.0
 text_loc = "showOnlyCorrect"
 [connection signal="pressed" from="VBoxContainer/HeaderContainer/BackButton" to="." method="go_back"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/ButtonForceIncorrect" to="." method="_on_ButtonForceIncorrect_pressed"]
