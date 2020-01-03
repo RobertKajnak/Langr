@@ -83,12 +83,13 @@ func set_cache_status_label():
 	prevButton.set_icon("left")
 	
 	nextButton.disabled = false
+	print(can_add_drawing)
 	if cst[0] == cst[1]:
 		if can_add_drawing:
 			nextButton.set_icon("plus")
 		else:
+			nextButton.set_icon("right")
 			nextButton.disabled = true
-			#nextButton.set_icon("empty")
 	else:
 		nextButton.set_icon("right")
 	if cst[0] == 1:
