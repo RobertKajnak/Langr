@@ -4,6 +4,8 @@ var text_size
 
 const BB_text = preload("res://res/chalkboard.jpg")	
 
+signal long_press
+
 func _ready():
 	#Set random offset for the blackboard material
 	set("custom_styles/normal",create_blackboard_style())
@@ -43,3 +45,14 @@ func create_blackboard_style():
 
 	#print(T.expand_margin_left,',',T.expand_margin_right,',',T.expand_margin_top,',',T.expand_margin_bottom)
 	return T
+
+
+var long_press_timer
+func _on_TextEditFreeform_gui_input(event):
+		if event is InputEventMouseButton:
+			if event.pressed:
+				long_press_timer = OS.get_ticks_msec()
+			elif Rect2(Vector2(0,0),self.rect_size).has_point(event.position):
+				if (OS.get_ticks_msec() - long_press_timer > 800):
+					emit_signal('long_press')
+

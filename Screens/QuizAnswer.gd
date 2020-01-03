@@ -32,17 +32,27 @@ func _ready():
 	
 	temp_answer = qm.get_temp_answer()
 	var answer_color
+	var correct_answer_provided = false
 	if 'answer_free' in current_question and 'answer_free' in temp_answer and \
 		current_question['answer_free'] == temp_answer['answer_free']:
 			answer_color = Color(0.1,0.9,0.2) 
+			correct_answer_provided = true
 	else:
 		 answer_color = Color(1,0.5,0.3)
 		
 	if 'answer_free' in current_question:
-		for txt in ['Expected Answer:',
-					'     ' + current_question['answer_free'].replace('\n','\n     '),
-					'Given Answer:',
-					'     ' + temp_answer['answer_free'].replace('\n','\n     ')]:
+		var txt_answer_content = []
+		if correct_answer_provided:
+			txt_answer_content.append(tr('correctlyAnswered') + ':')
+		else:
+			txt_answer_content.append(tr('expectedAnswer') + ':')
+			
+		txt_answer_content.append('     ' + current_question['answer_free'].replace('\n','\n     '))
+		if temp_answer['answer_free'].length() >0 and not correct_answer_provided:
+			txt_answer_content.append(tr('givenAnswer') + ':')
+			txt_answer_content.append('     ' + temp_answer['answer_free'].replace('\n','\n     '))
+			
+		for txt in txt_answer_content:
 			var label = load('res://Interface/TextDisplay/LabelAdaptive.tscn').instance()
 			$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(label)
 			label.text = txt

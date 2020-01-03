@@ -8,8 +8,8 @@
 
 [node name="VBoxContainerDraw" type="VBoxContainer"]
 margin_top = 170.0
-margin_right = 530.0
-margin_bottom = 606.0
+margin_right = 300.0
+margin_bottom = 470.0
 mouse_filter = 0
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -19,27 +19,27 @@ __meta__ = {
 }
 
 [node name="HBoxContainerMinimap" type="HBoxContainer" parent="."]
-margin_right = 530.0
+margin_right = 300.0
 alignment = 1
 
 [node name="LabelDraw" parent="HBoxContainerMinimap" instance=ExtResource( 2 )]
-margin_left = 263.0
-margin_right = 263.0
+margin_left = 148.0
+margin_right = 148.0
 
 [node name="LabelProgress" parent="HBoxContainerMinimap" instance=ExtResource( 2 )]
-margin_left = 267.0
-margin_right = 267.0
+margin_left = 152.0
+margin_right = 152.0
 
 [node name="HBoxContainerMain" type="HBoxContainer" parent="."]
 margin_top = 4.0
-margin_right = 530.0
+margin_right = 300.0
 margin_bottom = 203.0
 custom_constants/separation = 15
 alignment = 1
 
 [node name="VBoxContainerLeft" type="VBoxContainer" parent="HBoxContainerMain"]
-margin_left = 150.0
-margin_right = 195.0
+margin_left = 35.0
+margin_right = 80.0
 margin_bottom = 199.0
 custom_constants/separation = 15
 alignment = 1
@@ -75,8 +75,8 @@ margin_bottom = 110.0
 [node name="AnswerDraw" type="Control" parent="HBoxContainerMain" groups=[
 "noScroll",
 ]]
-margin_left = 210.0
-margin_right = 319.0
+margin_left = 95.0
+margin_right = 204.0
 margin_bottom = 109.0
 rect_min_size = Vector2( 109, 109 )
 rect_clip_content = true
@@ -91,8 +91,8 @@ scale = Vector2( 0.373909, 0.321247 )
 texture = ExtResource( 5 )
 
 [node name="VBoxContainerRight" type="VBoxContainer" parent="HBoxContainerMain"]
-margin_left = 334.0
-margin_right = 379.0
+margin_left = 219.0
+margin_right = 264.0
 margin_bottom = 199.0
 custom_constants/separation = 15
 alignment = 1

@@ -40,6 +40,8 @@ func _ready():
 		te_answer = load('res://Interface/Input/TextEditFreeForm.tscn').instance()
 		$VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers.add_child(te_answer)
 		te_answer.text=''
+		if 'answer_draw' in current_question:
+			te_answer.connect('long_press',self,'reveal_answer')
 	if 'answer_draw' in current_question:
 		var cc = CenterContainer.new()
 		cc.size_flags_horizontal = cc.SIZE_EXPAND_FILL
@@ -72,6 +74,8 @@ func go_back():
 	qm.exit_quiz()
 	var _err = get_tree().change_scene('res://Screens/MainMenu.tscn')
 	
+func reveal_answer():
+	te_answer.text = current_question.answer_free
 
 #INput handling
 func _unhandled_input(event):

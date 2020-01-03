@@ -12,6 +12,9 @@ question,Question,Kérdés,質問
 answer,Answer,Válasz,答え
 next,Next,Következő,次
 back,Back,Vissza,戻る
+expectedAnswer,Expected Answer,Helyes Válasz,正しい答え
+givenAnswer,Given Answer,Leírt Válasz,書いた答え
+correctlyAnswered,You have correctly answered,Helyesen válaszolta,正しく書いた答え
 lessonList,List of Lessons,Elérhető leckék,授業の列挙
 createLesson,Create Lesson, Lecke Létrehozása,授業を作る
 deleteLesson,Delete Lesson,Lecke törlése,授業を消す
