@@ -442,6 +442,25 @@ func check_if_folder_ok_android():
 func import_dictionary(file_name:String):
 	return import_file_and_folder(file_name,DICT_EXT,'user://dictionaries/')
 
+func __to_uni(code):
+	var arr = PoolByteArray()
+	while code > 0:
+		arr.append(code & 0xFF)
+		code = code >> 8
+	arr.invert()
+	return arr
+
+func __load_dictionary_contents():
+	"""This wuold probably a more robust approach, but the unicode conversion is problematic"""
+	var kanjis = list_files_in_directory('user://dictionaries/kanji')
+	for k in kanjis:
+		var code = int(k.substr(0,k.length()-4))
+		var repr = char(code)
+		print(int(code))
+		print(__to_uni(code).get_string_from_utf8())
+		active_dict[repr] = code
+		return
+	
 func load_dictionary_contents():
 	var dicts = list_files_in_directory('user://dictionaries/')
 	var f = File.new()

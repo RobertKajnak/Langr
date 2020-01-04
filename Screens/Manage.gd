@@ -104,7 +104,7 @@ func _on_ButtonImport_pressed():
 		else:
 			fd = preload("res://Interface/Interactive/FileDialogRestricted.tscn").instance()
 			get_node('.').add_child(fd)
-			fd.load_folder(global.ANDROID_PATH,false,tr("chooseFilename"),"",true)
+			fd.load_folder(global.ANDROID_PATH,'.les',false,tr("chooseFilename"),"",true)
 	else:
 		fd = global.create_file_dialog(get_viewport_rect(),get_node('.'),FileDialog.MODE_OPEN_FILE,["*.les ; Lesson File"])
 	fd.connect("file_selected",self,"import_lesson")

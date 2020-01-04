@@ -20,10 +20,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="CenterContainer"]
-margin_left = 127.0
-margin_top = 33.0
-margin_right = 522.0
-margin_bottom = 916.0
+margin_left = 142.0
+margin_top = 38.0
+margin_right = 537.0
+margin_bottom = 921.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 custom_constants/separation = 50
