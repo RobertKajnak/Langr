@@ -148,6 +148,7 @@ func load_prev_image():
 	set_cache_status_label()	
 
 func on_pressed(event,control,function):
+	return
 	if event is InputEventMouseButton:
 		if not event.pressed:
 			if Rect2(Vector2(0,0),control.rect_size).has_point(event.position):

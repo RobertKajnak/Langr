@@ -13,6 +13,11 @@ var to_translate = {'LabelSort':'sortBy'}
 
 func _ready():
 	global = $"/root/GlobalVars"
+	if GlobalVars.EINK:
+		$Sprite.texture = null
+	else:
+		$Sprite.texture = preload('res://.import/Wood15.jpg-50e2cbf6645f0a7ed0cb9f91f5de5cca.stex')
+	
 	global.retranslate($VBoxContainer,to_translate)
 	
 	qm = $"/root/QuestionManager"
@@ -111,7 +116,7 @@ func _on_Export_pressed():
 			fd.load_folder(global.ANDROID_PATH,true,tr("chooseFilename"),'',true)#tr("saveProgress")
 	else:
 		disable_scroll()
-		fd = global.create_file_dialog(get_viewport_rect(),get_node('.'),FileDialog.MODE_SAVE_FILE)
+		fd = global.create_file_dialog(get_viewport_rect(),get_node('.'),FileDialog.MODE_SAVE_FILE, [])
 	
 	fd.connect("file_selected",self,"export_lesson_to_file")
 	#fd.connect("mouse_entered",self,"disable_scroll")

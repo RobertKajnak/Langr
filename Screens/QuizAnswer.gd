@@ -13,6 +13,11 @@ var temp_answer
 func _ready():
 	qm = $"/root/QuestionManager"
 	global = $"/root/GlobalVars"
+	
+	if GlobalVars.EINK:
+		$Sprite.texture = null
+	else:
+		$Sprite.texture = preload('res://.import/Wood15.jpg-50e2cbf6645f0a7ed0cb9f91f5de5cca.stex')
 	#global.retranslate($VBoxContainer,to_translate)
 	
 	current_question = global.current_question

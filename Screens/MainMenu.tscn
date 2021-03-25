@@ -10,14 +10,22 @@
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 507.607, 798.533 )
+position = Vector2( 347.582, 522.407 )
+scale = Vector2( 0.95063, 0.868298 )
 texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 720, 1280 )
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="CenterContainer"]
 margin_left = 142.0

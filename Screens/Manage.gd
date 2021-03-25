@@ -10,7 +10,14 @@ var lesson_container
 
 func _ready():
 	global = $"/root/GlobalVars"
+	if GlobalVars.EINK:
+		$Sprite.texture = null
+	else:
+		$Sprite.texture = preload('res://.import/Wood24.jpg-4a3597f20fd006272deaaf45f7635168.stex')
+	
 	global.retranslate($VBoxContainer,to_translate)
+	
+	
 	
 	$VBoxContainer/LabelCheckActiveLessons.set_width(get_viewport_rect().size.x*0.75)
 	$VBoxContainer/LabelCheckActiveLessons.rect_size.y=0

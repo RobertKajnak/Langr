@@ -228,8 +228,7 @@ func save_dawing():
 
 func remove_last_line():
 	current_line = []
-	if lines.size()>0:
-		lines.remove(lines.size()-1)
+	lines.remove(lines.size()-1)
 	
 func load_prev_cached():
 	return load_cached(currently_loaded-1)

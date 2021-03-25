@@ -10,6 +10,11 @@ func _ready():
 	qm = $"/root/QuestionManager"
 	global = $"/root/GlobalVars"
 	
+	if GlobalVars.EINK:
+		$Sprite.texture = null
+	else:
+		$Sprite.texture = preload('res://.import/Wood15.jpg-50e2cbf6645f0a7ed0cb9f91f5de5cca.stex')
+	
 	current_question = qm.get_next_question_to_ask()
 	global.current_question = current_question
 	if not global.active_lessons:
@@ -43,6 +48,7 @@ func _ready():
 		if 'answer_draw' in current_question:
 			te_answer.connect('long_press',self,'reveal_answer')
 	if 'answer_draw' in current_question:
+		#var cc = $VBoxContainer/ScrollContainerAnswers/VBoxContainerAnswers
 		var cc = CenterContainer.new()
 		cc.size_flags_horizontal = cc.SIZE_EXPAND_FILL
 		dr_answer = load('res://Interface/Input/DrawBox.tscn').instance()

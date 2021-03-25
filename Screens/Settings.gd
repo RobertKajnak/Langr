@@ -5,12 +5,17 @@ var buttonTexts = {'LabelTitle':'settings',
 					'LabelLanguage':'language',
 					'LabelScale':'scale',
 					'LabelRotationSize':'quizRotationSize',
-					'LabelDebug':'enableDebug'}
+					'LabelDebug':'enableDebug',
+					'LabelEInk':'EInkMode'}
 var global
 
 
 func _ready():
 	global = $"/root/GlobalVars"
+	if global.EINK:
+		$Sprite.texture = null
+	else:
+		$Sprite.texture = preload('res://.import/Wood24.jpg-4a3597f20fd006272deaaf45f7635168.stex')
 	
 	global.retranslate($VBoxContainer,buttonTexts)
 	
@@ -42,6 +47,10 @@ func _ready():
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerRotation/LableRotationSizeValue.set_width_auto(10)
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerRotation/LabelRotationSize.set_width_auto(10)
 	
+	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerEInk/LabelEInk.set_width_auto(10)
+	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerEInk/CheckBoxEInk.pressed = global.EINK
+	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerEInk/CheckBoxEInk.rect_min_size = Vector2(60,60)
+	
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerDebug/LabelDebug.set_width_auto(10)
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerDebug/CheckBoxDebug.pressed = global.DEBUG
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerDebug/CheckBoxDebug.rect_min_size = Vector2(60,60)
@@ -54,6 +63,7 @@ func find_closest(array,value):
 	return array.size()-1
 
 func go_back():
+	global.EINK = $VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerEInk/CheckBoxEInk.is_pressed()
 	global.DEBUG = $VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerDebug/CheckBoxDebug.is_pressed()
 	global.save_settings()
 	var _err = get_tree().change_scene('res://Screens/MainMenu.tscn')

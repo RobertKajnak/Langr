@@ -1,7 +1,6 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Screens/QuestionList.gd" type="Script" id=1]
-[ext_resource path="res://res/Wood15.jpg" type="Texture" id=2]
 [ext_resource path="res://Interface/Buttons/BackButton.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Interface/Input/TextEditFreeForm.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Interface/Interactive/SearchBar.tscn" type="PackedScene" id=5]
@@ -12,10 +11,12 @@
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 635.74, 805.702 )
-texture = ExtResource( 2 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchor_right = 1.0
@@ -29,7 +30,7 @@ custom_constants/separation = 15
 alignment = 1
 
 [node name="HeaderContainer" type="HBoxContainer" parent="VBoxContainer"]
-margin_right = 594.0
+margin_right = 624.0
 margin_bottom = 60.0
 custom_constants/separation = 30
 
@@ -46,51 +47,51 @@ margin_bottom = 60.0
 rect_min_size = Vector2( 450, 60 )
 
 [node name="SearchBar" parent="VBoxContainer" instance=ExtResource( 5 )]
-margin_right = 594.0
+margin_right = 624.0
 margin_bottom = 135.0
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 margin_top = 150.0
-margin_right = 594.0
+margin_right = 624.0
 margin_bottom = 154.0
 
 [node name="ScrollContainer" parent="VBoxContainer" instance=ExtResource( 6 )]
 margin_top = 169.0
-margin_right = 594.0
-margin_bottom = 614.0
+margin_right = 624.0
+margin_bottom = 624.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
 margin_bottom = 300.0
 rect_min_size = Vector2( 0, 300 )
 
 [node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
-margin_top = 629.0
-margin_right = 594.0
-margin_bottom = 705.455
+margin_top = 639.0
+margin_right = 624.0
+margin_bottom = 715.455
 
 [node name="ButtonAddWord" parent="VBoxContainer/CenterContainer" instance=ExtResource( 7 )]
-margin_left = 247.0
-margin_right = 347.0
+margin_left = 262.0
+margin_right = 362.0
 text_loc = "createQuestion"
 
 [node name="CenterContainer2" type="CenterContainer" parent="VBoxContainer"]
-margin_top = 720.0
-margin_right = 594.0
-margin_bottom = 796.455
+margin_top = 730.0
+margin_right = 624.0
+margin_bottom = 806.455
 
 [node name="ButtonExport" parent="VBoxContainer/CenterContainer2" instance=ExtResource( 7 )]
-margin_left = 247.0
-margin_right = 347.0
+margin_left = 262.0
+margin_right = 362.0
 text_loc = "exportLesson"
 
 [node name="CenterContainer3" type="CenterContainer" parent="VBoxContainer"]
-margin_top = 811.0
-margin_right = 594.0
-margin_bottom = 887.455
+margin_top = 821.0
+margin_right = 624.0
+margin_bottom = 897.455
 
 [node name="ButtonDeleteLesson" parent="VBoxContainer/CenterContainer3" instance=ExtResource( 7 )]
-margin_left = 247.0
-margin_right = 347.0
+margin_left = 262.0
+margin_right = 362.0
 scene_to_load = "res://Manage.tscn"
 text_loc = "deleteLesson"
 [connection signal="pressed" from="VBoxContainer/HeaderContainer/BackButton" to="." method="go_back"]

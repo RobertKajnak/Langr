@@ -20,6 +20,14 @@ var link_button_class = preload("res://Interface/Buttons/SelectLessonButton.tscn
 
 func _ready():
 	global = $"/root/GlobalVars"
+	
+	global = $"/root/GlobalVars"
+	if global.EINK:
+		$Sprite.texture = null
+	else:
+		$Sprite.texture = preload('res://.import/Wood15.jpg-50e2cbf6645f0a7ed0cb9f91f5de5cca.stex')
+	
+	
 	global.retranslate($VBoxContainer,to_translate)
 	for control in [$VBoxContainer/ScrollContainer/VBoxContainer/TextEditQuestion,
 					$VBoxContainer/ScrollContainer/VBoxContainer/AnswerTextEdit]:

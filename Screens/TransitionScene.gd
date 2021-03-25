@@ -4,6 +4,12 @@ var global
 
 func _ready():
 	global = $"/root/GlobalVars"
+	
+	if GlobalVars.EINK:
+		$Sprite.texture = null
+	else:
+		$Sprite.texture = preload('res://.import/Wood24.jpg-4a3597f20fd006272deaaf45f7635168.stex')
+	
 	$CenterContainer/VBoxContainer/LabelTitle.text = tr(global._transition_title)
 	$CenterContainer/VBoxContainer/LabelMessage.text = tr(global._transition_message)
 	#print($CenterContainer/VBoxContainer/LabelMessage.rect_position)

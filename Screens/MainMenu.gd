@@ -2,7 +2,11 @@ extends Control
 
 func _ready():
 	randomize() #Randomizes the seed for the RNG. One line of code shall be sacrificed to the RNG Gods
-	
+	if GlobalVars.EINK:
+		$Sprite.texture = null
+	else:
+		$Sprite.texture = preload('res://.import/Wood24.jpg-4a3597f20fd006272deaaf45f7635168.stex')
+		
 	#Check and create the lesson, dictionaries etc. folders exits
 	$"/root/GlobalVars".create_folder_tree()
 	
@@ -33,14 +37,15 @@ func _on_ButtonStart_pressed(to_load):
 
 #%% Input handling
 func _unhandled_input(event):
-    if event is InputEventKey:
-        if event.pressed and event.scancode == KEY_ESCAPE:
-            get_tree().quit()
+	if event is InputEventKey:
+		if event.pressed and event.scancode == KEY_ESCAPE:
+			get_tree().quit()
 			
 func _notification(what):
-    if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
-        # For Windows
-        pass        
-    if what == MainLoop.NOTIFICATION_WM_GO_BACK_REQUEST: 
-        # For android
-        get_tree().quit()
+	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
+		# For Windows
+		pass        
+	if what == MainLoop.NOTIFICATION_WM_GO_BACK_REQUEST: 
+		# For android
+		get_tree().quit()
+

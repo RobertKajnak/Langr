@@ -16,6 +16,9 @@
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 674.318, 825.901 )
@@ -39,7 +42,7 @@ margin_bottom = 724.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
 margin_right = 600.0
-margin_bottom = 859.0
+margin_bottom = 943.0
 rect_min_size = Vector2( 600, 0 )
 custom_constants/separation = 20
 alignment = 1
@@ -80,18 +83,19 @@ margin_right = 424.0
 [node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 504.0
 margin_right = 600.0
-margin_bottom = 671.0
+margin_bottom = 820.0
 
 [node name="VBoxContainerDraw" parent="VBoxContainer/ScrollContainer/VBoxContainer/CenterContainer" instance=ExtResource( 8 )]
 margin_left = 185.0
 margin_top = 0.0
 margin_right = 414.0
-margin_bottom = 167.0
+margin_bottom = 316.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
-margin_top = 691.0
+visible = false
+margin_top = 727.0
 margin_right = 600.0
-margin_bottom = 736.0
+margin_bottom = 772.0
 
 [node name="LabelSkill" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer" instance=ExtResource( 9 )]
 margin_right = 200.0
@@ -100,14 +104,14 @@ rect_min_size = Vector2( 200, 0 )
 
 [node name="OptionButtonSkill" type="OptionButton" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
 margin_left = 204.0
-margin_right = 245.0
+margin_right = 233.0
 margin_bottom = 45.0
 custom_fonts/font = ExtResource( 10 )
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
-margin_top = 756.0
+margin_top = 840.0
 margin_right = 600.0
-margin_bottom = 795.0
+margin_bottom = 879.0
 
 [node name="LabelRequires" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer2" instance=ExtResource( 9 )]
 margin_right = 0.0
@@ -118,19 +122,19 @@ margin_left = 4.0
 margin_right = 117.0
 
 [node name="VBoxContainerRequires" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
-margin_top = 815.0
+margin_top = 899.0
 margin_right = 600.0
-margin_bottom = 815.0
+margin_bottom = 899.0
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
-margin_top = 835.0
+margin_top = 919.0
 margin_right = 600.0
-margin_bottom = 839.0
+margin_bottom = 923.0
 
 [node name="LableStats" parent="VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource( 9 )]
-margin_top = 859.0
+margin_top = 943.0
 margin_right = 600.0
-margin_bottom = 859.0
+margin_bottom = 943.0
 
 [node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
 margin_top = 739.0

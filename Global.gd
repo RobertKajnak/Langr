@@ -25,6 +25,7 @@ const FONT_SIZE_MEDIUM = 'MEDIUM'
 const FONT_SIZE_LARGE = 'LARGE'
 var FONTS = {}
 var DEBUG = false
+var EINK = false
 var question_sort_mode = 0
 
 var skill_color_dict = {0:Color(1,0,0),
@@ -124,6 +125,7 @@ func _ready():
 		
 		question_sort_mode = config.get_value("editing","question_sort_mode",0)
 		
+		EINK = config.get_value("general","EInk",false)
 		DEBUG = config.get_value("debug","debug_enabled",false)
 	TranslationServer.set_locale(langs[currentLang])
 
@@ -217,6 +219,7 @@ func save_settings():
 	config.set_value("quiz","active_lessons",active_lessons)
 	config.set_value("quiz","rotation_size",rotation_size)
 	config.set_value("editing","question_sort_mode",question_sort_mode)
+	config.set_value("general","EInk",EINK)
 	config.set_value("debug","debug_enabled",DEBUG)
 	config.save("user://settings.cfg")
 	

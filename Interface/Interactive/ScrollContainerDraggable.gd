@@ -27,14 +27,16 @@ func _input(ev) -> void:
 	if ev is InputEventScreenDrag and swiping:
 		accept_event()
 		return
-
+		
 	if ev is InputEventMouseButton:
 		if ev.pressed and get_global_rect().has_point(ev.global_position):
 			
 			var to_ignore = (get_tree().get_nodes_in_group('noScroll'))
 			for node in to_ignore:
-				var node_rect = Rect2(node.get_global_transform()[2],node.rect_size)
-				if node_rect.has_point(ev.global_position): #If the cursor is in any of them, it stops
+				
+				var node_rect = Rect2(node.get_global_position(),node.rect_size)
+				#This requires position instead of global position
+				if node_rect.has_point(ev.position): #If the cursor is in any of them, it stops
 					return
 			#this covers the actual scroll bar on the side
 			if ev.position.x-self.get_global_rect().position.x>=self.rect_size.x-self.get_v_scrollbar().rect_size.x:
@@ -42,6 +44,7 @@ func _input(ev) -> void:
 			look_for_swipe = true
 			swipe_mouse_start = ev.global_position
 		elif swiping:
+			
 			swipe_mouse_times.append(OS.get_ticks_msec())
 			swipe_mouse_positions.append(ev.global_position)
 			var source := Vector2(get_h_scroll(), get_v_scroll())
@@ -69,11 +72,12 @@ func _input(ev) -> void:
 
 		else:
 			look_for_swipe = false
-
+	
 	if ev is InputEventMouseMotion:
 
 		if look_for_swipe:
 			var delta = ev.global_position - swipe_mouse_start
+			
 			if abs(delta.x) > delta_for_swipe.x or abs(delta.y) > delta_for_swipe.y:
 				swiping = true
 				look_for_swipe = false
@@ -83,7 +87,7 @@ func _input(ev) -> void:
 				swipe_mouse_positions = [swipe_mouse_start]
 				if is_instance_valid(tween) and tween is Tween:
 					var _err = tween.stop_all()
-
+		
 		if swiping:
 			var delta : Vector2 = ev.global_position - swipe_mouse_start
 			set_h_scroll(int(swipe_start.x - delta.x))
