@@ -59,6 +59,7 @@ func has_all_elements(array_small,array_large):
 
 #Loads the questions associated to the currently open lesson. Can be overriden by specifiying the parameter
 func load_questions(lesson_path=null, replace_current_questions = true):
+	
 	if replace_current_questions:
 		_all_questions = []
 		
@@ -71,7 +72,8 @@ func load_questions(lesson_path=null, replace_current_questions = true):
 	if lesson_file.file_exists(self.lesson_path):
 		lesson_file.open(self.lesson_path, File.READ)
 		while not lesson_file.eof_reached():
-			var question = parse_json(lesson_file.get_line())
+			var line = lesson_file.get_line()
+			var question = parse_json(line)
 			if question == null:
 				break
 			_all_questions.append(question)

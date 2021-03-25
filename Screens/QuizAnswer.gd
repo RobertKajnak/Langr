@@ -174,9 +174,9 @@ func display_answers():
 			
 			dr_internal.change_line_color_to()
 			dr_answer.add_lines(temp_answer_cache[i][0])
+		set_color_to_retry(dr_internal)
 		if i<lim-1:
 			dr_internal.load_next_cached()
-		set_color_to_retry(dr_internal)
 	dr_answer.load_image(0)
 	
 func load_and_show_correct_answer(idx=-1):
