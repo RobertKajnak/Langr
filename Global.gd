@@ -6,6 +6,9 @@ var config
 #CONSTANTS
 var currentLang = 0; #currently used languge index from langs
 var langs = ['en','hu','ja']
+const FONT_FILES = {'Sawarabi': 'res://fonts/SawarabiMincho-Regular.ttf',
+					'Brush Stroke': 'res://fonts/AA_Brush Stroke_Hun.ttf'}
+var ui_font_path
 const ANDROID_PATH = "/storage/emulated/0/Langr"
 const LES_EXT = '.les'
 const DICT_EXT = '.dict'
@@ -50,14 +53,15 @@ func set_ui_scale(val):
 		FONTS[font] = DynamicFont.new()
 		var font_data = DynamicFontData.new()
 		if 'JP' in font:
-			font_data.font_path = 'res://fonts/851H-kktt.ttf'
+			font_data.font_path = 'res://fonts/SawarabiMincho-Regular.ttf'#'res://fonts/851H-kktt.ttf'
 		else:
 			if 'SMALL' in font:
-				font_data.font_path = 'res://fonts/AA_Brush Stroke_Hun.ttf'
+				font_data.font_path = ui_font_path#'res://fonts/SawarabiMincho-Regular.ttf'
 			elif 'LARGE' in font:
 				font_data.font_path = 'res://fonts/AA_Antique Type_Hun.ttf'
 			else: #elif 'MEDIUM' in font
-				font_data.font_path = 'res://fonts/AA_Antique Type_Hun.ttf'
+				font_data.font_path = ui_font_path#'res://fonts/AA_Antique Type_Hun.ttf'
+				
 		
 		if 'SMALL' in font:
 			FONTS[font] .size = UI_SCALE
@@ -120,6 +124,7 @@ func _ready():
 		#Render options, such as font size
 		var ui_scale_default = 32 if OS.get_name() in ["OSX", "HTML5", "Server", "Windows","UWP", "X11"] else 40
 		var ui_scale_temp = config.get_value("render", "ui_scale", ui_scale_default)
+		ui_font_path = config.get_value("render", "ui_font_path", FONT_FILES.values()[0])
 		set_ui_scale(ui_scale_temp)
 		
 		active_lessons = config.get_value("quiz", "active_lessons", [''])
@@ -219,6 +224,7 @@ func save_settings():
 	config.set_value("general", "lang", currentLang)
 	#config.set_value("general","allLangs",langs)
 	config.set_value("render","ui_scale",UI_SCALE)
+	config.set_value("render", "ui_font_path", ui_font_path)
 	config.set_value("render","draw_columns",draw_columns)
 	config.set_value("quiz","active_lessons",active_lessons)
 	config.set_value("quiz","rotation_size",rotation_size)

@@ -4,6 +4,7 @@ extends Control
 var buttonTexts = {'LabelTitle':'settings',
 					'LabelLanguage':'language',
 					'LabelScale':'scale',
+					'LabelFont':'font',
 					'LabelRotationSize':'quizRotationSize',
 					'LabelDebug':'enableDebug',
 					'LabelEInk':'EInkMode',
@@ -41,6 +42,14 @@ func _ready():
 		ButtonScale.add_item(str(i));
 	ButtonScale.select(index);
 	ButtonScale.adapt()
+	
+	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerFont/LabelFont.set_width_auto(10)
+	var ButtonFont = $VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerFont/ButtonFont
+	for font_name in global.FONT_FILES.keys():
+		ButtonFont.add_item(font_name);
+	ButtonFont.select(global.FONT_FILES.values().find(global.ui_font_path));
+	ButtonFont.adapt()
+	global.adapt_font(ButtonFont,global.FONT_SIZE_MEDIUM,null,true)
 	
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerColumns/LabelColumns.set_width_auto(10)
 	var buttonColumns = $VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerColumns/OptionButtonColumns
@@ -97,6 +106,11 @@ func _on_ButtonScale_item_selected(ID):
 	global.UI_SCALE = global.POSSIBLE_SCALES[ID]
 	refresh()
 
+func _on_ButtonFont_item_selected(index):
+	global.ui_font_path = global.FONT_FILES.values()[index]
+	global.UI_SCALE = global.UI_SCALE # Toggles UI Refresh/ font reload
+	refresh()
+
 func _on_OptionButtonColumns_item_selected(index):
 	global.draw_columns = global.POSSIBLE_COLUMNS[index]
 	
@@ -117,6 +131,7 @@ func _notification(what):
 	if what == MainLoop.NOTIFICATION_WM_GO_BACK_REQUEST: 
 		# For android
 		go_back()
+
 
 
 

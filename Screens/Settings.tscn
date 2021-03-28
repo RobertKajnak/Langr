@@ -40,58 +40,75 @@ custom_constants/separation = 30
 
 [node name="HBoxContainerLang" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
 margin_right = 680.0
-margin_bottom = 39.0
+margin_bottom = 12.0
 alignment = 1
 
 [node name="LabelLanguage" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerLang" instance=ExtResource( 3 )]
 margin_left = 181.0
 margin_right = 481.0
-margin_bottom = 39.0
+margin_bottom = 12.0
 rect_min_size = Vector2( 300, 0 )
 
 [node name="ButtonLanguage" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerLang" instance=ExtResource( 5 )]
 margin_left = 485.0
 margin_right = 499.0
-margin_bottom = 39.0
+margin_bottom = 12.0
 
 [node name="HBoxContainerScale" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
-margin_top = 69.0
+margin_top = 42.0
 margin_right = 680.0
-margin_bottom = 108.0
+margin_bottom = 54.0
 alignment = 1
 
 [node name="LabelScale" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerScale" instance=ExtResource( 3 )]
 margin_left = 231.0
 margin_right = 431.0
-margin_bottom = 39.0
+margin_bottom = 12.0
 rect_min_size = Vector2( 200, 0 )
 
 [node name="ButtonScale" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerScale" instance=ExtResource( 5 )]
 margin_left = 435.0
 margin_right = 449.0
-margin_bottom = 39.0
+margin_bottom = 12.0
+
+[node name="HBoxContainerFont" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+margin_top = 84.0
+margin_right = 680.0
+margin_bottom = 96.0
+alignment = 1
+
+[node name="LabelFont" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerFont" instance=ExtResource( 3 )]
+margin_left = 291.0
+margin_right = 371.0
+margin_bottom = 12.0
+rect_min_size = Vector2( 80, 0 )
+
+[node name="ButtonFont" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerFont" instance=ExtResource( 5 )]
+margin_left = 375.0
+margin_right = 389.0
+margin_bottom = 12.0
 
 [node name="HBoxContainerColumns" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
-margin_top = 138.0
+margin_top = 126.0
 margin_right = 680.0
-margin_bottom = 177.0
+margin_bottom = 138.0
 alignment = 1
 
 [node name="LabelColumns" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerColumns" instance=ExtResource( 3 )]
 margin_left = 231.0
 margin_right = 431.0
-margin_bottom = 39.0
+margin_bottom = 12.0
 rect_min_size = Vector2( 200, 0 )
 
 [node name="OptionButtonColumns" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerColumns" instance=ExtResource( 5 )]
 margin_left = 435.0
 margin_right = 449.0
-margin_bottom = 39.0
+margin_bottom = 12.0
 
 [node name="HBoxContainerEInk" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
-margin_top = 207.0
+margin_top = 168.0
 margin_right = 680.0
-margin_bottom = 273.0
+margin_bottom = 234.0
 alignment = 1
 
 [node name="LabelEInk" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerEInk" instance=ExtResource( 3 )]
@@ -106,9 +123,9 @@ margin_bottom = 66.0
 rect_min_size = Vector2( 60, 60 )
 
 [node name="HBoxContainerRotation" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
-margin_top = 303.0
+margin_top = 264.0
 margin_right = 680.0
-margin_bottom = 323.0
+margin_bottom = 284.0
 alignment = 1
 
 [node name="LabelRotationSize" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerRotation" instance=ExtResource( 3 )]
@@ -135,9 +152,9 @@ tick_count = 25
 ticks_on_borders = true
 
 [node name="HBoxContainerDebug" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
-margin_top = 353.0
+margin_top = 314.0
 margin_right = 680.0
-margin_bottom = 419.0
+margin_bottom = 380.0
 alignment = 1
 
 [node name="LabelDebug" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerDebug" instance=ExtResource( 3 )]
@@ -158,6 +175,7 @@ margin_right = 43.2562
 margin_bottom = 52.5804
 [connection signal="item_selected" from="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerLang/ButtonLanguage" to="." method="_on_ButtonLanguage_item_selected"]
 [connection signal="item_selected" from="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerScale/ButtonScale" to="." method="_on_ButtonScale_item_selected"]
+[connection signal="item_selected" from="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerFont/ButtonFont" to="." method="_on_ButtonFont_item_selected"]
 [connection signal="item_selected" from="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerColumns/OptionButtonColumns" to="." method="_on_OptionButtonColumns_item_selected"]
 [connection signal="value_changed" from="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerRotation/HSliderRotationSize" to="." method="_on_HSliderRotationSize_value_changed"]
 [connection signal="pressed" from="BackButton" to="." method="go_back"]

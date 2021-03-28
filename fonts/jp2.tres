@@ -2,7 +2,7 @@
 
 [sub_resource type="DynamicFontData" id=1]
 antialiased = false
-font_path = "res://fonts/851H-kktt.ttf"
+font_path = "res://fonts/SawarabiMincho-Regular.ttf"
 
 [resource]
 size = 32
