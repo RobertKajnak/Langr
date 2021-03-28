@@ -58,24 +58,26 @@ func has_all_elements(array_small,array_large):
 	return true
 
 #Loads the questions associated to the currently open lesson. Can be overriden by specifiying the parameter
-func load_questions(lesson_path=null, replace_current_questions = true):
+func load_questions(new_lesson_path=null, replace_current_questions = true):
 	
 	if replace_current_questions:
 		_all_questions = []
 		
-	if lesson_path == null:
-		self.lesson_path = 'user://lessons/' + global.current_lesson + global.LES_EXT
+	if new_lesson_path == null:
+		lesson_path = 'user://lessons/' + global.current_lesson + global.LES_EXT
 	else:
-		self.lesson_path = lesson_path
+		lesson_path = new_lesson_path
 		
 	var lesson_file = File.new()
 	if lesson_file.file_exists(self.lesson_path):
 		lesson_file.open(self.lesson_path, File.READ)
 		while not lesson_file.eof_reached():
 			var line = lesson_file.get_line()
+			if len(line) < 3:
+				continue
 			var question = parse_json(line)
-			if question == null:
-				break
+#			if question == null:
+#				break
 			_all_questions.append(question)
 		lesson_file.close()
 		
@@ -121,7 +123,7 @@ func _check_question(question, check_duplicate=true):
 	return null
 		
 #if null is specified, the current lesson is used
-func add_question(question,lesson_path=null):
+func add_question(question,new_lesson_path=null):
 	var err = _check_question(question,true)
 	if err:
 		return err
@@ -129,9 +131,9 @@ func add_question(question,lesson_path=null):
 		question['id'] = global.random_string(random_key_length)
 	self._all_questions.append(question)
 	var lesson_file = File.new()
-	if lesson_path == null:
-		lesson_path = self.lesson_path
-	lesson_file.open(lesson_path, File.READ_WRITE)
+	if new_lesson_path == null:
+		new_lesson_path = lesson_path
+	lesson_file.open(new_lesson_path, File.READ_WRITE)
 	lesson_file.seek_end()
 	lesson_file.store_line(to_json(question))
 	lesson_file.close()

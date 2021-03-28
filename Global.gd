@@ -138,9 +138,9 @@ func get_date_compact():
 	return dd['year']*10000+dd['month']*100+dd['day']
 	
 func get_date_from_date_compact(date_compact):
-	var date := int(date_compact)
-	return {'year':date/10000,
-			'month':date/100%100,
+	var date = int(date_compact)
+	return {'year': int(date/10000),
+			'month':int(date/100)%100,
 			'day':date%100,
 			'hour':0,
 			'minute':0,
@@ -200,8 +200,8 @@ func random_string(length):
 		a += char(v)
 	return a
 	
-func set_active_lessons(active_lessons):
-	self.active_lessons = active_lessons
+func set_active_lessons(new_active_lessons):
+	self.active_lessons = new_active_lessons
 	save_settings()
 
 #Auto_ellipse<=0 =>no ellipse
@@ -285,19 +285,20 @@ func read_svg(file_name):
 	var xml = XMLParser.new()
 	xml.open(file_name)
 	while xml.read() == OK:
-		if xml.get_node_name() == 'path':
-			var path = xml.get_named_attribute_value('d')
-			var conv = _path_string_to_path(path)
-			components.append(conv)
-		elif false:#xml.get_node_name() == 'text':
-			var coords = xml.get_named_attribute_value('transform')
-			if coords == '':
-				continue
-			coords = coords.split(',')
-			print('coords = ',coords[coords.size()-1])
-			var textval = xml.get_node_data()
-			print('textval = ',textval)
-			components.append(['text',coords[coords.size()-2],coords[coords.size()-1],textval])
+		if xml.get_node_type() != 3:
+			if xml.get_node_name() == 'path':
+				var path = xml.get_named_attribute_value('d')
+				var conv = _path_string_to_path(path)
+				components.append(conv)
+			elif false:#xml.get_node_name() == 'text':
+				var coords = xml.get_named_attribute_value('transform')
+				if coords == '':
+					continue
+				coords = coords.split(',')
+				print('coords = ',coords[coords.size()-1])
+				var textval = xml.get_node_data()
+				print('textval = ',textval)
+				components.append(['text',coords[coords.size()-2],coords[coords.size()-1],textval])
 	return components
 	
 func _path_string_to_path(string):

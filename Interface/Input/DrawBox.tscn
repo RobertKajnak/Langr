@@ -150,6 +150,13 @@ size_flags_horizontal = 6
 custom_constants/vseparation = 45
 custom_constants/hseparation = 45
 columns = 2
+
+[node name="ButtonAddDedicated" parent="." instance=ExtResource( 3 )]
+visible = false
+margin_left = 0.0
+margin_top = 226.0
+margin_right = 300.0
+margin_bottom = 300.0
 [connection signal="gui_input" from="HBoxContainerMain/VBoxContainerLeft/VBoxContainerPrevious" to="." method="_on_VBoxContainerPrevious_gui_input"]
 [connection signal="pressed" from="HBoxContainerMain/VBoxContainerLeft/VBoxContainerPrevious/HBoxContainerPrevious/PreviousButton" to="." method="_on_PreviousButton_pressed"]
 [connection signal="gui_input" from="HBoxContainerMain/VBoxContainerLeft/HBoxContainerUndo" to="." method="_on_HBoxContainerUndo_gui_input"]
@@ -160,3 +167,4 @@ columns = 2
 [connection signal="pressed" from="HBoxContainerMain/VBoxContainerRight/VBoxContainerNext/HBoxContainerNext/NextButton" to="." method="_on_NextButton_pressed"]
 [connection signal="gui_input" from="HBoxContainerMain/VBoxContainerRight/HBoxContainerClear" to="." method="_on_HBoxContainerClear_gui_input"]
 [connection signal="pressed" from="HBoxContainerMain/VBoxContainerRight/HBoxContainerClear/ButtonClearDrawing" to="." method="_on_ButtonClearDrawing_pressed"]
+[connection signal="pressed" from="ButtonAddDedicated" to="." method="_on_ButtonAddDedicated_pressed"]

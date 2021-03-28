@@ -13,8 +13,8 @@ export var text = '' setget set_text,get_text
 
 func get_text():
 	return $Label.text
-func set_text(text):
-	$Label.text = text
+func set_text(new_text):
+	$Label.text = new_text
 	adapt()
 
 func get_valign():
@@ -37,14 +37,14 @@ func _ready():
 	
 	var _valign = valign #The only purpose of this line is to silence the warning
 	
-func set_mode(mode=LABEL_MODE_NORMAL):
-	if mode is String:
-		mode = {'SMALL':LABEL_MODE_SMALL,
+func set_mode(new_mode=LABEL_MODE_NORMAL):
+	if new_mode is String:
+		new_mode = {'SMALL':LABEL_MODE_SMALL,
 				'NORMAL':LABEL_MODE_NORMAL,
 				'MEDIUM':LABEL_MODE_NORMAL,
 				'TITLE':LABEL_MODE_TITLE
-				}[mode.to_upper()]
-	self._mode = mode
+				}[new_mode.to_upper()]
+	self._mode = new_mode
 	adapt()
 
 func adapt():

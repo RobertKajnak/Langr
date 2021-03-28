@@ -176,9 +176,9 @@ func include_svg_path(svg_path):
 					
 #Does not try to approximate drawing with bezier
 #TODO compress image
-func drawing_to_svg_path(lines):
+func drawing_to_svg_path(new_lines):
 	var segments = []
-	for line in lines:
+	for line in new_lines:
 		var segment = []
 		var point = normalize(line[0])
 		segment.append(['M',point.x,point.y])

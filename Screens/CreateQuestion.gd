@@ -55,6 +55,7 @@ func _ready():
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer3/ButtonFromDicitonary.set_icon('plus')
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer3/TextEditFromDictionary.set_text_size(global.FONT_SIZE_LARGE)
 	
+	$VBoxContainer/ScrollContainer/VBoxContainer/CenterContainer/VBoxContainerDraw.enable_add_drawing()
 	
 	set_require_label_auto()
 #%% Helper functions
@@ -185,6 +186,9 @@ func _on_ButtonFromDicitonary_pressed():
 	var d_word = $VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer3/TextEditFromDictionary.text
 	var drawing = $VBoxContainer/ScrollContainer/VBoxContainer/CenterContainer/VBoxContainerDraw
 	var dpath = 'user://dictionaries/kanji/' + d_word + '.svg'
+	
+	if len(d_word)==0:
+		drawing.add_empty_drawing()
 	
 	var fc = File.new()
 	if fc.file_exists(dpath):

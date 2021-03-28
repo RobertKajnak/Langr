@@ -52,7 +52,6 @@ func load_folder(path, filter=null, save_dialog = false, message = null, option_
 		$VBoxContainer/CheckBox.text = option_text
 		$"/root/GlobalVars".adapt_font($VBoxContainer/CheckBox)
 	
-
 	if save_dialog:
 		$VBoxContainer/HBoxContainer/ButtonSelect.text_loc = "save"
 	else:

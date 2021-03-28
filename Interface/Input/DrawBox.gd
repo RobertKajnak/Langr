@@ -162,7 +162,6 @@ func add_empty_drawing():
 	
 	if GlobalVars.draw_columns >1 and len(surfaces)<=GlobalVars.draw_columns:
 		$GridContainer.columns  = len(surfaces)
-	print('col set to', $GridContainer.columns)
 		
 func create_empty_drawings(count,reset_position_to_0=true):
 	if GlobalVars.draw_columns == 1:
@@ -190,7 +189,11 @@ func set_focus_drawing_prev():
 	_set_current_surface_idx(max(0, current_surface_idx-1))
 
 func set_focus_drawing_next():
+	if current_surface_idx == len(surfaces)-1:
+		add_empty_drawing()
+		
 	_set_current_surface_idx(min(len(surfaces)-1, current_surface_idx+1))
+	
 
 func set_focus_drawing(index):
 	_set_current_surface_idx(max(0, max(len(surfaces)-1, index)))
@@ -202,12 +205,16 @@ func change_line_color_to(color, width):
 		s.change_line_color_to(color, width)
 
 func disable_add_drawing():
-	can_add_drawing = false
-	set_cache_status_label()
-	
+	if GlobalVars.draw_columns == 1:
+		can_add_drawing = false
+		set_cache_status_label()
+
+		
 func enable_add_drawing():
-	can_add_drawing = true
-	set_cache_status_label()
+	if GlobalVars.draw_columns == 1:
+		can_add_drawing = true
+		set_cache_status_label()
+
 
 func disable_erase():
 	clearButton.visible = false
@@ -236,6 +243,9 @@ func _on_ButtonClearAll_pressed():
 	for i in len(surfaces):
 		clear_drawing(i)
 
+func _on_ButtonAddDedicated_pressed():
+	add_empty_drawing()
+	
 func get_internal_idx():
 	return surfaces[current_surface_idx].currently_loaded
 
@@ -244,7 +254,6 @@ func load_image(indx : int):
 	set_cache_status_label()
 	
 func load_next_image():
-	set_focus_drawing_next()
 	var cst = surfaces[current_surface_idx].get_cache_status()
 	if can_add_drawing or cst[0]<cst[1]:
 		var _cp = surfaces[current_surface_idx].load_next_cached()
@@ -278,3 +287,5 @@ func _on_HBoxContainerClear_gui_input(event):
 
 func _on_VBoxContainerClearAll_gui_input(event):
 	on_pressed(event,containerClear,'_on_ButtonClearAll_pressed')
+
+
