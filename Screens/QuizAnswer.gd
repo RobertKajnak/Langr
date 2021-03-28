@@ -127,6 +127,7 @@ func show_required_quesiton(question_text):
 		if fns is String:
 			fns = [fns]
 			
+		dr_answer.create_empty_drawings(len(fns)-1)
 		for fn in fns:
 			dr_answer.load_drawing('user://lessons/' + qm.get_lesson_for_question(question_data,true) + '/' + fn)
 			dr_answer.load_next_image()
@@ -139,56 +140,63 @@ func show_required_quesiton(question_text):
 	epu.display(question_text,answer_text)
 	
 	
-func set_color_to_retry(dr_internal):
-	dr_internal.change_line_color_to(Color(0.4,0.1,0.6),4)
+func set_color_to_retry():
+	dr_answer.change_line_color_to(Color(0.4,0.1,0.6),4)
 	dr_answer.disable_add_drawing()
 	dr_answer.set_cache_status_label()
 
-func draw_correct_answer(dr_internal, idx: int):
-	dr_internal.change_line_color_to(Color(0,0.8,0.2,0.6),7)
+func draw_correct_answer(idx: int):
+	dr_answer.change_line_color_to(Color(0,0.8,0.2,0.6),7)
 	var fns = current_question['answer_draw']
 	if fns is String:
 		fns = [fns]
 	
 	var drawing_file_name = 'user://lessons/' + qm.get_lesson_for_question(current_question,true) \
 							+ '/' + fns[idx]
-	dr_internal.load_drawing(drawing_file_name)
+	dr_answer.load_drawing(drawing_file_name, -1 if GlobalVars.draw_columns == 1 else idx)
 
 func display_answers():
 	#if not correct_dr_answer:
 	var fns = current_question['answer_draw']
 	var temp_answer_cache = temp_answer['answer_draw']
-	var dr_internal = dr_answer.find_node('AnswerDraw')
 	if fns is String:
 		fns = [fns]
 		
 	var lim = max(temp_answer_cache.size(),fns.size())
 	for i in range(lim):
 		if i<fns.size():
-			draw_correct_answer(dr_internal,i)
+			draw_correct_answer(i)
 			#var correct_dr_answer = dr_answer.get_lines()
 		#else:
 		#	dr_answer.add_lines(correct_dr_answer)	
 		if i<temp_answer_cache.size():
-			dr_internal.change_line_color_to(Color(0.4,0.1,0.6),3)
+			dr_answer.change_line_color_to(Color(0.4,0.1,0.6),3)
 			
-			dr_internal.change_line_color_to()
 			dr_answer.add_lines(temp_answer_cache[i][0])
-		set_color_to_retry(dr_internal)
+		set_color_to_retry()
 		if i<lim-1:
-			dr_internal.load_next_cached()
+			dr_answer.load_next_cached()
 	dr_answer.load_image(0)
 	
 func load_and_show_correct_answer(idx=-1):
 	if dr_answer==null:
 		return
-	var dr_internal = dr_answer.find_node('AnswerDraw')
+		
 	if idx == -1:
-		idx = dr_internal.currently_loaded
-	dr_answer.load_image(idx)
-	dr_internal.clear_drawing()
-	draw_correct_answer(dr_internal,idx)	
-	set_color_to_retry(dr_internal)
+		if GlobalVars.draw_columns == 1:
+			idx = dr_answer.get_internal_idx()
+			#dr_answer.load_image(idx)
+			dr_answer.clear_drawing()
+			draw_correct_answer(idx)
+			set_color_to_retry()
+		else:
+			#idx = dr_answer.current_surface_idx
+			for i in len(dr_answer.surfaces):
+				dr_answer.clear_drawing(i)
+				draw_correct_answer(i)
+				set_color_to_retry()
+
+
 	
 func go_back():
 	qm.exit_quiz()
@@ -210,6 +218,7 @@ func _on_ButtonForceCorrect_pressed():
 
 func _on_ButtonOnlyCorrect_pressed():
 	#dr_answer.clear_drawing()
+	
 	load_and_show_correct_answer()
 
 

@@ -6,7 +6,8 @@ var buttonTexts = {'LabelTitle':'settings',
 					'LabelScale':'scale',
 					'LabelRotationSize':'quizRotationSize',
 					'LabelDebug':'enableDebug',
-					'LabelEInk':'EInkMode'}
+					'LabelEInk':'EInkMode',
+					'LabelColumns': 'drawColumns'}
 var global
 
 
@@ -41,15 +42,26 @@ func _ready():
 	ButtonScale.select(index);
 	ButtonScale.adapt()
 	
+	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerColumns/LabelColumns.set_width_auto(10)
+	var buttonColumns = $VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerColumns/OptionButtonColumns
+	index = find_closest(global.POSSIBLE_COLUMNS, global.draw_columns)
+	if global.POSSIBLE_COLUMNS[index] != global.draw_columns:
+		global.POSSIBLE_COLUMNS.insert(index,global.POSSIBLE_COLUMNS)
+	for i in global.POSSIBLE_COLUMNS:
+		buttonColumns.add_item(str(i));
+	buttonColumns.select(index);
+	buttonColumns.adapt()
+	
+	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerEInk/LabelEInk.set_width_auto(10)
+	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerEInk/CheckBoxEInk.pressed = global.EINK
+	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerEInk/CheckBoxEInk.rect_min_size = Vector2(60,60)
+	
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerRotation/HSliderRotationSize.value = global.rotation_size
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerRotation/LableRotationSizeValue.text = str(global.rotation_size)
 	#$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerRotation/LabelRotationSize.set_width(get_viewport_rect().size.x*0.45)
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerRotation/LableRotationSizeValue.set_width_auto(10)
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerRotation/LabelRotationSize.set_width_auto(10)
 	
-	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerEInk/LabelEInk.set_width_auto(10)
-	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerEInk/CheckBoxEInk.pressed = global.EINK
-	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerEInk/CheckBoxEInk.rect_min_size = Vector2(60,60)
 	
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerDebug/LabelDebug.set_width_auto(10)
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerDebug/CheckBoxDebug.pressed = global.DEBUG
@@ -85,6 +97,9 @@ func _on_ButtonScale_item_selected(ID):
 	global.UI_SCALE = global.POSSIBLE_SCALES[ID]
 	refresh()
 
+func _on_OptionButtonColumns_item_selected(index):
+	global.draw_columns = global.POSSIBLE_COLUMNS[index]
+	
 func _on_HSliderRotationSize_value_changed(value):
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerRotation/LableRotationSizeValue.text = str(value)
 	global.rotation_size = value

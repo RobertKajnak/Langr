@@ -18,12 +18,27 @@ var currently_loaded = 0
 
 var disable_mouse_interaction = false
 
+var true_parent = null
+
 func _ready():
-	self.rect_size.x = 109*4
-	self.rect_size.y = 109*4
-	self.rect_min_size.x = 109*4
-	self.rect_min_size.y = 109*4
+	var multiplier = (680.0 - 8 * (GlobalVars.draw_columns-1) - 80)/GlobalVars.draw_columns/109.0 \
+		if GlobalVars.draw_columns > 6 else \
+					{1 : 4,
+					2: 2.5,
+					3: 1.5,
+					4: 1.21,
+					5: 1.2,
+					6: 0.8,
+					}[GlobalVars.draw_columns]
+
+	self.rect_size.x = 109 * multiplier
+	self.rect_size.y = 109 * multiplier
+	self.rect_min_size.x = 109 * multiplier
+	self.rect_min_size.y = 109 * multiplier
 	_init_colors_and_widths()
+
+func set_true_parent(parent):
+	true_parent = parent
 
 func change_size(new_size:Vector2):
 	"""Changing size after lines are already added is not supported"""
@@ -228,13 +243,21 @@ func save_dawing():
 
 func remove_last_line():
 	current_line = []
-	lines.remove(lines.size()-1)
+	if lines.size()-1>=0:
+		lines.remove(lines.size()-1)
 	
 func load_prev_cached():
-	return load_cached(currently_loaded-1)
+	if GlobalVars.draw_columns == 1:
+		return load_cached(currently_loaded-1)
+	else:
+		return true_parent.call('set_focus_drawing_prev')
 	
 func load_next_cached():
-	return load_cached(currently_loaded+1)
+	if GlobalVars.draw_columns == 1:
+		return load_cached(currently_loaded+1)
+	else:
+		return true_parent.call('set_focus_drawing_next')
+	
 	
 #Return values: 
 #  0 -- loaded successfully
@@ -302,11 +325,14 @@ func _draw():
 #Event handling
 var button_down = false
 func _on_AnswerDraw_gui_input(event):
-	#print(event is InputEventMouseMotion)
+#	print(event.position)
+		
 	if disable_mouse_interaction:
 		return
 	if event is InputEventMouseButton:
 		if button_down:
+			if true_parent:
+				true_parent.call('set_draw_focus',self)
 			include_line()
 		button_down = !button_down
 	if button_down and event is InputEventMouseMotion:

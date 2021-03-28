@@ -34,13 +34,15 @@ func _ready():
 		var _err = control.connect("focus_entered",self,"_tapped_to_edit",[control])
 		_err = control.connect("focus_exited",self,"_tapped_away",[control])
 	
-	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/LabelSkill.set_width_auto(20)
+	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerSkill/LabelSkill.set_width_auto(20)
 
 	qm = $"/root/QuestionManager"
 	
 	#Add current profficiency skill level
+	if global.DEBUG:
+		$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerSkill.visible = true
 	for i in range(qm.MAX_SKILL_LEVEL+1):
-		$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/OptionButtonSkill.add_item(str(i))
+		$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerSkill/OptionButtonSkill.add_item(str(i))
 	modifying_mode = false
 
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer2/LabelRequires.set_mode('medium')
@@ -52,6 +54,7 @@ func _ready():
 	
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer3/ButtonFromDicitonary.set_icon('plus')
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer3/TextEditFromDictionary.set_text_size(global.FONT_SIZE_LARGE)
+	
 	
 	set_require_label_auto()
 #%% Helper functions
@@ -221,7 +224,7 @@ func _on_Button_pressed():
 				$VBoxContainer/ScrollContainer/VBoxContainer/TextEditQuestion]:
 		if q.text!='' and q.text!=tr(to_translate[q.name]):
 			to_save[adict[q.name]] = q.text
-	to_save[adict['OptionButtonSkill']] = $VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/OptionButtonSkill.selected
+	to_save[adict['OptionButtonSkill']] = $VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerSkill/OptionButtonSkill.selected
 	if modifying_mode:
 		if not 'question' in to_save:
 			to_save['question'] = original_question['question'] #This must happen before the 'AnswerDraw'='placeholder' draw,

@@ -8,6 +8,7 @@ const MENU_ICON = preload('res://res/MenuNavigation.png')
 const PLUS_SIGN = preload('res://res/Plus.png')
 const UNDO_SIGN = preload('res://res/Undo_brush.png')
 const X_SIGN = preload('res://res/X_brush.png')
+const XX_SIGN = preload('res://res/XX_brush.png')
 
 const FILE = preload("res://res/FileIcon.png")
 const FOLDER = preload("res://res/FolderIcon.png")
@@ -34,6 +35,7 @@ func set_icon(icon='plus'):
 			'FOLDER': ic = FOLDER
 			'UNDO': ic = UNDO_SIGN
 			'X': ic = X_SIGN
+			'XX': ic = XX_SIGN
 			'EMPTY': ic = null
 	else:
 		ic = icon

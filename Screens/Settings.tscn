@@ -71,10 +71,44 @@ margin_left = 435.0
 margin_right = 449.0
 margin_bottom = 39.0
 
-[node name="HBoxContainerRotation" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="HBoxContainerColumns" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 138.0
 margin_right = 680.0
-margin_bottom = 158.0
+margin_bottom = 177.0
+alignment = 1
+
+[node name="LabelColumns" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerColumns" instance=ExtResource( 3 )]
+margin_left = 231.0
+margin_right = 431.0
+margin_bottom = 39.0
+rect_min_size = Vector2( 200, 0 )
+
+[node name="OptionButtonColumns" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerColumns" instance=ExtResource( 5 )]
+margin_left = 435.0
+margin_right = 449.0
+margin_bottom = 39.0
+
+[node name="HBoxContainerEInk" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+margin_top = 207.0
+margin_right = 680.0
+margin_bottom = 273.0
+alignment = 1
+
+[node name="LabelEInk" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerEInk" instance=ExtResource( 3 )]
+margin_left = 308.0
+margin_right = 308.0
+margin_bottom = 66.0
+
+[node name="CheckBoxEInk" type="CheckBox" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerEInk"]
+margin_left = 312.0
+margin_right = 372.0
+margin_bottom = 66.0
+rect_min_size = Vector2( 60, 60 )
+
+[node name="HBoxContainerRotation" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+margin_top = 303.0
+margin_right = 680.0
+margin_bottom = 323.0
 alignment = 1
 
 [node name="LabelRotationSize" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerRotation" instance=ExtResource( 3 )]
@@ -100,27 +134,10 @@ value = 3.0
 tick_count = 25
 ticks_on_borders = true
 
-[node name="HBoxContainerEInk" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
-margin_top = 188.0
-margin_right = 680.0
-margin_bottom = 254.0
-alignment = 1
-
-[node name="LabelEInk" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerEInk" instance=ExtResource( 3 )]
-margin_left = 308.0
-margin_right = 308.0
-margin_bottom = 66.0
-
-[node name="CheckBoxEInk" type="CheckBox" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerEInk"]
-margin_left = 312.0
-margin_right = 372.0
-margin_bottom = 66.0
-rect_min_size = Vector2( 60, 60 )
-
 [node name="HBoxContainerDebug" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
-margin_top = 284.0
+margin_top = 353.0
 margin_right = 680.0
-margin_bottom = 350.0
+margin_bottom = 419.0
 alignment = 1
 
 [node name="LabelDebug" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerDebug" instance=ExtResource( 3 )]
@@ -141,5 +158,6 @@ margin_right = 43.2562
 margin_bottom = 52.5804
 [connection signal="item_selected" from="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerLang/ButtonLanguage" to="." method="_on_ButtonLanguage_item_selected"]
 [connection signal="item_selected" from="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerScale/ButtonScale" to="." method="_on_ButtonScale_item_selected"]
+[connection signal="item_selected" from="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerColumns/OptionButtonColumns" to="." method="_on_OptionButtonColumns_item_selected"]
 [connection signal="value_changed" from="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainerRotation/HSliderRotationSize" to="." method="_on_HSliderRotationSize_value_changed"]
 [connection signal="pressed" from="BackButton" to="." method="go_back"]

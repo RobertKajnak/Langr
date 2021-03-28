@@ -24,5 +24,8 @@ custom_styles/normal = SubResource( 1 )
 custom_fonts/font = ExtResource( 2 )
 wrap_enabled = true
 script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="gui_input" from="." to="." method="_on_TextEditFreeform_gui_input"]
 [connection signal="text_changed" from="." to="." method="_on_TextEditQuestion_text_changed"]

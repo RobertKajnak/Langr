@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Interface/Input/DrawSurface.gd" type="Script" id=1]
+[ext_resource path="res://res/Fabric19.jpg" type="Texture" id=2]
+
+[node name="AnswerDraw" type="Control" groups=[
+"noScroll",
+]]
+margin_left = 117.0
+margin_right = 226.0
+margin_bottom = 109.0
+rect_min_size = Vector2( 109, 109 )
+rect_clip_content = true
+size_flags_horizontal = 0
+size_flags_vertical = 0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+show_behind_parent = true
+position = Vector2( 306.957, 208.703 )
+scale = Vector2( 0.373909, 0.321247 )
+texture = ExtResource( 2 )
+[connection signal="gui_input" from="." to="." method="_on_AnswerDraw_gui_input"]

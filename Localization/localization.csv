@@ -62,7 +62,8 @@ importSuccessMessage,Importing '{lesson}' successful,'{lesson}' sikeresen import
 importFailTitle,Import Failed,Importálás sikertelen,輸入は失敗した
 importFailMessage,Could not import lesson,Nem sikerül importálni a leckét,授業の輸入
 quizRotationSize,Quiz Pool Size,Kvíz Kérdéshalom mérete,質問の数
-enableDebug,Developer Mode,Fejlesztői Mód,開発者モード
+drawColumns,Nr of Draw Columns,Rajz oszlopok száma,描くときの列数
+enableDebug,Developer Mode,Fejlesztői Mód,開発モード
 sortBy,Sort By:,Rendezés:,並べる：
 search,Search,Keresés,探す
 alphabetical,Alphabetical,ABC Sorrend,ABC順

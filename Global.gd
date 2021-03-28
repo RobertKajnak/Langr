@@ -27,6 +27,8 @@ var FONTS = {}
 var DEBUG = false
 var EINK = false
 var question_sort_mode = 0
+var POSSIBLE_COLUMNS = [1,2,3,4,6,8,12]
+var draw_columns = 1
 
 var skill_color_dict = {0:Color(1,0,0),
 						1:Color(1,0.3,0.35),
@@ -125,6 +127,7 @@ func _ready():
 		
 		question_sort_mode = config.get_value("editing","question_sort_mode",0)
 		
+		draw_columns = config.get_value("render","draw_columns",1)
 		EINK = config.get_value("general","EInk",false)
 		DEBUG = config.get_value("debug","debug_enabled",false)
 	TranslationServer.set_locale(langs[currentLang])
@@ -216,6 +219,7 @@ func save_settings():
 	config.set_value("general", "lang", currentLang)
 	#config.set_value("general","allLangs",langs)
 	config.set_value("render","ui_scale",UI_SCALE)
+	config.set_value("render","draw_columns",draw_columns)
 	config.set_value("quiz","active_lessons",active_lessons)
 	config.set_value("quiz","rotation_size",rotation_size)
 	config.set_value("editing","question_sort_mode",question_sort_mode)
