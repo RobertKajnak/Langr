@@ -21,6 +21,7 @@ var disable_mouse_interaction = false
 var true_parent = null
 
 func _ready():
+	
 	var multiplier = (680.0 - 8 * (GlobalVars.draw_columns-1) - 80)/GlobalVars.draw_columns/109.0 \
 		if GlobalVars.draw_columns > 6 else \
 					{1 : 4,

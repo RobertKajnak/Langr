@@ -239,10 +239,10 @@ func _on_Button_pressed():
 			popup.display(tr('couldNotModifyQuestion'),tr('questionAlreadyExists'))
 			return
 	#TODO this feels like a wokraround
-	if not $VBoxContainer/ScrollContainer/VBoxContainer/CenterContainer/VBoxContainerDraw/HBoxContainerMain/AnswerDraw.is_empty():
+	if not $VBoxContainer/ScrollContainer/VBoxContainer/CenterContainer/VBoxContainerDraw.is_empty():
 		to_save[adict['VBoxContainerDraw']] = 'placeholder'
 		if (modifying_mode and qm._check_question(to_save,false)==null) or (not modifying_mode and qm._check_question(to_save,true)==null):
-			to_save[adict['VBoxContainerDraw']] = $VBoxContainer/ScrollContainer/VBoxContainer/CenterContainer/VBoxContainerDraw/HBoxContainerMain/AnswerDraw.save_dawing()
+			to_save[adict['VBoxContainerDraw']] = $VBoxContainer/ScrollContainer/VBoxContainer/CenterContainer/VBoxContainerDraw.save_dawing()
 		else:
 			to_save.erase(adict['VBoxContainerDraw'])
 

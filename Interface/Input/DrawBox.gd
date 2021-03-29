@@ -122,6 +122,23 @@ func load_drawing(filename, idx = -1):
 		surfaces[idx].load_drawing(filename)
 		set_cache_status_label()
 	
+func is_empty():
+	var empty = true
+	for surface in surfaces:
+		empty = empty && surface.is_empty()
+	
+func save_dawing():
+	var filenames = []
+	for surface in surfaces:
+		var partial_fns = surface.save_dawing()
+		if partial_fns == null:
+			continue
+		filenames += partial_fns 
+	
+	if filenames.empty():
+		return null
+	else:
+		return filenames
 	
 func set_cache_status_label():
 	if GlobalVars.draw_columns != 1:
